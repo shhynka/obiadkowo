@@ -1,13 +1,5 @@
 <div class="container">
-    <div class="meal-card"
-         *ngFor="let meal of lastMeals"
-         [value]="meal">
-        <div class="image-container">
-            {{ meal.imageUrl }}
-        </div>
-        <div class="details-container">
-            <span class="name-class">{{ meal.name }}</span>
-            <span>{{ getTimeAgoFromNow(meal.lastDrawDate) }}</span>
-        </div>
-    </div>
+    <app-last-drawed-meal *ngFor="let meal of lastDrawedMeals | async"
+                          [meal]="meal">
+    </app-last-drawed-meal>
 </div>

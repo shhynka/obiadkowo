@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LastDrawedMealsService } from './last-drawed-meals.service';
+import { MealService } from './meal.service';
 
 describe('LastDrawedMealsService', () => {
-  let service: LastDrawedMealsService;
+  let service: MealService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LastDrawedMealsService);
+    service = TestBed.inject(MealService);
   });
 
   it('should be created', () => {

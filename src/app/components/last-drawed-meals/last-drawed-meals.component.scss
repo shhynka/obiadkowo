@@ -1,24 +1,4 @@
 .container {
     display: flex;
-}
-
-.image-container {
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
-    background-color: #cf8686;
-}
-
-.details-container {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.name-class {
-    padding-bottom: 10px;
-    font-weight: bold;
-}
-
-.meal-card {
+    justify-content: space-around;
 }
