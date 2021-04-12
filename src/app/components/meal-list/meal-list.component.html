@@ -5,7 +5,10 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
-
 <h3>Przyciski do zmiany wyświetlania: lista/galeria</h3>
 <h3>Sortuj:</h3>
 <h3>Liczba obiadów: {{ (meals | async).length}}</h3>
+<div class="list-container">
+    <app-meal *ngFor="let meal of meals | async"
+              [meal]="meal"></app-meal>
+</div>

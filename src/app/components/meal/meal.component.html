@@ -1,0 +1,17 @@
+<mat-card class="meal-card">
+    <div class="image-container">
+        <img src="{{ meal.imageUrl}}">
+        <button class="edit-btn"
+                mat-mini-fab>
+            <mat-icon>create</mat-icon>
+        </button>
+    </div>
+    <div class="content">
+        <h4>{{ meal.name }}</h4>
+        <h5>Ostatnio wylosowany: {{ meal.lastDrawDate | date: "longDate" }}</h5>
+    </div>
+    <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+    </mat-card-actions>
+</mat-card>
