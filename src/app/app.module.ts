@@ -13,6 +13,7 @@ import { MealListComponent } from './components/meal-list/meal-list.component';
 import { MealComponent } from './components/meal/meal.component';
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 registerLocaleData(localePl, "pl");
 
@@ -31,7 +32,9 @@ registerLocaleData(localePl, "pl");
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'pl' }],
   bootstrap: [AppComponent]

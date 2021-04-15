@@ -1,14 +1,17 @@
 .meal-card {
-    width: 400px;
+    width: 300px;
     margin: 10px;
 }
 
 img {
     width: 100%;
+    object-fit: cover;
 }
 
 .image-container {
     position: relative;
+    width: 300px;
+    height: 250px;
 }
 
 .edit-btn {
@@ -22,4 +25,5 @@ img {
 
 .content {
     text-align: center;
+    cursor: default;
 }
