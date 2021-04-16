@@ -9,7 +9,7 @@ import { Meal } from 'src/app/models/meal.model';
 })
 export class LastDrawedMealComponent implements OnInit {
 
-  @Input() meal: Meal;
+  @Input() lastMeal: Meal;
 
   constructor() { }
 

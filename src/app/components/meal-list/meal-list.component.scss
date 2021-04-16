@@ -1,15 +1,107 @@
 h3 {
     margin-top: 20px;
-    margin-left: 30px;
     color: #8b8888;
+    cursor: default;
+    text-align: center;
 }
 
-.btn-container {
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+    justify-content: space-between;
+    border-bottom: solid 1px #8b8888;
+    padding: 20px 30px 0px 30px;
+}
+
+.add-btn-container {
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
 .add-btn {
     background-color: #0c5bc2;
     color: #ffffff;
+    margin-left: 30px;
 }
+
+.display-options-container {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 1.34375em;
+}
+
+.display-btn {
+    border: none;
+    cursor: pointer;
+    color: #8b8888;
+    background-color: #ffffff;
+}
+
+.display-option {
+    font-size: 40px;
+}
+
+.sort-options-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+mat-form-field {
+    width: fit-content;
+}
+
+@media (max-width: 768px) {
+    .gallery-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    
+    .list-container {
+        display: flex;
+        flex-direction: column;
+        margin: 30px;
+        row-gap: 20px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .gallery-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        column-gap: 10px;
+        row-gap: 10px;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    
+    .list-container {
+        display: flex;
+        flex-direction: column;
+        margin: 30px;
+        row-gap: 20px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .gallery-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        column-gap: 10px;
+        row-gap: 10px;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .list-container {
+        display: flex;
+        flex-direction: column;
+        margin: 30px;
+        row-gap: 20px;
+    }
+}
+

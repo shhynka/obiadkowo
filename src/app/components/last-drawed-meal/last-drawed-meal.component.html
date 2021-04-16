@@ -1,9 +1,7 @@
-<div class="meal-card">
-    <div>
-        <img src="{{ meal.imageUrl }}">
-    </div>
-    <div class="details-container">
-        <span class="name-class">{{ meal.name }}</span>
-        <span>{{ getTimeAgoFromNow(meal.lastDrawDate) }}</span>
-    </div>
+<div class="image-container">
+    <img src="{{ lastMeal.imageUrl }}">
+</div>
+<div class="details-container">
+    <span class="name-class">{{ lastMeal.name }}</span>
+    <span>{{ getTimeAgoFromNow(lastMeal.lastDrawDate) }}</span>
 </div>

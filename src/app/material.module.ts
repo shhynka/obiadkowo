@@ -9,6 +9,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   exports: [
@@ -21,7 +23,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatListModule,
     MatSnackBarModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule { }

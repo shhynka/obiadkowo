@@ -18,7 +18,6 @@ export class LastDrawedMealsComponent implements OnInit {
 
   ngOnInit(): void {
     this.lastDrawedMeals = this.mealService.getMealList().pipe(map(meals => {
-      console.log(meals);
       return meals.sort((m1, m2) => {
         if (m1.lastDrawDate < m2.lastDrawDate) {
           return 1;
