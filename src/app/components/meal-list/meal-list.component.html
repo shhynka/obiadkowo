@@ -1,11 +1,13 @@
 <div class="container">
     <div class="display-options-container">
-        <button class="display-btn">
+        <button class="display-btn"
+                (click)="changeLayout('gallery')">
             <mat-icon class="display-option">
                 grid_view
             </mat-icon>
         </button>
-        <button class="display-btn">
+        <button class="display-btn"
+                (click)="changeLayout('list')">
             <mat-icon class="display-option">
                 format_list_bulleted
             </mat-icon>
@@ -30,8 +32,11 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
-<div class="list-container">
+<div [ngClass]="{
+    'gallery-container':layoutType == 'gallery',
+    'list-container':layoutType == 'list'}">
     <app-meal *ngFor="let meal of meals | async"
+              [layoutType]="layoutType"
               [meal]="meal"></app-meal>
 </div>
-<h3>Liczba obiadów: {{ (meals | async).length}}</h3>
+<h3>Liczba obiadów: {{ (meals | async).length }}</h3>

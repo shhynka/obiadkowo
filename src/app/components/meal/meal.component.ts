@@ -8,6 +8,7 @@ import { Meal } from 'src/app/models/meal.model';
 })
 export class MealComponent implements OnInit {
 
+  @Input() layoutType: 'list' | 'gallery';
   @Input() meal: Meal;
   constructor() { }
 

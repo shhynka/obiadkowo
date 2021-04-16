@@ -1,4 +1,4 @@
-.meal-card {
+.gallery-meal-card {
     width: 300px;
     margin: 10px;
 }
@@ -26,4 +26,10 @@ img {
 .content {
     text-align: center;
     cursor: default;
+}
+
+.list-meal-card {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
 }

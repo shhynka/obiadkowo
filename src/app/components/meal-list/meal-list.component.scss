@@ -54,16 +54,23 @@ mat-form-field {
 }
 
 @media (max-width: 768px) {
-    .list-container {
+    .gallery-container {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
     }
+    
+    .list-container {
+        display: flex;
+        flex-direction: column;
+        margin: 30px;
+        row-gap: 20px;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-    .list-container {
+    .gallery-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         column-gap: 10px;
@@ -71,16 +78,30 @@ mat-form-field {
         justify-content: space-evenly;
         align-items: center;
     }
+    
+    .list-container {
+        display: flex;
+        flex-direction: column;
+        margin: 30px;
+        row-gap: 20px;
+    }
 }
 
 @media (min-width: 1025px) {
-    .list-container {
+    .gallery-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         column-gap: 10px;
         row-gap: 10px;
         justify-content: space-evenly;
         align-items: center;
+    }
+
+    .list-container {
+        display: flex;
+        flex-direction: column;
+        margin: 30px;
+        row-gap: 20px;
     }
 }
 
