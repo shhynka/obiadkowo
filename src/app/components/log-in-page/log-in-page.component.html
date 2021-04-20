@@ -1,14 +1,4 @@
 <div class="container">
-    <div [formGroup]="logIn">
-        <h3>Logowanie</h3>
-        <input type="text"
-               name="username"
-               placeholder="Nazwa użytkownika">
-        <input type="password"
-               name="password"
-               placeholder="Hasło">
-    </div>
-    <div [formGroup]="registration">
-        <h3>Rejestracja</h3>
-    </div>
+    <app-log-in-form></app-log-in-form>
+    <app-registration-form></app-registration-form>
 </div>

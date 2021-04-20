@@ -1,0 +1,22 @@
+<div [formGroup]="registrationForm"
+     class="registration-container">
+    <h3>Rejestracja</h3>
+    <input type="text"
+           name="username"
+           formControlName="username"
+           placeholder="Nazwa użytkownika">
+    <div *ngIf="username.invalid && (username.touched || username.dirty)"
+         class="validation-container">
+        Pole wymagane
+    </div>
+    <input type="password"
+           formControlName="password"
+           placeholder="Hasło">
+    <input type="password"
+           formControlName="passwordConfirmation"
+           placeholder="Potwierdzenie hasła">
+    <input type="email"
+           formControlName="email"
+           placeholder="Adres email">
+    <button>ZAREJESTRUJ SIĘ</button>
+</div>
