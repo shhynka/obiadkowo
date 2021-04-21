@@ -1,22 +1,54 @@
 <div [formGroup]="registrationForm"
      class="registration-container">
-    <h3>Rejestracja</h3>
-    <input type="text"
-           name="username"
-           formControlName="username"
-           placeholder="Nazwa użytkownika">
-    <div *ngIf="username.invalid && (username.touched || username.dirty)"
-         class="validation-container">
-        Pole wymagane
-    </div>
-    <input type="password"
-           formControlName="password"
-           placeholder="Hasło">
-    <input type="password"
-           formControlName="passwordConfirmation"
-           placeholder="Potwierdzenie hasła">
-    <input type="email"
-           formControlName="email"
-           placeholder="Adres email">
-    <button>ZAREJESTRUJ SIĘ</button>
+       <h3>Rejestracja</h3>
+       <div class="input-validation-container">
+              <input type="text"
+                     name="username"
+                     formControlName="username"
+                     placeholder="Nazwa użytkownika"
+                     [ngClass]="{'invalid-input': username.invalid && (username.touched || username.dirty)}">
+              <div *ngIf="username.invalid && (username.touched || username.dirty)"
+                   class="validation-container">
+                     Pole wymagane
+              </div>
+       </div>
+       <div class="input-validation-container">
+              <input type="password"
+                     formControlName="password"
+                     placeholder="Hasło"
+                     [ngClass]="{'invalid-input': password.invalid && (password.touched || password.dirty)}">
+              <div *ngIf="password.invalid && (password.touched || password.dirty)"
+                   class="validation-container">
+                     <div *ngIf="password.errors.required">
+                            Pole wymagane
+                     </div>
+              </div>
+       </div>
+       <div class="input-validation-container">
+              <input type="password"
+                     formControlName="passwordConfirmation"
+                     placeholder="Potwierdzenie hasła"
+                     [ngClass]="{'invalid-input': passwordConfirmation.invalid && (passwordConfirmation.touched || passwordConfirmation.dirty)}">
+              <div *ngIf="passwordConfirmation.invalid && (passwordConfirmation.touched || passwordConfirmation.dirty)"
+                   class="validation-container">
+                     <div *ngIf="passwordConfirmation.errors.required">
+                            Pole wymagane
+                     </div>
+              </div>
+              <div *ngIf="registrationForm.errors?.mustMatch"
+                   class="validation-container">
+                     Hasło i potwierdzenie hasła muszą być takie same
+              </div>
+       </div>
+       <div class="input-validation-container">
+              <input type="email"
+                     formControlName="email"
+                     placeholder="Adres email"
+                     [ngClass]="{'invalid-input': email.invalid && (email.touched || email.dirty)}">
+              <div *ngIf="email.invalid && (email.touched || email.dirty)"
+                   class="validation-container">
+                     Pole wymagane
+              </div>
+       </div>
+       <button>ZAREJESTRUJ SIĘ</button>
 </div>

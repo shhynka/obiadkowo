@@ -1,9 +1,19 @@
-
 .registration-container {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
     padding: 20px 50px;
+}
+
+
+.validation-container {
+    width: 202px;
+    color: #f01717;
+    font-size: 10px;
+}
+
+.invalid-input {
+    border: solid 1px #f01717;
 }
 
 h3 {

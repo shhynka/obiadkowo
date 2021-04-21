@@ -43,6 +43,6 @@ export class RegistrationFormComponent implements OnInit {
     const password = control.get("password");
     const passwordConfirmation = control.get("passwordConfirmation");
 
-    return password && passwordConfirmation && password.value === passwordConfirmation.value ? null : { mustMatch: true };
+    return password.value === passwordConfirmation.value ? null : { mustMatch: true };
   }
 }

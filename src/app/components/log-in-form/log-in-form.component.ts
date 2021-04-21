@@ -20,7 +20,7 @@ export class LogInFormComponent implements OnInit {
   }
 
   get username() {
-    return this.logInForm.contains["username"];
+    return this.logInForm.controls["username"];
   }
 
   get password() {
