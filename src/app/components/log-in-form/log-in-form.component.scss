@@ -1,0 +1,44 @@
+.log-in-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    padding: 20px 50px;
+}
+
+.log-in-container {
+    border-right: solid 1px #8b8888;
+}
+
+.validation-container {
+    color: #f01717;
+}
+
+h3 {
+    text-align: center;
+}
+
+input {
+    width: 180px;
+    height: 40px;
+    background-color: #eaf2f8;
+    border: solid 1px #8b8888;
+    border-radius: 2px;
+    padding: 0px;
+    padding-left: 20px;
+}
+
+button {
+    width: 202px;
+    height: 42px;
+    background-color: #f01717;
+    border: none;
+    border-radius: 2px;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.new-password-button {
+    background-color: #0097ee;
+}

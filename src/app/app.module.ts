@@ -14,6 +14,9 @@ import { MealComponent } from './components/meal/meal.component';
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
+import { LogInFormComponent } from './components/log-in-form/log-in-form.component';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 
 registerLocaleData(localePl, "pl");
 
@@ -25,7 +28,10 @@ registerLocaleData(localePl, "pl");
     LastDrawedMealsComponent,
     LastDrawedMealComponent,
     MealListComponent,
-    MealComponent
+    MealComponent,
+    LogInPageComponent,
+    LogInFormComponent,
+    RegistrationFormComponent
   ],
   imports: [
     BrowserModule,
