@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-log-in-form',
@@ -14,17 +14,17 @@ export class LogInFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.logInForm = new FormGroup({
-      username: new FormControl("", Validators.required),
-      password: new FormControl("", Validators.required)
-    })
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
   }
 
-  get username() {
-    return this.logInForm.controls["username"];
+  get username(): AbstractControl {
+    return this.logInForm.controls.username;
   }
 
-  get password() {
-    return this.logInForm.controls["password"];
+  get password(): AbstractControl {
+    return this.logInForm.controls.password;
   }
 
 }

@@ -17,8 +17,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
 import { LogInFormComponent } from './components/log-in-form/log-in-form.component';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { NewMealComponent } from './components/new-meal/new-meal.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
-registerLocaleData(localePl, "pl");
+registerLocaleData(localePl, 'pl');
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ registerLocaleData(localePl, "pl");
     MealComponent,
     LogInPageComponent,
     LogInFormComponent,
-    RegistrationFormComponent
+    RegistrationFormComponent,
+    NewMealComponent,
+    ErrorPageComponent,
+    DragAndDropDirective,
   ],
   imports: [
     BrowserModule,

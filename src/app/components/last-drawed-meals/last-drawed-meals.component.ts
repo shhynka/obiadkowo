@@ -27,7 +27,7 @@ export class LastDrawedMealsComponent implements OnInit {
         }
         return 0;
       }).slice(0, 4);
-    }))
+    }));
   }
 
 

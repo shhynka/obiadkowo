@@ -1,4 +1,4 @@
-export interface sortByOption {
-    propertyName: string,
-    direction: "asc" | "desc"
+export interface SortByOption {
+    propertyName: string;
+    direction: 'asc' | 'desc';
 }

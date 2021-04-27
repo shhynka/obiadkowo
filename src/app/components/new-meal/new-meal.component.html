@@ -1,0 +1,89 @@
+<div class="btn-container">
+    <button routerLink="/meal-list"
+            class="back-btn">
+        Wróć do listy
+    </button>
+    <button class="add-btn">
+        Dodaj obiad
+    </button>
+</div>
+<div class="form-container">
+    <div class="child-container">
+
+        <h3>Nowy obiad</h3>
+        <mat-form-field>
+            <mat-label>Nazwa obiadu</mat-label>
+            <input matInput
+                   #name
+                   maxlength="50">
+            <mat-hint align="end">{{name.value.length}} / 50</mat-hint>
+        </mat-form-field>
+
+        <h3>Lista zakupów</h3>
+        <div class="list-container">
+            <!-- zakupy -->
+            <div cdkDropList
+                 class="ingredients-list"
+                 (cdkDropListDropped)="drop($event)">
+                <div class="ingredient-box"
+                     *ngFor="let ingredient of ingredients"
+                     cdkDrag>
+                    {{ingredient}}
+                    <button class="delete-item-list-btn"
+                            mat-mini-fab>
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <button class="add-item-list-btn"
+                    mat-mini-fab>
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    <div class="child-container">
+
+        <h3>Zdjęcie</h3>
+        <div class="dropzone"
+             appDragAndDrop
+             *ngIf="!image"
+             (fileDrop)="onFileDropped($event)">
+            <span class="material-icons drop-icon">
+                image_search
+            </span>
+            <h4>Drag and drop image</h4>
+            <h4>or</h4>
+            <label for="upload-img">Browse...</label>
+            <input type="file"
+                   name="image"
+                   id="upload-img"
+                   accept="image/*"
+                   (change)="fileBrowseHandler($event)">
+        </div>
+        <div class="inserted-img-container"
+             *ngIf="image">
+            <button class="delete-btn"
+                    mat-mini-fab
+                    (click)="deleteImage()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <img class="inserted-img"
+                 [src]="image.url">
+        </div>
+
+        <h3>Przepis</h3>
+        <!--
+            Napraw textarea.
+        -->
+        <mat-form-field>
+            <textarea matInput
+                      name="recipe"
+                      id="recipe-area"
+                      cols="30"
+                      rows="10"
+                      placeholder="Wpisz tu treść przepisu"></textarea>
+        </mat-form-field>
+
+    </div>
+</div>

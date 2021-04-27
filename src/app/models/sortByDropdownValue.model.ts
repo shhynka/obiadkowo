@@ -1,6 +1,6 @@
-import { sortByOption } from "./sortByOption.model";
+import { SortByOption } from './sortByOption.model';
 
-export interface sortByDropdownValue {
-    sortByOption: sortByOption,
-    displayValue: string
+export interface SortByDropdownValue {
+    sortByOption: SortByOption;
+    displayValue: string;
 }
