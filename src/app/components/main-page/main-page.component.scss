@@ -5,6 +5,13 @@
     padding-top: 20px;
 }
 
+h1,
+h2 {
+    color: #8b8888;
+    text-align: center;
+    margin-top: 20px;
+}
+
 .last-meals-container {
     padding: 30px;
 }
@@ -30,4 +37,20 @@
 .blue-btn {
     background-color: #1b84b4;
     color: #ffffff;
+}
+
+table {
+    margin: 20px auto;
+}
+
+th,
+td {
+    width: 200px;
+    text-align: center;
+    height: 50px;
+    background-color: #3294d4;
+}
+
+td {
+    cursor: grab;
 }

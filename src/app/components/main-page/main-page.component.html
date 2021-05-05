@@ -1,6 +1,6 @@
 <div class="page">
     <h1>Hej imię! Jak się masz?</h1>
-    <h2>Ostatnio wylosowane obiady:</h2>
+    <h2>Ostatnio wylosowane obiady</h2>
     <div class="last-meals-container">
         <app-last-drawed-meals></app-last-drawed-meals>
     </div>
@@ -9,4 +9,24 @@
         <button class="btn"
                 routerLink="meal-list">Przejdź do listy obiadów</button>
     </div>
+    <h2>Plan tygodnia</h2>
+    <table>
+        <tr>
+            <th>Poniedziałek</th>
+            <th>Wtorek</th>
+            <th>Środa</th>
+            <th>Czwartek</th>
+            <th>Piątek</th>
+            <th>Sobota</th>
+            <th>Niedziela</th>
+        </tr>
+        <tr cdkDropList
+            cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="drop($event)">
+            <td *ngFor="let meal of drawedMeals"
+                cdkDrag>{{meal}}</td>
+        </tr>
+
+    </table>
+
 </div>

@@ -3,13 +3,15 @@
         <div class="image-container">
             <img [src]="meal.imageUrl">
             <button class="edit-btn"
-                    mat-mini-fab>
+                    mat-mini-fab
+                    routerLink="meal-id">
                 <mat-icon>create</mat-icon>
             </button>
         </div>
         <div class="content">
             <h4>{{ meal.name }}</h4>
-            <h5>Ostatnio wylosowany: {{ meal.lastDrawDate | date: "longDate" }}</h5>
+            <h5 *ngIf="meal.lastDrawDate">Ostatnio wylosowany: {{ meal.lastDrawDate | date: "longDate" }}</h5>
+            <h5 *ngIf="!meal.lastDrawDate">Jeszcze nie wylosowano tego obiadu</h5>
         </div>
         <mat-card-actions>
             <button mat-button>SHARE</button>
@@ -19,6 +21,7 @@
 <div *ngIf="layoutType == 'list'">
     <mat-card class="list-meal-card">
         <span>{{ meal.name }}</span>
-        <span>Ostatnio wylosowany: {{ meal.lastDrawDate | date: "longDate" }}</span>
+        <span *ngIf="meal.lastDrawDate">Ostatnio wylosowany: {{ meal.lastDrawDate | date: "longDate" }}</span>
+        <span *ngIf="!meal.lastDrawDate">Jeszcze nie wylosowano tego obiadu</span>
     </mat-card>
 </div>

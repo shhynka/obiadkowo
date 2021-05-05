@@ -3,40 +3,64 @@
             class="back-btn">
         Wróć do listy
     </button>
-    <button class="add-btn">
+    <button class="add-meal-btn"
+            [disabled]="form.invalid"
+            [ngStyle]="{
+                'background-color': form.valid ? '#34bb19' : 'grey'
+            }"
+            (click)="saveMeal()"
+            routerLink="/meal-list">
         Dodaj obiad
     </button>
 </div>
-<div class="form-container">
+<div class="form-container"
+     [formGroup]="form">
     <div class="child-container">
 
         <h3>Nowy obiad</h3>
+
         <mat-form-field>
             <mat-label>Nazwa obiadu</mat-label>
             <input matInput
-                   #name
+                   formControlName="name"
                    maxlength="50">
             <mat-hint align="end">{{name.value.length}} / 50</mat-hint>
-        </mat-form-field>
 
-        <h3>Lista zakupów</h3>
+        </mat-form-field>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+             class="validation-container">
+            <div *ngIf="name.errors.required">
+                Pole wymagane
+            </div>
+            <div *ngIf="name.errors.minlength">
+                Pole powinno zawierać od 3 do 50 liter.
+            </div>
+            <div *ngIf="name.errors.pattern">
+                Pole zawiera niedopuszczalne znaki. Pole powinno zawierać tylko litery.
+            </div>
+        </div>
+
+        <h3>Lista składników</h3>
         <div class="list-container">
-            <!-- zakupy -->
             <div cdkDropList
                  class="ingredients-list"
-                 (cdkDropListDropped)="drop($event)">
+                 (cdkDropListDropped)="dropIngredients($event)">
                 <div class="ingredient-box"
-                     *ngFor="let ingredient of ingredients"
+                     *ngFor="let ingredient of ingredientsList; let i = index"
                      cdkDrag>
                     {{ingredient}}
                     <button class="delete-item-list-btn"
-                            mat-mini-fab>
+                            mat-mini-fab
+                            (click)="deleteIngredient(i)">
                         <mat-icon>close</mat-icon>
                     </button>
                 </div>
+                <div>
+                </div>
             </div>
             <button class="add-item-list-btn"
-                    mat-mini-fab>
+                    mat-mini-fab
+                    (click)="openIngredientDialog()">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
@@ -59,11 +83,12 @@
                    name="image"
                    id="upload-img"
                    accept="image/*"
+                   formControlName="imageUrl"
                    (change)="fileBrowseHandler($event)">
         </div>
         <div class="inserted-img-container"
              *ngIf="image">
-            <button class="delete-btn"
+            <button class="delete-image-btn"
                     mat-mini-fab
                     (click)="deleteImage()">
                 <mat-icon>close</mat-icon>
@@ -73,17 +98,7 @@
         </div>
 
         <h3>Przepis</h3>
-        <!--
-            Napraw textarea.
-        -->
-        <mat-form-field>
-            <textarea matInput
-                      name="recipe"
-                      id="recipe-area"
-                      cols="30"
-                      rows="10"
-                      placeholder="Wpisz tu treść przepisu"></textarea>
-        </mat-form-field>
-
+        <quill-editor class="recipe-area"
+                      formControlName="recipe"></quill-editor>
     </div>
 </div>
