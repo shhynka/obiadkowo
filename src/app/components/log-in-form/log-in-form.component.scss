@@ -5,15 +5,13 @@
     padding: 20px 50px;
 }
 
-.log-in-container {
-    border-right: solid 1px #8b8888;
-}
-
 .validation-container {
     color: #f01717;
 }
 
 h3 {
+    color: #38424c;
+    font-size: 22px;
     text-align: center;
 }
 
@@ -29,16 +27,18 @@ input {
 
 button {
     width: 202px;
-    height: 42px;
-    background-color: #f01717;
+    padding: 15px;
     border: none;
-    border-radius: 2px;
+    background-color: #1b84b4;
     color: #ffffff;
     font-size: 10px;
     font-weight: bold;
+    border-radius: 2px;
     cursor: pointer;
 }
 
 .new-password-button {
-    background-color: #0097ee;
+    background-color: #ffffff;
+    color: #000000;
+    border: solid 1px #8b8888;
 }

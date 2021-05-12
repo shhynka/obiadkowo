@@ -17,12 +17,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
 import { LogInFormComponent } from './components/log-in-form/log-in-form.component';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
-import { NewMealComponent } from './components/new-meal/new-meal.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { QuillModule } from 'ngx-quill';
 import { IngredientFormDialogComponent } from './components/ingredient-form-dialog/ingredient-form-dialog.component';
 import { MealViewComponent } from './components/meal-view/meal-view.component';
+import { CreateOrUpdateMealFormComponent } from './components/create-or-update-meal-form/create-or-update-meal-form.component';
 
 registerLocaleData(localePl, 'pl');
 
@@ -38,11 +38,11 @@ registerLocaleData(localePl, 'pl');
     LogInPageComponent,
     LogInFormComponent,
     RegistrationFormComponent,
-    NewMealComponent,
     ErrorPageComponent,
     DragAndDropDirective,
     IngredientFormDialogComponent,
     MealViewComponent,
+    CreateOrUpdateMealFormComponent,
   ],
   imports: [
     BrowserModule,

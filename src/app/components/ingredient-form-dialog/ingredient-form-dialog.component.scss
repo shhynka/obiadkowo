@@ -1,12 +1,18 @@
 .dialog-container {
     width: 400px;
-    height: 200px;
     text-align: center;
     position: relative;
+    height: 280px;
+}
+
+h3 {
+    color: #38424c;
+    font-size: 22px;
+    text-align: center;
 }
 
 mat-form-field {
-    width: 220px;
+    width: 300px;
     padding: 10px 0px;
 }
 
@@ -21,14 +27,20 @@ mat-form-field {
 }
 
 button {
-    width: 100px;
-    height: 50px;
-    padding: 5px 10px;
-    margin: 10px;
-    border-radius: 2px;
+    width: 300px;
+    padding: 15px;
     border: none;
+    font-size: 10px;
     font-weight: bold;
-    color: #ffffff;
-    background-color: #830e4e;
+    border-radius: 2px;
     cursor: pointer;
+    background-color: #1b84b4;
+    color: #ffffff;
+}
+
+.back-btn {
+    background-color: #ffffff;
+    border: solid 1px #8b8888;
+    color: #000000;
+    margin-top: 10px;
 }

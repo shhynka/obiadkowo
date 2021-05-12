@@ -1,4 +1,5 @@
 <div class="dialog-container">
+    <h3>Dodaj składnik obiadu</h3>
     <mat-form-field>
         <mat-label>Składnik</mat-label>
         <input matInput
@@ -22,7 +23,8 @@
         <button (click)="saveIngredient()">
             Dodaj
         </button>
-        <button (click)="closeDialog()">
+        <button class="back-btn"
+                (click)="closeDialog()">
             Cofnij
         </button>
     </div>

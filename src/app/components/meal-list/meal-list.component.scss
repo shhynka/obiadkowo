@@ -1,8 +1,10 @@
 h3 {
     margin-top: 20px;
-    color: #8b8888;
+    margin-bottom: 0px;
     cursor: default;
     text-align: center;
+    font-weight: bold;
+    color: #38424c;
 }
 
 .container {
@@ -10,8 +12,9 @@ h3 {
     grid-template-columns: 1fr 1fr;
     column-gap: 30px;
     justify-content: space-between;
-    border-bottom: solid 1px #8b8888;
+    border-bottom: solid 1px #38424c;
     padding: 20px 30px 0px 30px;
+    background-color: #ffffff;
 }
 
 .add-btn-container {
@@ -35,8 +38,8 @@ h3 {
 .display-btn {
     border: none;
     cursor: pointer;
-    color: #8b8888;
-    background-color: #ffffff;
+    color: #38424c;
+    background: none;
 }
 
 .display-option {
@@ -53,6 +56,14 @@ mat-form-field {
     width: fit-content;
 }
 
+.list-container {
+    display: flex;
+    flex-direction: column;
+    margin: 30px auto;
+    row-gap: 20px;
+    width: fit-content;
+}
+
 @media (max-width: 768px) {
     .gallery-container {
         display: flex;
@@ -60,16 +71,9 @@ mat-form-field {
         justify-content: space-evenly;
         align-items: center;
     }
-    
-    .list-container {
-        display: flex;
-        flex-direction: column;
-        margin: 30px;
-        row-gap: 20px;
-    }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) {
     .gallery-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -78,30 +82,4 @@ mat-form-field {
         justify-content: space-evenly;
         align-items: center;
     }
-    
-    .list-container {
-        display: flex;
-        flex-direction: column;
-        margin: 30px;
-        row-gap: 20px;
-    }
 }
-
-@media (min-width: 1025px) {
-    .gallery-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        column-gap: 10px;
-        row-gap: 10px;
-        justify-content: space-evenly;
-        align-items: center;
-    }
-
-    .list-container {
-        display: flex;
-        flex-direction: column;
-        margin: 30px;
-        row-gap: 20px;
-    }
-}
-
