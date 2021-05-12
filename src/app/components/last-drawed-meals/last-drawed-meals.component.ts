@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Meal } from 'src/app/models/meal.model';
 import { MealService } from 'src/app/services/meal.service';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-last-drawed-meals',
@@ -13,6 +14,7 @@ import { map } from 'rxjs/operators';
 export class LastDrawedMealsComponent implements OnInit {
 
   lastDrawedMeals: Observable<Meal[]>;
+  @Input() data: any[] = [];
 
   constructor(private mealService: MealService) { }
 
@@ -27,8 +29,15 @@ export class LastDrawedMealsComponent implements OnInit {
         }
         return 0;
       }).slice(0, 4);
-    }))
+    }));
+
+    this.lastDrawedMeals.subscribe(data => {
+      console.log(data);
+      this.data.push(this.lastDrawedMeals);
+    })
   }
 
-
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.data, event.previousIndex, event.currentIndex);
+  }
 }

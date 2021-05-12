@@ -16,7 +16,7 @@ export class LastDrawedMealComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getTimeAgoFromNow(date: Date) {
+  getTimeAgoFromNow(date: Date): string {
     return moment(date).fromNow();
   }
 

@@ -14,34 +14,34 @@ export class RegistrationFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
-      username: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9]*')]),
-      password: new FormControl("", [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9!?@#$%^&*+=]*')]),
-      passwordConfirmation: new FormControl("", Validators.required),
-      email: new FormControl("", [Validators.required, Validators.email])
+      username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9]*')]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9!?@#$%^&*+=]*')]),
+      passwordConfirmation: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email])
     }, {
       validators: this.mustMatchValidator
-    })
+    });
   }
 
-  get username() {
-    return this.registrationForm.controls["username"];
+  get username(): AbstractControl {
+    return this.registrationForm.controls.username;
   }
 
-  get password() {
-    return this.registrationForm.controls["password"];
+  get password(): AbstractControl {
+    return this.registrationForm.controls.password;
   }
 
-  get passwordConfirmation() {
-    return this.registrationForm.controls["passwordConfirmation"];
+  get passwordConfirmation(): AbstractControl {
+    return this.registrationForm.controls.passwordConfirmation;
   }
 
-  get email() {
-    return this.registrationForm.controls["email"];
+  get email(): AbstractControl {
+    return this.registrationForm.controls.email;
   }
 
   private mustMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get("password");
-    const passwordConfirmation = control.get("passwordConfirmation");
+    const password = control.get('password');
+    const passwordConfirmation = control.get('passwordConfirmation');
 
     return password.value === passwordConfirmation.value ? null : { mustMatch: true };
   }

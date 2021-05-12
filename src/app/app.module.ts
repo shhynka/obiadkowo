@@ -17,8 +17,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
 import { LogInFormComponent } from './components/log-in-form/log-in-form.component';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { QuillModule } from 'ngx-quill';
+import { IngredientFormDialogComponent } from './components/ingredient-form-dialog/ingredient-form-dialog.component';
+import { MealViewComponent } from './components/meal-view/meal-view.component';
+import { CreateOrUpdateMealFormComponent } from './components/create-or-update-meal-form/create-or-update-meal-form.component';
 
-registerLocaleData(localePl, "pl");
+registerLocaleData(localePl, 'pl');
 
 @NgModule({
   declarations: [
@@ -31,7 +37,12 @@ registerLocaleData(localePl, "pl");
     MealComponent,
     LogInPageComponent,
     LogInFormComponent,
-    RegistrationFormComponent
+    RegistrationFormComponent,
+    ErrorPageComponent,
+    DragAndDropDirective,
+    IngredientFormDialogComponent,
+    MealViewComponent,
+    CreateOrUpdateMealFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +51,22 @@ registerLocaleData(localePl, "pl");
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    QuillModule.forRoot({
+      modules: {
+        syntax: false,
+        toolbar: [
+          ['bold', 'italic', 'underline'],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'align': [] }],
+          ['link', 'image', 'video']
+        ]
+      }
+    })
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'pl' }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [IngredientFormDialogComponent]
 })
 export class AppModule { }

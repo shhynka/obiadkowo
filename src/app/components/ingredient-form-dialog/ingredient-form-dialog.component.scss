@@ -1,0 +1,46 @@
+.dialog-container {
+    width: 400px;
+    text-align: center;
+    position: relative;
+    height: 280px;
+}
+
+h3 {
+    color: #38424c;
+    font-size: 22px;
+    text-align: center;
+}
+
+mat-form-field {
+    width: 300px;
+    padding: 10px 0px;
+}
+
+.validation-container {
+    color: red;
+}
+
+.btn-container {
+    width: 400px;
+    position: absolute;
+    bottom: 0;
+}
+
+button {
+    width: 300px;
+    padding: 15px;
+    border: none;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: #1b84b4;
+    color: #ffffff;
+}
+
+.back-btn {
+    background-color: #ffffff;
+    border: solid 1px #8b8888;
+    color: #000000;
+    margin-top: 10px;
+}

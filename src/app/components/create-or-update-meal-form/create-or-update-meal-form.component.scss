@@ -1,0 +1,206 @@
+* {
+    box-sizing: border-box;
+}
+
+.form-container {
+    display: grid;
+    grid-template-areas:
+        "name image"
+        "list image"
+        "recipe recipe"
+        "button button";
+    grid-template-columns: 450px 1fr;
+    grid-template-rows: 150px min-content min-content min-content;
+    background-color: #ffffff;
+    margin: 50px auto;
+    width: 1000px;
+    padding: 30px;
+    border-radius: 2px;
+}
+
+.name-container {
+    grid-area: name;
+}
+
+.image-container {
+    grid-area: image;
+}
+
+.list-container {
+    grid-area: list;
+    position: relative;
+    margin-bottom: 50px;
+    margin-right: 50px;
+}
+
+.recipe-container {
+    grid-area: recipe;
+    padding: 20px 0px;
+}
+
+.btn-container {
+    grid-area: button;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px 30px;
+}
+
+.validation-container {
+    color: #cc0707;
+}
+
+button {
+    cursor: pointer;
+}
+
+.back-btn,
+.add-meal-btn {
+    width: 300px;
+    padding: 15px;
+    border: none;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 2px;
+    background-color: #1b84b4;
+    color: #ffffff;
+}
+
+.back-btn {
+    background-color: #ffffff;
+    border: solid 1px #8b8888;
+    color: #000000;
+}
+
+h3 {
+    color: #38424c;
+    font-size: 22px;
+}
+
+h4 {
+    color: #38424c;
+    margin-bottom: 10px;
+}
+
+mat-form-field {
+    width: 400px;
+}
+
+.dropzone {
+    height: 400px;
+    text-align: center;
+    border: solid 1px #8b8888;
+    border-radius: 2px;
+    background-color: #ffffff;
+    position: relative;
+}
+
+.drop-icon {
+    color: #38424c;
+    font-size: 160px;
+    padding: 10px 30px;
+    margin: 30px;
+}
+
+label {
+    display: inline-block;
+    background-color: #1b84b4;
+    color: #ffffff;
+    width: 300px;
+    padding: 15px;
+    border: none;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+
+#upload-img {
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.inserted-img {
+    max-width: 100%;
+}
+
+.inserted-img-container {
+    position: relative;
+}
+
+.delete-image-btn {
+    background-color: #0c5bc23f;
+    margin: 10px 10px 0px 0px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.delete-item-list-btn {
+    background-color: #0c5bc23f;
+    margin-right: 10px;
+    position: absolute;
+    right: 0px;
+}
+
+.add-item-list-btn {
+    background-color: #0c5bc2;
+    position: absolute;
+    left: 45%;
+}
+
+.delete-image-btn:hover,
+.delete-item-list-btn:hover {
+    background-color: #0c5bc2;
+}
+
+.recipe-area {
+    display: block;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.ingredients-list {
+    width: 400px;
+    max-width: 100%;
+    border: solid 1px #8b8888;
+    min-height: 60px;
+    display: block;
+    background: #ffffff;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.ingredient-box {
+    padding: 20px 10px;
+    border-bottom: solid 1px #8b8888;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: #ffffff;
+    font-size: 14px;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 2px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
