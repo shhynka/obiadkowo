@@ -28,7 +28,7 @@ export class LastDrawedMealsComponent implements OnInit {
           return -1;
         }
         return 0;
-      }).slice(0, 4);
+      }).slice(0, 7);
     }));
 
     this.lastDrawedMeals.subscribe(data => {
