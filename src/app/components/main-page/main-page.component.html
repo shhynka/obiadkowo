@@ -1,30 +1,53 @@
 <div class="page">
     <h3>Hej imię! Jak się masz?</h3>
     <h3>Ostatnio wylosowane obiady</h3>
-    <div class="last-meals-container">
-        <app-last-drawed-meals></app-last-drawed-meals>
+    <div cdkDropListGroup>
+        <div class="example-container">
+            <div cdkDropList
+                 cdkDropListOrientation="horizontal"
+                 [cdkDropListData]="lastDrawedMeals"
+                 class="example-list"
+                 (cdkDropListDropped)="drop($event)">
+                <div class="example-box"
+                     cdkDrag
+                     *ngFor="let meal of lastDrawedMeals">
+                    {{meal.name}}
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn blue-btn">Wylosuj nowy obiad</button>
+            <button class="btn"
+                    routerLink="meal-list">Przejdź do listy obiadów</button>
+        </div>
+        <h3>Plan tygodnia</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Poniedziałek</th>
+                    <th>Wtorek</th>
+                    <th>Środa</th>
+                    <th>Czwartek</th>
+                    <th>Piątek</th>
+                    <th>Sobota</th>
+                    <th>Niedziela</th>
+                </tr>
+            </thead>
+            <tbody class="example-list-container">
+                <tr cdkDropList
+                    class="example-list"
+                    cdkDropListOrientation="horizontal"
+                    [cdkDropListData]="plannedMeals"
+                    (cdkDropListDropped)="drop($event)">
+                    <td class="example-box"
+                        *ngFor="let meal of plannedMeals"
+                        cdkDrag>
+                        {{meal.name}}
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
     </div>
-    <div class="btn-container">
-        <button class="btn blue-btn">Wylosuj nowy obiad</button>
-        <button class="btn"
-                routerLink="meal-list">Przejdź do listy obiadów</button>
-    </div>
-    <h3>Plan tygodnia</h3>
-    <table>
-        <tr>
-            <th>Poniedziałek</th>
-            <th>Wtorek</th>
-            <th>Środa</th>
-            <th>Czwartek</th>
-            <th>Piątek</th>
-            <th>Sobota</th>
-            <th>Niedziela</th>
-        </tr>
-        <tr cdkDropList
-            cdkDropListOrientation="horizontal"
-            (cdkDropListDropped)="drop($event)">
-            <td *ngFor="let meal of drawedMeals"
-                cdkDrag>{{meal}}</td>
-        </tr>
-    </table>
 </div>
