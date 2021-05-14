@@ -1,6 +1,20 @@
 <div class="form-container"
      [formGroup]="form">
 
+    <div class="btn-container">
+        <button routerLink="/meal-list"
+                class="back-btn">
+            Wróć do listy
+        </button>
+        <button class="add-meal-btn"
+                [disabled]="form.invalid"
+                [ngStyle]="{'background-color': form.valid ? '#1b84b4' : 'grey'}"
+                (click)="saveMeal()"
+                routerLink="/meal-list">
+            Zapisz obiad
+        </button>
+    </div>
+
     <div class="name-container">
         <h3>{{ id ? 'Edytuj obiad' : 'Dodaj nowy obiad' }}</h3>
 
@@ -82,26 +96,10 @@
         </button>
     </div>
 
-
     <div class="recipe-container">
         <h3>{{ id ? 'Przepis' : 'Przepis (opcjonalne)'}}</h3>
         <quill-editor class="recipe-area"
                       formControlName="recipe"
                       placeholder=""></quill-editor>
-    </div>
-
-    <div class="btn-container">
-        <button routerLink="/meal-list"
-                class="back-btn">
-            Wróć do listy
-        </button>
-        <button class="add-meal-btn"
-                [disabled]="form.invalid"
-                [ngStyle]="{'background-color': form.valid ? '#1b84b4' : 'grey'}"
-                (click)="saveMeal()"
-                routerLink="/meal-list">
-            Zapisz obiad
-        </button>
-
     </div>
 </div>

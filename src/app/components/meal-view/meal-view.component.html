@@ -1,1 +1,29 @@
-<p>meal-view works!</p>
+<div class="page">
+    <div class="btn-container">
+        <button class="back-btn"
+                routerLink="/meal-list">Wróć do listy</button>
+        <button class="share-btn">Udostępnij</button>
+        <button class="icon"
+                (click)="openDeleteDialog()">
+            <mat-icon>
+                delete
+            </mat-icon>
+        </button>
+    </div>
+    <div class="image-container">
+        <img src="{{ meal.imageUrl}}"
+             alt="image of dinner">
+    </div>
+    <h3>{{meal.name}}</h3>
+    <h4>Składniki</h4>
+    <ul>
+        <li *ngFor="let ingredient of ingredients"
+            [ingredient]="ingredient">
+            {{ ingredient }}
+        </li>
+    </ul>
+    <h4>Przepis</h4>
+
+    <quill-view-html [content]="meal.recipe"
+                     theme="snow"></quill-view-html>
+</div>

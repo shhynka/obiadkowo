@@ -1,34 +1,20 @@
-.log-in-container {
+.btn-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 20px;
-    padding: 20px 50px 30px;
-}
-
-.validation-container {
-    color: #f01717;
 }
 
 h3 {
-    color: #38424c;
     font-size: 22px;
     text-align: center;
-}
-
-input {
-    width: 180px;
-    height: 40px;
-    background-color: #eaf2f8;
-    border: solid 1px #8b8888;
-    border-radius: 2px;
-    padding: 0px;
-    padding-left: 20px;
+    color: #38424c;
+    margin-bottom: 30px;
 }
 
 button {
-    width: 202px;
+    width: 300px;
     padding: 15px;
+    margin-bottom: 5px;
     border: none;
     background-color: #1b84b4;
     color: #ffffff;
@@ -38,12 +24,8 @@ button {
     cursor: pointer;
 }
 
-.new-password-button {
+.close-btn {
     background-color: #ffffff;
     color: #000000;
     border: solid 1px #8b8888;
-}
-
-mat-divider {
-    border-top-color: #8b8888;
 }
