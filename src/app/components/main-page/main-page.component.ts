@@ -13,7 +13,15 @@ import { MealService } from 'src/app/services/meal.service';
 export class MainPageComponent implements OnInit {
 
   lastDrawedMeals: Meal[] = [];
-  plannedMeals: Meal[] = [];
+  plannedMeals: Meal[] = [
+    { name: "", ingredients: [], imageUrl: "" },
+    { name: "", ingredients: [], imageUrl: "" },
+    { name: "", ingredients: [], imageUrl: "" },
+    { name: "", ingredients: [], imageUrl: "" },
+    { name: "", ingredients: [], imageUrl: "" },
+    { name: "", ingredients: [], imageUrl: "" },
+    { name: "", ingredients: [], imageUrl: "" }
+  ];
 
   constructor(private mealService: MealService) { }
 
@@ -31,17 +39,13 @@ export class MainPageComponent implements OnInit {
     })).subscribe((meals) => {
       this.lastDrawedMeals = meals;
     });
-
   }
 
   drop(event: CdkDragDrop<Meal[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
+      this.plannedMeals[event.currentIndex] = this.lastDrawedMeals[event.previousIndex];
     }
   }
 }

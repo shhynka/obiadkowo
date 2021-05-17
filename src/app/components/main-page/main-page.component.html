@@ -1,26 +1,33 @@
 <div class="page">
     <h3>Hej imię! Jak się masz?</h3>
-    <h3>Ostatnio wylosowane obiady</h3>
-    <div cdkDropListGroup>
-        <div class="example-container">
-            <div cdkDropList
-                 cdkDropListOrientation="horizontal"
-                 [cdkDropListData]="lastDrawedMeals"
-                 class="example-list"
-                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box"
-                     cdkDrag
-                     *ngFor="let meal of lastDrawedMeals">
-                    {{meal.name}}
-                </div>
+
+    <div class="example-container">
+        <h3>Ostatnio wylosowane obiady</h3>
+
+        <div cdkDropList
+             cdkDropListOrientation="horizontal"
+             #lastDrawedMealsList="cdkDropList"
+             [cdkDropListData]="lastDrawedMeals"
+             [cdkDropListConnectedTo]="[plannedMealsList]"
+             class="example-list"
+             (cdkDropListDropped)="drop($event)">
+            <div class="example-box"
+                 *ngFor="let meal of lastDrawedMeals"
+                 cdkDrag>
+                {{ meal.name }}
             </div>
         </div>
+    </div>
 
-        <div class="btn-container">
-            <button>Wylosuj nowy obiad</button>
-            <button class="list-btn"
-                    routerLink="meal-list">Przejdź do listy obiadów</button>
-        </div>
+    <div class="btn-container">
+        <button>Wylosuj nowy obiad</button>
+        <button class="list-btn"
+                routerLink="meal-list">
+            Przejdź do listy obiadów
+        </button>
+    </div>
+
+    <div class="example-container">
         <h3>Plan tygodnia</h3>
         <table>
             <thead>
@@ -34,20 +41,21 @@
                     <th>Niedziela</th>
                 </tr>
             </thead>
-            <tbody class="example-list-container">
+            <tbody>
                 <tr cdkDropList
-                    class="example-list"
+                    #plannedMealsList="cdkDropList"
                     cdkDropListOrientation="horizontal"
                     [cdkDropListData]="plannedMeals"
+                    [cdkDropListConnectedTo]="[lastDrawedMealsList]"
                     (cdkDropListDropped)="drop($event)">
-                    <td class="example-box"
-                        *ngFor="let meal of plannedMeals"
-                        cdkDrag>
-                        {{meal.name}}
+                    <td *ngFor="let meal of plannedMeals"
+                        cdkDrag
+                        cdkDragLockAxis="x">
+                        {{ meal.name }}
                     </td>
                 </tr>
             </tbody>
-
         </table>
     </div>
+
 </div>
