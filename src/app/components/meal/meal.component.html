@@ -1,5 +1,6 @@
 <div *ngIf="layoutType == 'gallery'">
-    <mat-card class="gallery-meal-card">
+    <mat-card class="gallery-meal-card"
+              [routerLink]="['/meal', meal.id, 'view']">
         <div class="image-container">
             <img [src]="meal.imageUrl">
             <button class="edit-btn"
@@ -18,7 +19,8 @@
             </ng-template>
 
         </div>
-        <button class="add-btn">Dodaj do planu tygodnia</button>
+        <button class="add-btn"
+                routerLink="">Dodaj do planu tygodnia</button>
     </mat-card>
 </div>
 <div *ngIf="layoutType == 'list'">

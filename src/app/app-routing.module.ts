@@ -23,6 +23,9 @@ const routes: Routes = [{
   path: 'meal/:id/edit', component: CreateOrUpdateMealFormComponent
 },
 {
+  path: 'meal/:id/view', component: MealViewComponent
+},
+{
   path: '**', component: ErrorPageComponent
 }
 ];

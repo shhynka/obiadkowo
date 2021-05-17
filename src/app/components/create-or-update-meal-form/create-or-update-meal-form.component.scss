@@ -5,12 +5,12 @@
 .form-container {
     display: grid;
     grid-template-areas:
+        "button button"
         "name image"
         "list image"
-        "recipe recipe"
-        "button button";
+        "recipe recipe";
     grid-template-columns: 450px 1fr;
-    grid-template-rows: 150px min-content min-content min-content;
+    grid-template-rows: min-content 150px min-content min-content;
     background: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     margin: 50px auto 30px;
@@ -45,6 +45,13 @@
     transform: rotate(1.4deg);
 }
 
+.btn-container {
+    grid-area: button;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px 30px 30px;
+}
+
 .name-container {
     grid-area: name;
 }
@@ -63,13 +70,6 @@
 .recipe-container {
     grid-area: recipe;
     padding: 20px 0px;
-}
-
-.btn-container {
-    grid-area: button;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 10px 30px;
 }
 
 .validation-container {

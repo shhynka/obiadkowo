@@ -23,6 +23,7 @@ import { QuillModule } from 'ngx-quill';
 import { IngredientFormDialogComponent } from './components/ingredient-form-dialog/ingredient-form-dialog.component';
 import { MealViewComponent } from './components/meal-view/meal-view.component';
 import { CreateOrUpdateMealFormComponent } from './components/create-or-update-meal-form/create-or-update-meal-form.component';
+import { DeleteMealDialogComponent } from './components/delete-meal-dialog/delete-meal-dialog.component';
 
 registerLocaleData(localePl, 'pl');
 
@@ -43,6 +44,7 @@ registerLocaleData(localePl, 'pl');
     IngredientFormDialogComponent,
     MealViewComponent,
     CreateOrUpdateMealFormComponent,
+    DeleteMealDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +69,6 @@ registerLocaleData(localePl, 'pl');
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'pl' }],
   bootstrap: [AppComponent],
-  entryComponents: [IngredientFormDialogComponent]
+  entryComponents: [IngredientFormDialogComponent, DeleteMealDialogComponent]
 })
 export class AppModule { }
