@@ -1,6 +1,5 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { MealService } from 'src/app/services/meal.service';

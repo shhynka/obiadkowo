@@ -1,7 +1,7 @@
 <div class="page">
     <h3>Hej imię! Jak się masz?</h3>
 
-    <div class="example-container">
+    <div>
         <h3>Ostatnio wylosowane obiady</h3>
 
         <div cdkDropList
@@ -27,7 +27,7 @@
         </button>
     </div>
 
-    <div class="example-container">
+    <div>
         <h3>Plan tygodnia</h3>
         <table>
             <thead>
@@ -50,7 +50,8 @@
                     (cdkDropListDropped)="drop($event)">
                     <td *ngFor="let meal of plannedMeals"
                         cdkDrag
-                        cdkDragLockAxis="x">
+                        cdkDragLockAxis="x"
+                        class="table-cell">
                         {{ meal.name }}
                     </td>
                 </tr>
