@@ -1,24 +1,5 @@
 <div class="page">
     <h3>Hej imię! Jak się masz?</h3>
-
-    <div class="example-container">
-        <h3>Ostatnio wylosowane obiady</h3>
-
-        <div cdkDropList
-             cdkDropListOrientation="horizontal"
-             #lastDrawedMealsList="cdkDropList"
-             [cdkDropListData]="lastDrawedMeals"
-             [cdkDropListConnectedTo]="[plannedMealsList]"
-             class="example-list"
-             (cdkDropListDropped)="drop($event)">
-            <div class="example-box"
-                 *ngFor="let meal of lastDrawedMeals"
-                 cdkDrag>
-                {{ meal.name }}
-            </div>
-        </div>
-    </div>
-
     <div class="btn-container">
         <button>Wylosuj nowy obiad</button>
         <button class="list-btn"
@@ -26,36 +7,30 @@
             Przejdź do listy obiadów
         </button>
     </div>
+</div>
+<div class="page">
 
-    <div class="example-container">
-        <h3>Plan tygodnia</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Poniedziałek</th>
-                    <th>Wtorek</th>
-                    <th>Środa</th>
-                    <th>Czwartek</th>
-                    <th>Piątek</th>
-                    <th>Sobota</th>
-                    <th>Niedziela</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr cdkDropList
-                    #plannedMealsList="cdkDropList"
-                    cdkDropListOrientation="horizontal"
-                    [cdkDropListData]="plannedMeals"
-                    [cdkDropListConnectedTo]="[lastDrawedMealsList]"
-                    (cdkDropListDropped)="drop($event)">
-                    <td *ngFor="let meal of plannedMeals"
-                        cdkDrag
-                        cdkDragLockAxis="x">
-                        {{ meal.name }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <h3>Oto Twój plan posiłków na nadchodzący tydzień!</h3>
+</div>
+<div class="planner-container">
 
+    <mat-card *ngFor="let plannedMeal of plannedMeals"
+              [routerLink]="['meal/', plannedMeal.meal?.id, 'view']">
+        <h4 class="date-header">{{ plannedMeal.date | date : 'fullDate' }}</h4>
+        <div class="image-container"
+             *ngIf="plannedMeal.meal; else elseBlock">
+            <img [src]="plannedMeal.meal?.imageUrl"
+                 *ngIf="plannedMeal.meal?.imageUrl; else elseImageMessage">
+
+        </div>
+        <h4 class="name-header"
+            *ngIf="plannedMeal"> {{ plannedMeal.meal?.name }}</h4>
+    </mat-card>
+    <ng-template #elseBlock>
+        <h5>Nie wiem co zjem :(</h5>
+        <button>Wylosuj obiad</button>
+    </ng-template>
+    <ng-template #elseImageMessage>
+        <h5>Brak zdjęcia</h5>
+    </ng-template>
 </div>
