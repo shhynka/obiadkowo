@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { CdkTableModule } from '@angular/cdk/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   exports: [
@@ -27,7 +28,8 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatToolbarModule,
     MatSelectModule,
     MatDividerModule,
-    CdkTableModule
+    CdkTableModule,
+    MatDatepickerModule
   ]
 })
 export class MaterialModule { }

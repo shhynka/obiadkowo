@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { MealService } from 'src/app/services/meal.service';
+import * as moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-main-page',
@@ -12,17 +14,9 @@ import { MealService } from 'src/app/services/meal.service';
 export class MainPageComponent implements OnInit {
 
   lastDrawedMeals: Meal[] = [];
-  plannedMeals: Meal[] = [
-    { name: "", ingredients: [], imageUrl: "" },
-    { name: "", ingredients: [], imageUrl: "" },
-    { name: "", ingredients: [], imageUrl: "" },
-    { name: "", ingredients: [], imageUrl: "" },
-    { name: "", ingredients: [], imageUrl: "" },
-    { name: "", ingredients: [], imageUrl: "" },
-    { name: "", ingredients: [], imageUrl: "" }
-  ];
+  plannedMeals: { date: Date, meal: Meal }[] = [];
 
-  constructor(private mealService: MealService) { }
+  constructor(private mealService: MealService, private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.mealService.getMealList().pipe(map(meals => {
@@ -38,14 +32,22 @@ export class MainPageComponent implements OnInit {
     })).subscribe((meals) => {
       this.lastDrawedMeals = meals;
     });
+
+    this.mealService.getMealPlan().subscribe((meals) => {
+      this.plannedMeals = meals;
+    })
   }
 
-  drop(event: CdkDragDrop<Meal[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      this.plannedMeals[event.currentIndex] = this.lastDrawedMeals[event.previousIndex];
-    }
-  }
+
+  // drop(event: CdkDragDrop<Meal[]>) {
+  //   if (event.previousContainer === event.container) {
+  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  //   } else {
+  //     let oldTarget = this.lastDrawedMeals[event.previousIndex];
+  //     this.lastDrawedMeals[event.previousIndex] = this.plannedMeals[event.currentIndex];
+  //     this.plannedMeals[event.currentIndex] = oldTarget;
+
+  //   }
+  // }
 }
 

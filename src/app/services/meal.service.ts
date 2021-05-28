@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { Meal } from '../models/meal.model';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,37 @@ export class MealService {
           this.mealsSubject.next(meals);
         })
       );
+  }
+
+  getMealPlan(): Observable<{ date: Date, meal: Meal }[]> {
+    return this.mealsSubject.pipe(
+      map(meals => {
+        let filteredMealList = meals.filter(meal =>
+          meal.plannedDates.some(plannedDate => {
+            const currentDate = moment();
+            const planD = moment(plannedDate); // konwertujemy date do obiektu typu moment
+            const dayDifference = planD.diff(currentDate, "days");
+            return 0 <= dayDifference && dayDifference <= 7
+          })
+        ); // tworzę listę posiłków, które zawierają daty z zakresu dzisiaj - 6 dni do przodu
+        console.log("filteredMealList:", filteredMealList);
+        let dateList: moment.Moment[] = [];
+        dateList.push(moment());
+
+        for (let i = 1; i < 7; i++) {
+          dateList.push(moment().add(i, "days")); // tworzę listę dat: dzisiaj i 6 kolejnych dni
+        }
+
+        return dateList.map(date => {
+          let foundMeal = filteredMealList.find(meal => meal.plannedDates.some(plannedDate => moment(plannedDate).isSame(date, "day")));
+          return { date: date.toDate(), meal: foundMeal }
+        }); // mapuję/kopiuję listę dat i dopasowuję konkretny posiłek do konkretnej daty i zwracam obiekt, który ma te dwie propercje. W ten sposób tworzy się nowa lista z maksymalnie 7 elementami
+      }
+      ));
+
+    // przypisz to do zmiennej (filtr)
+    // stwórz sobie array dat
+    // na tym array dat zrób sobie map na tym arrayu i znajdź posiłek, który odpowiada danej dacie jak nie ma to przypisz null => tak powinien wyglądać pojedynczy wpis ({date: Date, meal: Meal})
   }
 
 }
