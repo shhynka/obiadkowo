@@ -1,11 +1,11 @@
 .gallery-meal-card {
     width: 300px;
     margin: 10px;
+    cursor: pointer;
 }
 
 mat-card {
     background-color: #ffffff;
-    cursor: pointer;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
@@ -57,10 +57,11 @@ h5 {
 
 .content {
     text-align: center;
-    cursor: default;
+    cursor: pointer;
 }
 
 .list-meal-card {
+    width: 400px;
     display: flex;
     justify-content: space-between;
     text-align: center;
