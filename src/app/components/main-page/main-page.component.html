@@ -13,9 +13,7 @@
     <h3>Oto Twój plan posiłków na nadchodzący tydzień!</h3>
 </div>
 <div class="planner-container">
-
-    <mat-card *ngFor="let plannedMeal of plannedMeals"
-              [routerLink]="['meal/', plannedMeal.meal?.id, 'view']">
+    <mat-card *ngFor="let plannedMeal of plannedMeals">
         <h4 class="date-header">{{ plannedMeal.date | date : 'fullDate' }}</h4>
         <div class="image-container"
              *ngIf="plannedMeal.meal; else elseBlock">
@@ -25,12 +23,12 @@
         </div>
         <h4 class="name-header"
             *ngIf="plannedMeal"> {{ plannedMeal.meal?.name }}</h4>
+        <ng-template #elseBlock>
+            <h5>Nie wiem co zjem :(</h5>
+            <button (click)="openDrawDialog(plannedMeal?.date)">Wylosuj obiad</button>
+        </ng-template>
+        <ng-template #elseImageMessage>
+            <h5>Brak zdjęcia</h5>
+        </ng-template>
     </mat-card>
-    <ng-template #elseBlock>
-        <h5>Nie wiem co zjem :(</h5>
-        <button>Wylosuj obiad</button>
-    </ng-template>
-    <ng-template #elseImageMessage>
-        <h5>Brak zdjęcia</h5>
-    </ng-template>
 </div>

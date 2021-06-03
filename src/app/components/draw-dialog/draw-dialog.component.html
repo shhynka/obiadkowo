@@ -1,0 +1,13 @@
+<div class="dialog-container">
+    <h3>Wylosowano obiad!</h3>
+    <h4>{{ randomMeal?.name }}</h4>
+    <div class="img-container">
+        <img src="{{ randomMeal?.imageUrl}}">
+    </div>
+    <div class="btn-container">
+        <button (click)="planMeal()">Potwierdź</button>
+        <button (click)="closeDialog()"
+                class="back-btn">Anuluj</button>
+    </div>
+
+</div>
