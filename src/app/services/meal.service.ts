@@ -13,7 +13,9 @@ export class MealService {
   private mealsSubject: BehaviorSubject<Meal[]> = new BehaviorSubject([]);
   private baseUrl = 'http://localhost:3000/meals';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    this.getMealList().subscribe();
+  }
 
   getMeal(id: string): Observable<Meal> {
     return this.httpClient.get<Meal>(`${this.baseUrl}/${id}`);
@@ -67,7 +69,6 @@ export class MealService {
             return 0 <= dayDifference && dayDifference <= 7
           })
         ); // tworzę listę posiłków, które zawierają daty z zakresu dzisiaj - 6 dni do przodu
-        console.log("filteredMealList:", filteredMealList);
         let dateList: moment.Moment[] = [];
         dateList.push(moment());
 
@@ -85,6 +86,12 @@ export class MealService {
     // przypisz to do zmiennej (filtr)
     // stwórz sobie array dat
     // na tym array dat zrób sobie map na tym arrayu i znajdź posiłek, który odpowiada danej dacie jak nie ma to przypisz null => tak powinien wyglądać pojedynczy wpis ({date: Date, meal: Meal})
+  }
+
+  getRandomMeal() {
+    const actualListOfMeals = this.mealsSubject.value.slice();
+    let randomIndex = Math.floor(Math.random() * actualListOfMeals.length);
+    return actualListOfMeals[randomIndex];
   }
 
 }

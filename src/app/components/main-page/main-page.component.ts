@@ -1,10 +1,10 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { MealService } from 'src/app/services/meal.service';
-import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
+import { DrawDialogComponent } from '../draw-dialog/draw-dialog.component';
+import { switchMap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -13,41 +13,28 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class MainPageComponent implements OnInit {
 
-  lastDrawedMeals: Meal[] = [];
   plannedMeals: { date: Date, meal: Meal }[] = [];
 
   constructor(private mealService: MealService, private matDialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.mealService.getMealList().pipe(map(meals => {
-      return meals.sort((m1, m2) => {
-        if (m1.lastDrawDate < m2.lastDrawDate) {
-          return 1;
-        }
-        if (m1.lastDrawDate > m2.lastDrawDate) {
-          return -1;
-        }
-        return 0
-      }).slice(0, 7)
-    })).subscribe((meals) => {
-      this.lastDrawedMeals = meals;
-    });
-
     this.mealService.getMealPlan().subscribe((meals) => {
       this.plannedMeals = meals;
     })
   }
 
+  openDrawDialog(dateToPlanMeal: Date) {
+    let dialogRef = this.matDialog.open(DrawDialogComponent);
 
-  // drop(event: CdkDragDrop<Meal[]>) {
-  //   if (event.previousContainer === event.container) {
-  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-  //   } else {
-  //     let oldTarget = this.lastDrawedMeals[event.previousIndex];
-  //     this.lastDrawedMeals[event.previousIndex] = this.plannedMeals[event.currentIndex];
-  //     this.plannedMeals[event.currentIndex] = oldTarget;
-
-  //   }
-  // }
+    dialogRef.afterClosed().pipe(
+      switchMap((result: Meal) => {
+        if (result) {
+          result.plannedDates.push(dateToPlanMeal);
+          return this.mealService.updateMeal(result);
+        }
+        return EMPTY;
+      })
+    ).subscribe();
+  }
 }
 
