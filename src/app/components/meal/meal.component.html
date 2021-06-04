@@ -1,6 +1,5 @@
 <div *ngIf="layoutType == 'gallery'">
-    <mat-card class="gallery-meal-card"
-              [routerLink]="['/meal', meal.id, 'view']">
+    <mat-card class="gallery-meal-card">
         <div class="image-container">
             <img [src]="meal.imageUrl">
             <button class="edit-btn"
@@ -8,9 +7,16 @@
                     [routerLink]="['/meal', meal.id, 'edit']">
                 <mat-icon>create</mat-icon>
             </button>
+            <button class="delete-btn"
+                    mat-mini-fab
+                    (click)="openDeleteDialog()">
+                <mat-icon>
+                    delete
+                </mat-icon>
+            </button>
         </div>
         <div class="content">
-            <h4>{{ meal.name }}</h4>
+            <h4 [routerLink]="['/meal', meal.id, 'view']">{{ meal.name }}</h4>
             <h5 *ngIf="meal.lastDrawDate; else elseMessage">
                 Ostatnio wylosowany: {{ meal.lastDrawDate | date: "longDate" }}
             </h5>
