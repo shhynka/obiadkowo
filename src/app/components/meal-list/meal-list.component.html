@@ -26,17 +26,21 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="add-btn-container">
-        <h3>Dodaj nowy obiad</h3>
-        <button class="add-btn"
-                mat-mini-fab
-                routerLink="/meal/new-meal">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
     <div [ngClass]="{
     'gallery-container':layoutType == 'gallery',
     'list-container':layoutType == 'list'}">
+        <mat-card [ngClass]="{
+            'gallery-card':layoutType == 'gallery',
+            'list-card':layoutType == 'list'}">
+            <div>
+                <h3>Dodaj nowy obiad</h3>
+                <button class="add-btn"
+                        mat-mini-fab
+                        routerLink="/meal/new-meal">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </mat-card>
         <app-meal *ngFor="let meal of meals | async"
                   [layoutType]="layoutType"
                   [meal]="meal"></app-meal>
