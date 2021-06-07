@@ -1,9 +1,0 @@
-<div class="container"
-     cdkDropList
-     cdkDropListOrientation="horizontal"
-     (cdkDropListDropped)="drop($event)">
-    <app-last-drawed-meal *ngFor="let lastMeal of lastDrawedMeals | async"
-                          [lastMeal]="lastMeal"
-                          cdkDrag>
-    </app-last-drawed-meal>
-</div>

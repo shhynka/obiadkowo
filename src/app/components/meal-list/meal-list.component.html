@@ -14,36 +14,38 @@
                 </mat-icon>
             </button>
         </div>
-        <div class="sort-options-container">
-            <mat-form-field appearance="fill">
-                <mat-label>Sortuj</mat-label>
-                <mat-select [formControl]="sortByOptionControl">
-                    <mat-option *ngFor="let dropdownOption of sortByDropdownValues"
-                                [value]="dropdownOption.sortByOption">
-                        {{dropdownOption.displayValue}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Sortuj</mat-label>
+            <mat-select [formControl]="sortByOptionControl">
+                <mat-option *ngFor="let dropdownOption of sortByDropdownValues"
+                            [value]="dropdownOption.sortByOption">
+                    {{dropdownOption.displayValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h3 class="header">Liczba obiadów: {{ (meals | async).length }}</h3>
     </div>
-    <div [ngClass]="{
+
+</div>
+<div [ngClass]="{
     'gallery-container':layoutType == 'gallery',
     'list-container':layoutType == 'list'}">
-        <mat-card [ngClass]="{
+    <mat-card [ngClass]="{
             'gallery-card':layoutType == 'gallery',
             'list-card':layoutType == 'list'}">
-            <div>
-                <h3>Dodaj nowy obiad</h3>
-                <button class="add-btn"
-                        mat-mini-fab
-                        routerLink="/meal/new-meal">
-                    <mat-icon>add</mat-icon>
-                </button>
-            </div>
-        </mat-card>
-        <app-meal *ngFor="let meal of meals | async"
-                  [layoutType]="layoutType"
-                  [meal]="meal"></app-meal>
-    </div>
-    <h3>Liczba obiadów: {{ (meals | async).length }}</h3>
+        <div>
+            <h3>Dodaj nowy obiad</h3>
+            <button class="add-btn"
+                    mat-mini-fab
+                    routerLink="/meal/new-meal">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </mat-card>
+    <app-meal *ngFor="let meal of meals | async"
+              [layoutType]="layoutType"
+              [meal]="meal"></app-meal>
 </div>
