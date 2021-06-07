@@ -6,9 +6,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { MenuComponent } from './components/menu/menu.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
-import { LastDrawedMealsComponent } from './components/last-drawed-meals/last-drawed-meals.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LastDrawedMealComponent } from './components/last-drawed-meal/last-drawed-meal.component';
 import { MealListComponent } from './components/meal-list/meal-list.component';
 import { MealComponent } from './components/meal/meal.component';
 import { registerLocaleData } from '@angular/common';
@@ -33,8 +31,6 @@ registerLocaleData(localePl, 'pl');
     AppComponent,
     MenuComponent,
     MainPageComponent,
-    LastDrawedMealsComponent,
-    LastDrawedMealComponent,
     MealListComponent,
     MealComponent,
     LogInPageComponent,

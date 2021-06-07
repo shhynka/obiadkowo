@@ -32,5 +32,5 @@ export class MealComponent implements OnInit {
       return EMPTY;
     })).subscribe();
   }
-
 }
+

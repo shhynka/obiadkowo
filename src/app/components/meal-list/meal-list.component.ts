@@ -48,6 +48,5 @@ export class MealListComponent implements OnInit {
   changeLayout(changeToLayout: 'list' | 'gallery'): void {
     this.layoutType = changeToLayout;
   }
-
-
 }
+

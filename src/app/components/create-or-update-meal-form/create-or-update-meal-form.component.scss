@@ -88,7 +88,7 @@ button {
     font-size: 10px;
     font-weight: bold;
     border-radius: 2px;
-    background-color: #1b84b4;
+    background-color: #b4531b;
     color: #ffffff;
 }
 
@@ -130,7 +130,7 @@ mat-form-field {
 
 label {
     display: inline-block;
-    background-color: #1b84b4;
+    background-color: #b4531b;
     color: #ffffff;
     width: 300px;
     padding: 15px;
@@ -161,7 +161,7 @@ label {
 }
 
 .delete-image-btn {
-    background-color: #0c5bc23f;
+    background-color: #b4531b94;
     margin: 10px 10px 0px 0px;
     position: absolute;
     right: 0px;
@@ -169,21 +169,21 @@ label {
 }
 
 .delete-item-list-btn {
-    background-color: #0c5bc23f;
+    background-color: #b4531b94;
     margin-right: 10px;
     position: absolute;
     right: 0px;
 }
 
 .add-item-list-btn {
-    background-color: #0c5bc2;
+    background-color: #b4531b;
     position: absolute;
     left: 45%;
 }
 
 .delete-image-btn:hover,
 .delete-item-list-btn:hover {
-    background-color: #0c5bc2;
+    background-color: #b4531b;
 }
 
 .recipe-area {

@@ -1,22 +1,56 @@
 .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 30px;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    border-bottom: solid 1px #38424c;
-    padding: 20px 30px 0px 30px;
-    background-color: #ffffff;
+    align-items: center;
+}
+
+.page {
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin: 50px auto 30px;
+    max-width: 400px;
+    padding: 30px;
+    position: relative;
+    width: 80%;
+}
+
+.page:before,
+.page:after {
+    content: "";
+    height: 98%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+}
+
+.page:before {
+    background: #fafafa;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    left: -5px;
+    top: 4px;
+    transform: rotate(-2.5deg);
+}
+
+.page:after {
+    background: #f6f6f6;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    right: -3px;
+    top: 1px;
+    transform: rotate(1.4deg);
+}
+
+.header {
+    margin: 10px auto 0px;
 }
 
 .add-btn {
-    background-color: #0c5bc2;
+    background-color: #b4531b;
     color: #ffffff;
 }
 
 .display-options-container {
     display: flex;
-    justify-content: space-evenly;
-    padding-bottom: 1.34375em;
 }
 
 .display-btn {
@@ -24,6 +58,7 @@
     cursor: pointer;
     color: #38424c;
     background: none;
+    margin: 20px;
 }
 
 .display-option {
@@ -91,22 +126,11 @@ mat-card.list-card {
     width: fit-content;
 }
 
-@media (max-width: 768px) {
-    .gallery-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-    }
-}
-
-@media (min-width: 769px) {
-    .gallery-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        column-gap: 10px;
-        row-gap: 10px;
-        justify-content: space-evenly;
-        align-items: center;
-    }
+.gallery-container {
+    display: flex;
+    column-gap: 20px;
+    row-gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
 }

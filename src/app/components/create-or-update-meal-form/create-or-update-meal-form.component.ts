@@ -103,9 +103,8 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
       const id = this.activatedRoute.snapshot.params.id;
 
       if (this.id) {
-        console.log(this.form.valid);
-
         const { name, recipe } = this.form.value;
+
         this.mealService.updateMeal({
           id: this.meal.id,
           name,
