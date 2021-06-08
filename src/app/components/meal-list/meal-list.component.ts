@@ -31,8 +31,9 @@ export class MealListComponent implements OnInit {
     const mealList = this.mealService.getMealList();
     this.sortByOptionControl.setValue(this.sortByDropdownValues[0].sortByOption);
 
-    this.meals = combineLatest([this.sortByOptionControl.valueChanges.pipe(startWith(this.sortByDropdownValues[0])), mealList]).pipe(
+    this.meals = combineLatest([this.sortByOptionControl.valueChanges.pipe(startWith(this.sortByDropdownValues[0].sortByOption)), mealList]).pipe(
       map(([currentSortBy, currentMealList]) => {
+        console.log("wtf", currentSortBy);
         return currentMealList.sort((m1, m2) => {
           if (m1[currentSortBy.propertyName] > m2[currentSortBy.propertyName]) {
             return currentSortBy.direction === 'asc' ? 1 : -1;
@@ -44,6 +45,7 @@ export class MealListComponent implements OnInit {
         });
       }));
   }
+  /////NIE DZIAŁA SORTOWANIE PRZY INICJALIZACJI
 
   changeLayout(changeToLayout: 'list' | 'gallery'): void {
     this.layoutType = changeToLayout;

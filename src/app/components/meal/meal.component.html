@@ -23,10 +23,18 @@
             <ng-template #elseMessage>
                 <h5>Jeszcze nie wylosowano tego obiadu</h5>
             </ng-template>
-
         </div>
-        <button class="add-btn"
-                routerLink="">Dodaj do planu tygodnia</button>
+        <mat-form-field appearance="fill">
+            <mat-label>Kiedy chcesz to ugotować?</mat-label>
+            <input matInput
+                   [matDatepicker]="datepicker"
+                   [formControl]="date">
+            <mat-datepicker-toggle matSuffix
+                                   [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker></mat-datepicker>
+        </mat-form-field>
+        <button (click)="addToMealPlan(date)"
+                class="add-btn">Dodaj do planu tygodnia</button>
     </mat-card>
 </div>
 <div *ngIf="layoutType == 'list'">
