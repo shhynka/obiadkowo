@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
@@ -16,10 +17,12 @@ export class MealComponent implements OnInit {
 
   @Input() layoutType: 'list' | 'gallery';
   @Input() meal: Meal;
+  date: FormControl;
 
-  constructor(private matDialog: MatDialog, private mealService: MealService) { }
+  constructor(private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.date = new FormControl("", Validators.required);
   }
 
   openDeleteDialog() {
@@ -31,6 +34,19 @@ export class MealComponent implements OnInit {
       }
       return EMPTY;
     })).subscribe();
+  }
+
+  addToMealPlan(date: FormControl) {
+    if (date.value) {
+      let pickedDate = new Date(date.value);
+      console.log("data: ", pickedDate);
+      this.meal.plannedDates.push(pickedDate);
+
+      console.log("pickeddate: ", pickedDate);
+      console.log("meal: ", this.meal);
+      this.mealService.updateMeal(this.meal).subscribe();
+      this.matSnackBar.open("Zaplanowano obiad!", "Hide", { duration: 2000 });
+    }
   }
 }
 
