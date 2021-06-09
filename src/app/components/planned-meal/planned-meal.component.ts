@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { EMPTY } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { MealService } from 'src/app/services/meal.service';
-import { DeleteMealDialogComponent } from '../delete-meal-dialog/delete-meal-dialog.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { DrawDialogComponent } from '../draw-dialog/draw-dialog.component';
 
 @Component({
@@ -18,7 +19,7 @@ export class PlannedMealComponent implements OnInit {
   @Input() plannedMeal: { date: Date, meals: Meal[] };
   currentIndex: number = 0;
 
-  constructor(private mealService: MealService, private matDialog: MatDialog) { }
+  constructor(private mealService: MealService, private matDialog: MatDialog, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -50,11 +51,17 @@ export class PlannedMealComponent implements OnInit {
         }
         return EMPTY;
       })
-    ).subscribe();
+    ).subscribe(() => {
+      this.matSnackBar.open("Dodano obiad do planu posiłków!", "Ok", { duration: 2000 });
+    });
   }
 
   openDeleteFromMealPlanDialog(dateToDelete: Date) {
-    let dialogRef = this.matDialog.open(DeleteMealDialogComponent);
+    let dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: "Czy na pewno chcesz usunąć ten obiad z planu posiłków?"
+      }
+    });
 
     dialogRef.afterClosed().pipe(switchMap(result => {
       if (result) {
@@ -62,6 +69,8 @@ export class PlannedMealComponent implements OnInit {
         return this.mealService.updateMeal(this.currentMeal);
       }
       return EMPTY;
-    })).subscribe();
+    })).subscribe(() => {
+      this.matSnackBar.open("Usunięto obiad z planu posiłków!", "Ok", { duration: 2000 });
+    });
   }
 }

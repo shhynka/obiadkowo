@@ -94,6 +94,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.ingredientsList.push(result);
+        this.matSnackBar.open("Dodano składnik obiadu!", "Ok", { duration: 2000 });
       }
     });
   }
@@ -113,7 +114,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
           recipe,
         }).subscribe((meal) => {
           if (meal) {
-            this.matSnackBar.open("Zaktualizowano obiad!", "Hide", { duration: 2000 })
+            this.matSnackBar.open("Zaktualizowano obiad!", "Ok", { duration: 2000 })
           }
         })
       } else {
@@ -129,7 +130,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
           })
           .subscribe((meal) => {
             if (meal) {
-              this.matSnackBar.open("Dodano nowy obiad!", "Hide", { duration: 2000 })
+              this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 })
             }
           })
       }

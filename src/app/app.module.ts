@@ -16,12 +16,11 @@ import { LogInPageComponent } from './components/log-in-page/log-in-page.compone
 import { LogInFormComponent } from './components/log-in-form/log-in-form.component';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
-import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { QuillModule } from 'ngx-quill';
 import { IngredientFormDialogComponent } from './components/ingredient-form-dialog/ingredient-form-dialog.component';
 import { MealViewComponent } from './components/meal-view/meal-view.component';
 import { CreateOrUpdateMealFormComponent } from './components/create-or-update-meal-form/create-or-update-meal-form.component';
-import { DeleteMealDialogComponent } from './components/delete-meal-dialog/delete-meal-dialog.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { DrawDialogComponent } from './components/draw-dialog/draw-dialog.component';
 import { PlannedMealComponent } from './components/planned-meal/planned-meal.component';
 
@@ -38,11 +37,10 @@ registerLocaleData(localePl, 'pl');
     LogInFormComponent,
     RegistrationFormComponent,
     ErrorPageComponent,
-    DragAndDropDirective,
     IngredientFormDialogComponent,
     MealViewComponent,
     CreateOrUpdateMealFormComponent,
-    DeleteMealDialogComponent,
+    ConfirmationDialogComponent,
     DrawDialogComponent,
     PlannedMealComponent,
   ],
@@ -69,6 +67,6 @@ registerLocaleData(localePl, 'pl');
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'pl' }],
   bootstrap: [AppComponent],
-  entryComponents: [IngredientFormDialogComponent, DeleteMealDialogComponent]
+  entryComponents: [IngredientFormDialogComponent, ConfirmationDialogComponent]
 })
 export class AppModule { }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { SortByDropdownValue } from 'src/app/models/sortByDropdownValue.model';
 import { SortByOption } from 'src/app/models/sortByOption.model';
