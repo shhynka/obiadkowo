@@ -58,7 +58,7 @@ export class MealService {
       );
   }
 
-  getMealPlan(): Observable<{ date: Date, meal: Meal }[]> {
+  getMealPlan(): Observable<{ date: Date, meals: Meal[] }[]> {
     return this.mealsSubject.pipe(
       map(meals => {
         let filteredMealList = meals.filter(meal =>
@@ -77,8 +77,8 @@ export class MealService {
         }
 
         return dateList.map(date => {
-          let foundMeal = filteredMealList.find(meal => meal.plannedDates.some(plannedDate => moment(plannedDate).isSame(date, "day")));
-          return { date: date.toDate(), meal: foundMeal }
+          let foundMeals = filteredMealList.filter(meal => meal.plannedDates.some(plannedDate => moment(plannedDate).isSame(date, "day")));
+          return { date: date.toDate(), meals: foundMeals }
         }); // mapuję/kopiuję listę dat i dopasowuję konkretny posiłek do konkretnej daty i zwracam obiekt, który ma te dwie propercje. W ten sposób tworzy się nowa lista z maksymalnie 7 elementami
       }
       ));

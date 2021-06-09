@@ -23,6 +23,7 @@ import { MealViewComponent } from './components/meal-view/meal-view.component';
 import { CreateOrUpdateMealFormComponent } from './components/create-or-update-meal-form/create-or-update-meal-form.component';
 import { DeleteMealDialogComponent } from './components/delete-meal-dialog/delete-meal-dialog.component';
 import { DrawDialogComponent } from './components/draw-dialog/draw-dialog.component';
+import { PlannedMealComponent } from './components/planned-meal/planned-meal.component';
 
 registerLocaleData(localePl, 'pl');
 
@@ -43,6 +44,7 @@ registerLocaleData(localePl, 'pl');
     CreateOrUpdateMealFormComponent,
     DeleteMealDialogComponent,
     DrawDialogComponent,
+    PlannedMealComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,41 @@
+<mat-card>
+    <h4 class="date-header">{{ plannedMeal.date | date : 'fullDate' }}</h4>
+    <div class="image-container"
+         *ngIf="currentMeal; else elseBlock">
+        <img [src]="currentMeal?.imageUrl"
+             *ngIf="currentMeal?.imageUrl; else elseImageMessage">
+        <button class="delete-btn"
+                mat-mini-fab
+                (click)="openDeleteFromMealPlanDialog(plannedMeal?.date)">
+            <mat-icon>
+                delete
+            </mat-icon>
+        </button>
+    </div>
+    <div>
+        <button class="arrow-back"
+                (click)="displayPreviousMeal()">
+            <mat-icon>
+                arrow_back
+            </mat-icon>
+        </button>
+        <button class="arrow-forward"
+                (click)="displayNextMeal()">
+            <mat-icon>
+                arrow_forward
+            </mat-icon>
+        </button>
+    </div>
+    <div *ngIf="currentMeal">
+        <h4 class="name-header"> {{ currentMeal?.name }}</h4>
+        <h4>{{ currentIndex + 1 }} z {{plannedMeal.meals.length}} zaplanowanych obiadów</h4>
+    </div>
+    <ng-template #elseBlock>
+        <h5>Nie masz zaplanowanego obiadu</h5>
+        <button class="btn"
+                (click)="openDrawDialog(plannedMeal?.date)">Wylosuj obiad</button>
+    </ng-template>
+    <ng-template #elseImageMessage>
+        <h5>Brak zdjęcia</h5>
+    </ng-template>
+</mat-card>

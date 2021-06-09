@@ -1,0 +1,90 @@
+mat-card {
+    width: 300px;
+    height: 380px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3) !important;
+    position: relative;
+}
+
+.image-container {
+    width: 300px;
+    height: 250px;
+    position: relative;
+}
+
+img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.date-header {
+    font-weight: bold;
+    border: solid 1px #8b8888;
+    border-radius: 2px;
+    padding: 10px 0px;
+    margin-bottom: 16px;
+}
+
+.name-header {
+    font-family: "Courgette";
+}
+
+h4 {
+    color: #38424c;
+    text-align: center;
+    margin: 10px auto 0;
+}
+
+h5 {
+    color: #38424c;
+    text-align: center;
+    font-size: 30px;
+    line-height: 30px;
+    margin: 100px auto;
+}
+
+.btn {
+    width: 300px;
+    padding: 15px;
+    margin-bottom: 5px;
+    border: none;
+    background-color: #b4531b;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+button.delete-btn {
+    background-color: #b4531b;
+    color: #ffffff;
+    margin: 10px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.arrow-back,
+.arrow-forward {
+    width: fit-content;
+    border: none;
+    padding: 15px;
+    background-color: #b4531b94;
+    color: #ffffff;
+    position: absolute;
+    top: 42%;
+}
+
+.arrow-back {
+    left: 0;
+}
+
+.arrow-forward {
+    right: 0;
+}
+
+.arrow-back:hover,
+.arrow-forward:hover {
+    background-color: #b4531b;
+}

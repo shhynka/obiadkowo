@@ -38,12 +38,7 @@ export class MealComponent implements OnInit {
 
   addToMealPlan(date: FormControl) {
     if (date.value) {
-      let pickedDate = new Date(date.value);
-      console.log("data: ", pickedDate);
-      this.meal.plannedDates.push(pickedDate);
-
-      console.log("pickeddate: ", pickedDate);
-      console.log("meal: ", this.meal);
+      this.meal.plannedDates.push(date.value);
       this.mealService.updateMeal(this.meal).subscribe();
       this.matSnackBar.open("Zaplanowano obiad!", "Hide", { duration: 2000 });
     }
