@@ -12,29 +12,6 @@
     <h3>Oto Twój plan posiłków na nadchodzący tydzień!</h3>
 </div>
 <div class="planner-container">
-    <mat-card *ngFor="let plannedMeal of plannedMeals">
-        <h4 class="date-header">{{ plannedMeal.date | date : 'fullDate' }}</h4>
-        <div class="image-container"
-             *ngIf="plannedMeal.meal; else elseBlock">
-            <img [src]="plannedMeal.meal?.imageUrl"
-                 *ngIf="plannedMeal.meal?.imageUrl; else elseImageMessage">
-
-        </div>
-        <h4 class="name-header"
-            *ngIf="plannedMeal"> {{ plannedMeal.meal?.name }}</h4>
-        <ng-template #elseBlock>
-            <h5>Nie wiem co zjem :(</h5>
-            <button (click)="openDrawDialog(plannedMeal?.date)">Wylosuj obiad</button>
-        </ng-template>
-        <ng-template #elseImageMessage>
-            <h5>Brak zdjęcia</h5>
-        </ng-template>
-    </mat-card>
-    <!--
-        mat-card do osobnego komponentu
-        zamienić meal na listę
-        ngIf listaMeali.length > 1 pojawiają się strzałki do podglądu innych kart obiadowych
-        strzałka w lewo (indeks -1), strzałka w prawo (indeks +1)
-        nazwa obiadu + np. 1/3 (żeby użytkownik wiedział, że zaplanował więcej niż jeden posiłek na jeden dzień)
-    -->
+    <app-planned-meal *ngFor="let plannedMeal of plannedMeals"
+                      [plannedMeal]="plannedMeal"></app-planned-meal>
 </div>
