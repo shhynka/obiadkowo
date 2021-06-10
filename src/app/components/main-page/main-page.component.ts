@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Meal } from 'src/app/models/meal.model';
+import { PlannedMeal } from 'src/app/models/plannedMeal.model';
 import { MealService } from 'src/app/services/meal.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { MealService } from 'src/app/services/meal.service';
 })
 export class MainPageComponent implements OnInit {
 
-  plannedMeals: { date: Date, meals: Meal[] }[] = [];
+  plannedMeals: PlannedMeal[] = [];
 
   constructor(private mealService: MealService) { }
 

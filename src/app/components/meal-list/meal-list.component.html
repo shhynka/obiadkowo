@@ -1,34 +1,28 @@
 <div class="page">
-    <div class="container">
-        <div class="display-options-container">
-            <button class="display-btn"
-                    (click)="changeLayout('gallery')">
-                <mat-icon class="display-option">
-                    grid_view
-                </mat-icon>
-            </button>
-            <button class="display-btn"
-                    (click)="changeLayout('list')">
-                <mat-icon class="display-option">
-                    format_list_bulleted
-                </mat-icon>
-            </button>
-        </div>
-
-
-        <mat-form-field appearance="fill">
-            <mat-label>Sortuj</mat-label>
-            <mat-select [formControl]="sortByOptionControl">
-                <mat-option *ngFor="let dropdownOption of sortByDropdownValues"
-                            [value]="dropdownOption.sortByOption">
-                    {{dropdownOption.displayValue}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <h3 class="header">Liczba obiadów: {{ (meals | async).length }}</h3>
+    <div class="display-options-container">
+        <button class="display-btn"
+                (click)="changeLayout('gallery')">
+            <mat-icon class="display-option">
+                grid_view
+            </mat-icon>
+        </button>
+        <button class="display-btn"
+                (click)="changeLayout('list')">
+            <mat-icon class="display-option">
+                format_list_bulleted
+            </mat-icon>
+        </button>
     </div>
-
+    <mat-form-field appearance="fill">
+        <mat-label>Sortuj</mat-label>
+        <mat-select [formControl]="sortByOptionControl">
+            <mat-option *ngFor="let dropdownOption of sortByDropdownValues"
+                        [value]="dropdownOption.sortByOption">
+                {{dropdownOption.displayValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <h3 class="header">Liczba obiadów: {{ (meals | async).length }}</h3>
 </div>
 <div [ngClass]="{
     'gallery-container':layoutType == 'gallery',

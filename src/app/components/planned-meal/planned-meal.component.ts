@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { EMPTY } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
+import { PlannedMeal } from 'src/app/models/plannedMeal.model';
 import { MealService } from 'src/app/services/meal.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { DrawDialogComponent } from '../draw-dialog/draw-dialog.component';
@@ -16,7 +17,7 @@ import { DrawDialogComponent } from '../draw-dialog/draw-dialog.component';
 })
 export class PlannedMealComponent implements OnInit {
 
-  @Input() plannedMeal: { date: Date, meals: Meal[] };
+  @Input() plannedMeal: PlannedMeal;
   currentIndex: number = 0;
 
   constructor(private mealService: MealService, private matDialog: MatDialog, private matSnackBar: MatSnackBar) { }

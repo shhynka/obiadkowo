@@ -12,20 +12,18 @@
             </mat-icon>
         </button>
     </div>
-    <div>
-        <button class="arrow-back"
-                (click)="displayPreviousMeal()">
-            <mat-icon>
-                arrow_back
-            </mat-icon>
-        </button>
-        <button class="arrow-forward"
-                (click)="displayNextMeal()">
-            <mat-icon>
-                arrow_forward
-            </mat-icon>
-        </button>
-    </div>
+    <button class="arrow-back"
+            (click)="displayPreviousMeal()">
+        <mat-icon>
+            arrow_back
+        </mat-icon>
+    </button>
+    <button class="arrow-forward"
+            (click)="displayNextMeal()">
+        <mat-icon>
+            arrow_forward
+        </mat-icon>
+    </button>
     <div *ngIf="currentMeal">
         <h4 class="name-header"> {{ currentMeal?.name }}</h4>
         <h4>{{ currentIndex + 1 }} z {{plannedMeal.meals.length}} zaplanowanych obiadów</h4>

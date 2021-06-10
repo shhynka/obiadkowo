@@ -1,87 +1,76 @@
-.gallery-meal-card {
-    width: 300px;
-    margin: 10px;
-}
-
 mat-card {
     background-color: #ffffff;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
-img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
+h5,
+span {
+    color: #38424c;
 }
 
-.image-container {
-    position: relative;
+.gallery-meal-card {
     width: 300px;
-    height: 250px;
-}
-
-.edit-btn,
-.delete-btn {
-    background-color: #b4531b;
-    color: #ffffff;
     margin: 10px;
-    position: absolute;
-    top: 0px;
-}
 
-.edit-btn {
-    right: 0px;
-}
+    img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
 
-.delete-btn {
-    right: 50px;
-}
+    .image-container {
+        position: relative;
+        width: 300px;
+        height: 250px;
+    }
 
-.add-btn {
-    width: 300px;
-    padding: 15px;
-    margin-bottom: 5px;
-    border: none;
-    font-size: 10px;
-    font-weight: bold;
-    border-radius: 2px;
-    cursor: pointer;
-    background-color: #b4531b;
-    color: #ffffff;
-}
+    .edit-btn,
+    .delete-btn {
+        background-color: #b4531b;
+        color: #ffffff;
+        margin: 10px;
+        position: absolute;
+        top: 0px;
+    }
 
-.btn-container {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 5px;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    background-color: #b4531b;
-    color: #ffffff;
-}
+    .edit-btn {
+        right: 0px;
+    }
 
-mat-form-field {
-    text-align: center;
-    width: 100%;
-}
+    .delete-btn {
+        right: 50px;
+    }
 
-h4 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #38424c;
-    margin-top: 10px;
-    font-family: "Courgette";
-    cursor: pointer;
-}
+    .add-btn {
+        width: 300px;
+        padding: 15px;
+        margin-bottom: 5px;
+        border: none;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 2px;
+        cursor: pointer;
+        background-color: #b4531b;
+        color: #ffffff;
+    }
 
-h5 {
-    color: #38424c;
-}
+    mat-form-field {
+        text-align: center;
+        width: 100%;
+    }
 
-.content {
-    text-align: center;
+    h4 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #38424c;
+        margin-top: 10px;
+        font-family: "Courgette";
+        cursor: pointer;
+    }
+
+    .content {
+        text-align: center;
+    }
 }
 
 .list-meal-card {

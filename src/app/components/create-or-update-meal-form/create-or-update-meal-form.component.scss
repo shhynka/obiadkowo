@@ -50,14 +50,90 @@
     display: flex;
     justify-content: space-evenly;
     padding: 10px 30px 30px;
+
+    .back-btn,
+    .add-meal-btn {
+        width: 300px;
+        padding: 15px;
+        border: none;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 2px;
+        background-color: #b4531b;
+        color: #ffffff;
+    }
+
+    .back-btn {
+        background-color: #ffffff;
+        border: solid 1px #8b8888;
+        color: #000000;
+    }
 }
 
 .name-container {
     grid-area: name;
+
+    mat-form-field {
+        width: 400px;
+    }
+
+    .validation-container {
+        width: 400px;
+        font-size: 12px;
+        color: #f44336;
+    }
 }
 
 .image-container {
     grid-area: image;
+
+    .dropzone {
+        height: 400px;
+        text-align: center;
+        border: solid 1px #8b8888;
+        border-radius: 2px;
+        background-color: #ffffff;
+        position: relative;
+    }
+
+    .drop-icon {
+        color: #38424c;
+        font-size: 160px;
+        padding: 10px 30px;
+        margin: 30px;
+    }
+
+    label {
+        display: inline-block;
+        background-color: #b4531b;
+        color: #ffffff;
+        width: 300px;
+        padding: 15px;
+        border: none;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 2px;
+        margin-bottom: 10px;
+    }
+
+    #upload-img {
+        opacity: 0;
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+    }
+
+    .inserted-img {
+        max-width: 100%;
+    }
+
+    .inserted-img-container {
+        position: relative;
+    }
 }
 
 .list-container {
@@ -70,32 +146,16 @@
 .recipe-container {
     grid-area: recipe;
     padding: 20px 0px;
-}
 
-.validation-container {
-    color: #cc0707;
+    .recipe-area {
+        display: block;
+        background-color: #ffffff;
+        margin-bottom: 20px;
+    }
 }
 
 button {
     cursor: pointer;
-}
-
-.back-btn,
-.add-meal-btn {
-    width: 300px;
-    padding: 15px;
-    border: none;
-    font-size: 10px;
-    font-weight: bold;
-    border-radius: 2px;
-    background-color: #b4531b;
-    color: #ffffff;
-}
-
-.back-btn {
-    background-color: #ffffff;
-    border: solid 1px #8b8888;
-    color: #000000;
 }
 
 h3 {
@@ -108,71 +168,20 @@ h4 {
     margin-bottom: 10px;
 }
 
-mat-form-field {
-    width: 400px;
-}
-
-.dropzone {
-    height: 400px;
-    text-align: center;
-    border: solid 1px #8b8888;
-    border-radius: 2px;
-    background-color: #ffffff;
-    position: relative;
-}
-
-.drop-icon {
-    color: #38424c;
-    font-size: 160px;
-    padding: 10px 30px;
-    margin: 30px;
-}
-
-label {
-    display: inline-block;
-    background-color: #b4531b;
-    color: #ffffff;
-    width: 300px;
-    padding: 15px;
-    border: none;
-    font-size: 10px;
-    font-weight: bold;
-    border-radius: 2px;
-    margin-bottom: 10px;
-}
-
-#upload-img {
-    opacity: 0;
+.delete-image-btn,
+.delete-item-list-btn {
+    background-color: #b4531b94;
     position: absolute;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    cursor: pointer;
-}
-
-.inserted-img {
-    max-width: 100%;
-}
-
-.inserted-img-container {
-    position: relative;
+    right: 0px;
 }
 
 .delete-image-btn {
-    background-color: #b4531b94;
     margin: 10px 10px 0px 0px;
-    position: absolute;
-    right: 0px;
     top: 0px;
 }
 
 .delete-item-list-btn {
-    background-color: #b4531b94;
     margin-right: 10px;
-    position: absolute;
-    right: 0px;
 }
 
 .add-item-list-btn {
@@ -184,12 +193,6 @@ label {
 .delete-image-btn:hover,
 .delete-item-list-btn:hover {
     background-color: #b4531b;
-}
-
-.recipe-area {
-    display: block;
-    background-color: #ffffff;
-    margin-bottom: 20px;
 }
 
 .ingredients-list {
