@@ -1,19 +1,11 @@
-.example-spacer {
-    flex: 1 1 auto;
-}
-
-.btn {
-    background-color: #3f51b5;
-    border: none;
-    color: #ffffff;
+mat-toolbar {
+    background-color: #b4531b;
+    display: flex;
+    justify-content: space-between;
 }
 
 a {
     color: #ffffff;
     text-decoration: none;
-}
-
-mat-icon {
-    display: flex;
-    margin-right: 15px;
+    margin: 0px 30px;
 }

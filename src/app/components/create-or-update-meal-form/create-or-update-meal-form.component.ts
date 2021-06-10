@@ -110,7 +110,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
           id: this.meal.id,
           name,
           ingredients: this.ingredientsList,
-          imageUrl: this.image.url.toString(),
+          imageUrl: this.image?.url.toString(),
           recipe,
         }).subscribe((meal) => {
           if (meal) {
@@ -125,7 +125,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
             id: "",
             name,
             ingredients: this.ingredientsList,
-            imageUrl: this.image.url.toString(),
+            imageUrl: this.image?.url.toString(),
             recipe
           })
           .subscribe((meal) => {

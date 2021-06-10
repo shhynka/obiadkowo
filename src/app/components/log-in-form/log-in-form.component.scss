@@ -3,11 +3,11 @@
     flex-direction: column;
     align-items: center;
     row-gap: 20px;
-    padding: 20px 50px 30px;
+    padding-bottom: 30px;
 }
 
 .validation-container {
-    color: #f01717;
+    color: #f44336;
 }
 
 h3 {
@@ -22,8 +22,12 @@ input {
     background-color: #eaf2f8;
     border: solid 1px #8b8888;
     border-radius: 2px;
-    padding: 0px;
-    padding-left: 20px;
+    padding: 0px 0px 0px 20px;
+}
+
+input:focus {
+    border: solid 1px #b4531b;
+    outline: none;
 }
 
 button {

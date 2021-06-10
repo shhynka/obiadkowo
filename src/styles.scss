@@ -13,8 +13,41 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$obiadkowo-primary: mat-palette($mat-indigo);
-$obiadkowo-accent: mat-palette($mat-pink, A200, A100, A400);
+$obiadkowo-orange: (
+  50: #f6eae4,
+  100: #e9cbbb,
+  200: #daa98d,
+  300: #cb875f,
+  400: #bf6d3d,
+  500: #b4531b,
+  600: #ad4c18,
+  700: #a44214,
+  800: #9c3910,
+  900: #8c2908,
+  A100: #ffc8ba,
+  A200: #ff9f87,
+  A400: #ff7654,
+  A700: #ff623b,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: white,
+  ),
+);
+
+$obiadkowo-palette-primary: mat-palette($obiadkowo-orange);
+$obiadkowo-palette-accent: mat-palette($obiadkowo-orange);
 
 // The warn palette is optional (defaults to red).
 $obiadkowo-warn: mat-palette($mat-red);
@@ -24,8 +57,8 @@ $obiadkowo-warn: mat-palette($mat-red);
 $obiadkowo-theme: mat-light-theme(
   (
     color: (
-      primary: $obiadkowo-primary,
-      accent: $obiadkowo-accent,
+      primary: $obiadkowo-palette-primary,
+      accent: $obiadkowo-palette-accent,
       warn: $obiadkowo-warn,
     ),
   )
