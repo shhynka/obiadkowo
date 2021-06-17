@@ -13,13 +13,15 @@
         </button>
     </div>
     <button class="arrow-back"
-            (click)="displayPreviousMeal()">
+            (click)="displayPreviousMeal()"
+            *ngIf="currentIndex !== 0">
         <mat-icon>
             arrow_back
         </mat-icon>
     </button>
     <button class="arrow-forward"
-            (click)="displayNextMeal()">
+            (click)="displayNextMeal()"
+            *ngIf="currentIndex !== plannedMeal.meals.length">
         <mat-icon>
             arrow_forward
         </mat-icon>
@@ -29,7 +31,7 @@
         <h4>{{ currentIndex + 1 }} z {{plannedMeal.meals.length}} zaplanowanych obiadów</h4>
     </div>
     <ng-template #elseBlock>
-        <h5>Nie masz zaplanowanego obiadu</h5>
+        <h5>Zaplanuj danie</h5>
         <button class="btn"
                 (click)="openDrawDialog(plannedMeal?.date)">Wylosuj obiad</button>
     </ng-template>

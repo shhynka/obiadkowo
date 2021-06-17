@@ -13,7 +13,8 @@
 
     .display-options-container {
         display: flex;
-        justify-content: center;
+        align-items: flex-start;
+        column-gap: 40px;
     }
 
     .display-btn {
@@ -21,7 +22,11 @@
         cursor: pointer;
         color: #38424c;
         background: none;
-        margin: 20px;
+    }
+
+    .gallery-btn,
+    .list-btn {
+        color: #b4531b;
     }
 
     .display-option {
@@ -124,6 +129,10 @@ mat-card.list-card {
 .add-btn {
     background-color: #b4531b;
     color: #ffffff;
+}
+
+.add-btn:hover {
+    background-color: #8c2908;
 }
 
 h3 {

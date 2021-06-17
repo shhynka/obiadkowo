@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "obiadkowo-6a1d0": {
+      "hosting": {
+        "obiadkowo": [
+          "obiadkowo-6a1d0"
+        ]
+      }
+    }
+  }
+}

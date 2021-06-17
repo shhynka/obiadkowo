@@ -33,10 +33,23 @@ button {
     cursor: pointer;
 }
 
+.yes-btn {
+    transition: background-color 1s;
+}
+
+.yes-btn:hover {
+    background-color: #8c2908;
+}
+
 .back-btn {
     background-color: #ffffff;
     color: #000000;
     border: solid 1px #8b8888;
+    transition: border 1s;
+}
+
+.back-btn:hover {
+    border: solid 1px #000000;
 }
 
 h3,

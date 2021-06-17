@@ -20,8 +20,6 @@ export class MealListComponent implements OnInit {
   sortByDropdownValues: SortByDropdownValue[] = [
     { sortByOption: { propertyName: 'name', direction: 'asc' }, displayValue: 'Alfabetycznie rosnąco' },
     { sortByOption: { propertyName: 'name', direction: 'desc' }, displayValue: 'Alfabetycznie malejąco' },
-    { sortByOption: { propertyName: 'lastDrawDate', direction: 'asc' }, displayValue: 'Data wylosowania rosnąco' },
-    { sortByOption: { propertyName: 'lastDrawDate', direction: 'desc' }, displayValue: 'Data wylosowania malejąco' }
   ];
   sortByOptionControl: FormControl = new FormControl();
 

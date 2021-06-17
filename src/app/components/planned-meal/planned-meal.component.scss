@@ -24,6 +24,10 @@ mat-card {
         top: 0px;
         right: 0px;
     }
+
+    .delete-btn:hover {
+        background-color: #8c2908;
+    }
 }
 
 .date-header {
@@ -88,4 +92,9 @@ h5 {
     font-weight: bold;
     border-radius: 2px;
     cursor: pointer;
+    transition: background-color 1s;
+}
+
+.btn:hover {
+    background-color: #8c2908;
 }

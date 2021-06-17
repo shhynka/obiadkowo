@@ -3,10 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EMPTY } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { FileHandle } from 'src/app/models/fileHandle.model';
 import { Meal } from 'src/app/models/meal.model';
 import { MealService } from 'src/app/services/meal.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { IngredientFormDialogComponent } from '../ingredient-form-dialog/ingredient-form-dialog.component';
 
 @Component({
@@ -26,7 +29,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
   });
   ingredientsList: string[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar) { }
+  constructor(private activatedRoute: ActivatedRoute, private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params.id;
@@ -112,9 +115,11 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
           ingredients: this.ingredientsList,
           imageUrl: this.image?.url.toString(),
           recipe,
+          plannedDates: []
         }).subscribe((meal) => {
           if (meal) {
-            this.matSnackBar.open("Zaktualizowano obiad!", "Ok", { duration: 2000 })
+            this.matSnackBar.open("Zaktualizowano obiad!", "Ok", { duration: 2000 });
+            this.router.navigateByUrl("/meal-list");
           }
         })
       } else {
@@ -126,14 +131,32 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
             name,
             ingredients: this.ingredientsList,
             imageUrl: this.image?.url.toString(),
-            recipe
+            recipe,
+            plannedDates: []
           })
           .subscribe((meal) => {
             if (meal) {
-              this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 })
+              this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 });
+              this.router.navigateByUrl("/meal-list");
             }
           })
       }
+    }
+  }
+
+  backToMealList() {
+    if (this.form.dirty) {
+      let dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
+        data: { message: "Czy na pewno chcesz powrócić do listy obiadów? Wprowadzone zmiany nie zostaną zapisane" }
+      })
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.router.navigateByUrl("/meal-list");
+        }
+      });
+    } else {
+      this.router.navigateByUrl("/meal-list");
     }
   }
 
