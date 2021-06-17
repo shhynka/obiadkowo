@@ -40,12 +40,22 @@ button {
     font-weight: bold;
     border-radius: 2px;
     cursor: pointer;
+    transition: background-color 1s;
+}
+
+.log-in-btn:hover {
+    background-color: #8c2908;
 }
 
 .new-password-button {
     background-color: #ffffff;
     color: #000000;
     border: solid 1px #8b8888;
+    transition: border 1s;
+}
+
+.new-password-button:hover {
+    border: solid 1px #000000;
 }
 
 mat-divider {

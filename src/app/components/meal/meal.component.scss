@@ -41,7 +41,8 @@ span {
         right: 50px;
     }
 
-    .add-btn {
+    .add-btn,
+    .disabled-btn {
         width: 300px;
         padding: 15px;
         margin-bottom: 5px;
@@ -52,6 +53,21 @@ span {
         cursor: pointer;
         background-color: #b4531b;
         color: #ffffff;
+        transition: background-color 1s;
+    }
+
+    .disabled-btn {
+        background-color: #7e7e7e;
+    }
+
+    .log-in-btn:hover {
+        background-color: #8c2908;
+    }
+
+    .add-btn:hover,
+    .edit-btn:hover,
+    .delete-btn:hover {
+        background-color: #8c2908;
     }
 
     mat-form-field {
@@ -68,8 +84,15 @@ span {
         cursor: pointer;
     }
 
-    .content {
+    .content,
+    h5 {
         text-align: center;
+    }
+
+    .no-image-msg {
+        padding-top: 100px;
+        font-size: 15px;
+        color: grey;
     }
 }
 

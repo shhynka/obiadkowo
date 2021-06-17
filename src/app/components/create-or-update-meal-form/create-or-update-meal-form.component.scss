@@ -52,21 +52,40 @@
     padding: 10px 30px 30px;
 
     .back-btn,
-    .add-meal-btn {
+    .add-meal-btn,
+    .disabled-btn {
         width: 300px;
         padding: 15px;
         border: none;
         font-size: 10px;
         font-weight: bold;
         border-radius: 2px;
-        background-color: #b4531b;
         color: #ffffff;
+    }
+
+    .disabled-btn,
+    .disabled-btn:hover {
+        background-color: #7e7e7e;
+    }
+
+    .add-meal-btn {
+        background-color: #b4531b;
+        transition: background-color 1s;
+    }
+
+    .add-meal-btn:hover {
+        background-color: #8c2908;
     }
 
     .back-btn {
         background-color: #ffffff;
         border: solid 1px #8b8888;
         color: #000000;
+        transition: border 1s;
+    }
+
+    .back-btn:hover {
+        border: solid 1px #000000;
     }
 }
 
@@ -114,6 +133,11 @@
         font-weight: bold;
         border-radius: 2px;
         margin-bottom: 10px;
+        transition: background-color 1s;
+    }
+
+    label:hover {
+        background-color: #8c2908;
     }
 
     #upload-img {
@@ -188,6 +212,10 @@ h4 {
     background-color: #b4531b;
     position: absolute;
     left: 45%;
+}
+
+.add-item-list-btn:hover {
+    background-color: #8c2908;
 }
 
 .delete-image-btn:hover,

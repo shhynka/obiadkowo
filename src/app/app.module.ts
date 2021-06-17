@@ -23,6 +23,7 @@ import { CreateOrUpdateMealFormComponent } from './components/create-or-update-m
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { DrawDialogComponent } from './components/draw-dialog/draw-dialog.component';
 import { PlannedMealComponent } from './components/planned-meal/planned-meal.component';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 registerLocaleData(localePl, 'pl');
 
@@ -52,6 +53,7 @@ registerLocaleData(localePl, 'pl');
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireStorageModule,
     QuillModule.forRoot({
       modules: {
         syntax: false,

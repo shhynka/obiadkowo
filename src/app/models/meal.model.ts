@@ -4,6 +4,5 @@ export interface Meal {
     ingredients?: string[];
     imageUrl?: string;
     recipe?: string;
-    lastDrawDate?: Date;
     plannedDates?: Date[];
 }

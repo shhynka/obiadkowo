@@ -1,7 +1,8 @@
 <mat-card class="gallery-meal-card"
           *ngIf="layoutType == 'gallery'">
     <div class="image-container">
-        <img [src]="meal.imageUrl">
+        <img [src]="meal.imageUrl"
+             *ngIf="meal.imageUrl; else elseImageMessage">
         <button class="edit-btn"
                 mat-mini-fab
                 [routerLink]="['/meal', meal.id, 'edit']">
@@ -17,16 +18,18 @@
     </div>
     <div class="content">
         <h4 [routerLink]="['/meal', meal.id, 'view']">{{ meal.name }}</h4>
-        <h5 *ngIf="meal.lastDrawDate; else elseMessage">
-            Ostatnio wylosowany: {{ meal.lastDrawDate | date: "longDate" }}
+        <h5 *ngIf="meal.plannedDates.length, else elseMessage">
+            {{ getMessage() }} {{meal.plannedDates[meal.plannedDates.length - 1] | date: "longDate" }}
         </h5>
         <ng-template #elseMessage>
-            <h5>Jeszcze nie wylosowano tego obiadu</h5>
+            <h5>Jeszcze nie ugotowano tego obiadu</h5>
         </ng-template>
     </div>
     <mat-form-field appearance="fill">
         <mat-label>Kiedy chcesz to ugotować?</mat-label>
         <input matInput
+               [min]="minDate"
+               [max]="maxDate"
                [matDatepicker]="datepicker"
                [formControl]="date">
         <mat-datepicker-toggle matSuffix
@@ -34,15 +37,22 @@
         <mat-datepicker #datepicker></mat-datepicker>
     </mat-form-field>
     <button (click)="addToMealPlan(date)"
-            class="add-btn">Dodaj do planu tygodnia</button>
+            class="add-btn"
+            [disabled]="date.invalid"
+            [ngClass]="{
+                'add-btn': date.valid,
+                'disabled-btn': date.invalid}">Dodaj do planu tygodnia</button>
+    <ng-template #elseImageMessage>
+        <h5 class="no-image-msg">Brak zdjęcia</h5>
+    </ng-template>
 </mat-card>
 <mat-card class="list-meal-card"
           *ngIf="layoutType == 'list'">
     <span>{{ meal.name }}</span>
-    <span *ngIf="meal.lastDrawDate; else elseMessage">
-        Ostatnio wylosowany: {{ meal.lastDrawDate | date: "longDate" }}
+    <span *ngIf="meal.plannedDates.length; else elseMessage">
+        Ostatnio ugotowany: {{ meal.plannedDates[meal.plannedDates.length - 1] | date: "longDate" }}
     </span>
     <ng-template #elseMessage>
-        <span>Jeszcze nie wylosowano tego obiadu</span>
+        <span>Jeszcze nie ugotowano tego obiadu</span>
     </ng-template>
 </mat-card>

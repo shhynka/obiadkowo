@@ -2,15 +2,16 @@
      [formGroup]="form">
 
     <div class="btn-container">
-        <button routerLink="/meal-list"
-                class="back-btn">
+        <button class="back-btn"
+                (click)="backToMealList()">
             Wróć do listy
         </button>
         <button class="add-meal-btn"
                 [disabled]="form.invalid"
-                [ngStyle]="{'background-color': form.valid ? '#b4531b' : 'grey'}"
-                (click)="saveMeal()"
-                routerLink="/meal-list">
+                [ngClass]="{
+                    'add-meal-btn': form.valid,
+                    'disabled-btn': form.invalid}"
+                (click)="saveMeal()">
             Zapisz obiad
         </button>
     </div>

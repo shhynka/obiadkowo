@@ -1,7 +1,10 @@
+.container {
+    width: 700px;
+}
+
 .btn-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-around;
 }
 
 h3 {
@@ -22,10 +25,20 @@ button {
     font-weight: bold;
     border-radius: 2px;
     cursor: pointer;
+    transition: background-color 1s;
+}
+
+.yes-btn:hover {
+    background-color: #8c2908;
 }
 
 .close-btn {
     background-color: #ffffff;
     color: #000000;
     border: solid 1px #8b8888;
+    transition: border 1s;
+}
+
+.close-btn:hover {
+    border: solid 1px #000000;
 }

@@ -1,10 +1,13 @@
-<h3>{{ msg }}</h3>
-<div class="btn-container">
-    <button (click)="yesClick()">
-        Tak
-    </button>
-    <button (click)="closeDialog()"
-            class="close-btn">
-        Nie
-    </button>
+<div class="container">
+    <h3>{{ msg }}</h3>
+    <div class="btn-container">
+        <button (click)="yesClick()"
+                class="yes-btn">
+            Tak
+        </button>
+        <button (click)="closeDialog()"
+                class="close-btn">
+            Nie
+        </button>
+    </div>
 </div>

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as moment from 'moment';
 import { EMPTY } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
@@ -18,11 +19,17 @@ export class MealComponent implements OnInit {
   @Input() layoutType: 'list' | 'gallery';
   @Input() meal: Meal;
   date: FormControl;
+  minDate: Date;
+  maxDate: Date;
+  msg: string;
 
   constructor(private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.date = new FormControl("", Validators.required);
+    this.meal.plannedDates = this.meal.plannedDates.sort();
+    this.minDate = moment().toDate();
+    this.maxDate = moment().add(7, "days").toDate();
   }
 
   openDeleteDialog() {
@@ -47,6 +54,16 @@ export class MealComponent implements OnInit {
       this.mealService.updateMeal(this.meal).subscribe(() => {
         this.matSnackBar.open("Zaplanowano obiad!", "Ok", { duration: 2000 });
       });
+    }
+  }
+
+  getMessage(): string {
+    let latestMealDate = new Date(this.meal.plannedDates[this.meal.plannedDates.length - 1]);
+    if (latestMealDate < this.minDate) {
+      return "Ostatnio ugotowano: ";
+    }
+    if (latestMealDate >= this.minDate) {
+      return "Zaplanowano na: ";
     }
   }
 }
