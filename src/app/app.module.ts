@@ -24,6 +24,9 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
 import { DrawDialogComponent } from './components/draw-dialog/draw-dialog.component';
 import { PlannedMealComponent } from './components/planned-meal/planned-meal.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 registerLocaleData(localePl, 'pl');
 
@@ -44,6 +47,7 @@ registerLocaleData(localePl, 'pl');
     ConfirmationDialogComponent,
     DrawDialogComponent,
     PlannedMealComponent,
+    DragAndDropDirective,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +57,7 @@ registerLocaleData(localePl, 'pl');
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
     QuillModule.forRoot({
       modules: {

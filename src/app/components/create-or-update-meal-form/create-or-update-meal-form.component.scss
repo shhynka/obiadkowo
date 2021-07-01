@@ -158,6 +158,11 @@
     .inserted-img-container {
         position: relative;
     }
+
+    mat-progress-bar {
+        width: 400px;
+        margin: 10px auto 0px;
+    }
 }
 
 .list-container {

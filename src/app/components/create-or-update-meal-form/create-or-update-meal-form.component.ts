@@ -1,35 +1,41 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { FileHandle } from 'src/app/models/fileHandle.model';
+import { from, Observable } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
+import { FireStorageService } from 'src/app/services/firestorage.service';
 import { MealService } from 'src/app/services/meal.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { IngredientFormDialogComponent } from '../ingredient-form-dialog/ingredient-form-dialog.component';
+import firebase from "firebase/app";
 
 @Component({
   selector: 'app-create-or-update-meal-form',
   templateUrl: './create-or-update-meal-form.component.html',
   styleUrls: ['./create-or-update-meal-form.component.scss']
 })
-export class CreateOrUpdateMealFormComponent implements OnInit {
+export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
   id: string;
-  image: FileHandle;
+  imageURL: string;
+  imagePath: string;
+  ingredientsList: string[] = [];
   meal: Meal;
   form = new FormGroup({
     name: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ ]*')]),
     imageUrl: new FormControl(""),
     recipe: new FormControl("")
   });
-  ingredientsList: string[] = [];
+  uploadPercent: Observable<number>;
+  saved = false;
+  unsavedChanges = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar, private router: Router, private firestorageService: FireStorageService) { }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params.id;
@@ -46,7 +52,11 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
           });
 
           this.ingredientsList = meal.ingredients;
-          this.image = { url: meal.imageUrl, file: null };
+          this.imageURL = this.meal.imageUrl;
+          this.imagePath = this.meal.imagePath;
+          console.log(this.meal.imagePath);
+          console.log(this.imageURL);
+          console.log("imageUrl: " + this.imageUrl);
         })
     }
   }
@@ -63,25 +73,29 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
     return this.form.controls.recipe;
   }
 
-  onFileDropped($event): void {
-    this.prepareFilesList($event);
+  onImageDropped($event): void {
+    this.uploadImage($event);
   }
 
-  fileBrowseHandler(event): void {
+  imageBrowseHandler(event): void {
     const img = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(img);
-    reader.onload = e => {
-      this.image = { url: reader.result, file: img };
-    };
+    this.uploadImage(img);
   }
 
-  prepareFilesList(file: FileHandle): void {
-    this.image = file;
-  }
+  uploadImage(image: File): void {
+    const imagePath = `/images/${new Date().getTime()}-${image.name}`;
+    const result = this.firestorageService.uploadFile(image, imagePath);
+    this.uploadPercent = result.task.percentageChanges();
 
-  deleteImage(): void {
-    this.image = null;
+    result.task.percentageChanges().subscribe((v) => console.log(v));
+    result.task.snapshotChanges().pipe(
+      filter(task => task.state === firebase.storage.TaskState.SUCCESS),
+      switchMap(task => from(task.ref.getDownloadURL()))
+    ).subscribe((url) => {
+      this.imageURL = url;
+      this.imagePath = imagePath;
+      this.uploadPercent = null;
+    })
   }
 
   dropIngredients(event: CdkDragDrop<string[]>): void {
@@ -90,6 +104,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
 
   deleteIngredient(index: number) {
     this.ingredientsList.splice(index, 1);
+    this.unsavedChanges = true;
   }
 
   openIngredientDialog() {
@@ -104,8 +119,6 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
 
   saveMeal() {
     if (this.form.valid) {
-      const id = this.activatedRoute.snapshot.params.id;
-
       if (this.id) {
         const { name, recipe } = this.form.value;
 
@@ -113,11 +126,16 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
           id: this.meal.id,
           name,
           ingredients: this.ingredientsList,
-          imageUrl: this.image?.url.toString(),
+          imageUrl: this.imageURL,
+          imagePath: this.imagePath,
           recipe,
           plannedDates: []
         }).subscribe((meal) => {
           if (meal) {
+            this.saved = true;
+            if (this.meal.imagePath != this.imagePath) {
+              this.firestorageService.deleteFile(this.meal.imagePath);
+            }
             this.matSnackBar.open("Zaktualizowano obiad!", "Ok", { duration: 2000 });
             this.router.navigateByUrl("/meal-list");
           }
@@ -130,12 +148,14 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
             id: "",
             name,
             ingredients: this.ingredientsList,
-            imageUrl: this.image?.url.toString(),
+            imageUrl: this.imageURL,
+            imagePath: this.imagePath,
             recipe,
             plannedDates: []
           })
           .subscribe((meal) => {
             if (meal) {
+              this.saved = true;
               this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 });
               this.router.navigateByUrl("/meal-list");
             }
@@ -145,7 +165,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
   }
 
   backToMealList() {
-    if (this.form.dirty) {
+    if (this.form.dirty || this.unsavedChanges) {
       let dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
         data: { message: "Czy na pewno chcesz powrócić do listy obiadów? Wprowadzone zmiany nie zostaną zapisane" }
       })
@@ -157,6 +177,35 @@ export class CreateOrUpdateMealFormComponent implements OnInit {
       });
     } else {
       this.router.navigateByUrl("/meal-list");
+    }
+  }
+
+  ngOnDestroy() {
+    if (!this.saved && this.imagePath && (!this.id || this.imagePath != this.meal.imagePath)) {
+      this.firestorageService.deleteFile(this.imagePath);
+    }
+  }
+
+  @HostListener('window:beforeunload')
+  windowBeforeUpload() {
+    if (this.imagePath && (!this.id || this.imagePath != this.meal.imagePath)) {
+      this.firestorageService.deleteFile(this.imagePath);
+    }
+  }
+
+  deleteImage(): void {
+    if (!this.id) {
+      this.firestorageService.deleteFile(this.imagePath);
+      this.imageURL = null;
+      this.imagePath = null;
+    } else {
+      if (this.meal.imagePath != this.imagePath) {
+        this.firestorageService.deleteFile(this.meal.imagePath);
+      }
+      this.imageURL = null;
+      this.imagePath = null;
+      this.unsavedChanges = true;
+
     }
   }
 
