@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { EMPTY } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
+import { FireStorageService } from 'src/app/services/firestorage.service';
 import { MealService } from 'src/app/services/meal.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
@@ -23,7 +24,7 @@ export class MealComponent implements OnInit {
   maxDate: Date;
   msg: string;
 
-  constructor(private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar) { }
+  constructor(private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar, private firestorageService: FireStorageService) { }
 
   ngOnInit(): void {
     this.date = new FormControl("", Validators.required);
@@ -39,6 +40,9 @@ export class MealComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(switchMap(result => {
       if (result) {
+        if (this.meal.imagePath) {
+          this.firestorageService.deleteFile(this.meal.imagePath);
+        };
         return this.mealService.deleteMeal(this.meal.id);
       }
       return EMPTY;

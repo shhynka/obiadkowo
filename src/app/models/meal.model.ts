@@ -3,6 +3,7 @@ export interface Meal {
     name: string;
     ingredients?: string[];
     imageUrl?: string;
+    imagePath?: string;
     recipe?: string;
     plannedDates?: Date[];
 }

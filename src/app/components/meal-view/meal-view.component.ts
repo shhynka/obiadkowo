@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FileHandle } from 'src/app/models/fileHandle.model';
 import { Meal } from 'src/app/models/meal.model';
 import { MealService } from 'src/app/services/meal.service';
 
@@ -14,7 +13,7 @@ export class MealViewComponent implements OnInit {
   id: string;
   meal: Meal;
   ingredients: string[];
-  image: FileHandle;
+  image: string;
 
   constructor(private mealService: MealService, private activatedRoute: ActivatedRoute) { }
 
@@ -24,7 +23,7 @@ export class MealViewComponent implements OnInit {
     this.mealService.getMeal(this.id).subscribe(meal => {
       this.meal = meal;
       this.ingredients = meal.ingredients;
-      this.image = { url: meal.imageUrl, file: null };
+      this.image = meal.imageUrl;
     })
   }
 }

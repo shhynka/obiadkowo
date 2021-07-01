@@ -45,8 +45,8 @@
         <h3>{{ id ? 'Zdjęcie' : 'Zdjęcie (opcjonalne)'}}</h3>
         <div class="dropzone"
              appDragAndDrop
-             *ngIf="!image"
-             (fileDrop)="onFileDropped($event)">
+             *ngIf="!imageURL"
+             (fileDrop)="onImageDropped($event)">
             <span class="material-icons drop-icon">
                 image_search
             </span>
@@ -58,17 +58,19 @@
                    id="upload-img"
                    accept="image/*"
                    formControlName="imageUrl"
-                   (change)="fileBrowseHandler($event)">
+                   (change)="imageBrowseHandler($event)">
+            <mat-progress-bar mode="indeterminate"
+                              *ngIf="uploadPercent"></mat-progress-bar>
         </div>
         <div class="inserted-img-container"
-             *ngIf="image">
+             *ngIf="imageURL">
             <button class="delete-image-btn"
                     mat-mini-fab
                     (click)="deleteImage()">
                 <mat-icon>close</mat-icon>
             </button>
             <img class="inserted-img"
-                 [src]="image.url">
+                 [src]="imageURL">
         </div>
     </div>
 
