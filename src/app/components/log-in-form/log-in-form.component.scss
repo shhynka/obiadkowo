@@ -4,6 +4,7 @@
     align-items: center;
     row-gap: 20px;
     padding-bottom: 30px;
+    position: relative;
 }
 
 .validation-container {
@@ -56,6 +57,12 @@ button {
 
 .new-password-button:hover {
     border: solid 1px #000000;
+}
+
+mat-spinner {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
 }
 
 mat-divider {

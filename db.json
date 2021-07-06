@@ -1,3 +1,13 @@
 {
-  "meals": []
+  "meals": [
+    {
+      "id": 1,
+      "name": "obiad dodany przez igapop",
+      "ingredients": [],
+      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/obiadkowo-6a1d0.appspot.com/o/images%2F1625222790996-160752817_734449840606598_6134321850932297539_o.jpg?alt=media&token=979f9be3-be04-4f1b-bdcb-45ce67ae8b4d",
+      "imagePath": "/images/1625222790996-160752817_734449840606598_6134321850932297539_o.jpg",
+      "recipe": "",
+      "plannedDates": []
+    }
+  ]
 }

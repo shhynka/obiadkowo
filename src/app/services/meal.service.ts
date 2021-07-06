@@ -1,67 +1,67 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, from, Observable, pipe } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { Meal } from '../models/meal.model';
 import * as moment from 'moment';
 import { PlannedMeal } from '../models/plannedMeal.model';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
+import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable({
   providedIn: 'root'
 })
 export class MealService {
 
-  private mealsSubject: BehaviorSubject<Meal[]> = new BehaviorSubject([]);
-  private baseUrl = 'http://localhost:3000/meals';
+  private mealsCollection: AngularFirestoreCollection<Meal>;
+  meals: Observable<Meal[]>;
 
-  constructor(private httpClient: HttpClient) {
-    this.getMealList().subscribe();
+  constructor(private angularFirestore: AngularFirestore) {
+    this.mealsCollection = this.angularFirestore.collection<Meal>("meals");
+    this.meals = this.mealsCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Meal;
+        const id = a.payload.doc.id;
+        const plannedDates = (data.plannedDates as any[]).map((date: Timestamp) => date.toDate());
+        return { ...data, plannedDates, id };
+      }))
+    )
   }
 
-  getMeal(id: string): Observable<Meal> {
-    return this.httpClient.get<Meal>(`${this.baseUrl}/${id}`);
+  getMeal(id: string) {
+    return this.mealsCollection
+      .doc(id)
+      .valueChanges();
   }
 
-  getMealList(): Observable<Meal[]> {
-    return this.httpClient.get<Meal[]>(this.baseUrl)
-      .pipe(
-        switchMap(meals => {
-          this.mealsSubject.next(meals);
-          return this.mealsSubject.asObservable();
-        }));
+  addMeal(newMeal: Meal) {
+    return from(this.mealsCollection.add(newMeal))
+      .pipe(map(doc => !!doc.id));
   }
 
-  addMeal(newMeal: Meal): Observable<Meal> {
-    return this.httpClient.post<Meal>(this.baseUrl, newMeal)
-      .pipe(
-        tap(createdMeal => this.mealsSubject.next([...this.mealsSubject.value, createdMeal]))
-      );
+  updateMeal(mealToUpdate: Meal) {
+    return from(this.mealsCollection
+      .doc(mealToUpdate.id)
+      .update({
+        name: mealToUpdate.name,
+        ingredients: mealToUpdate.ingredients,
+        imageUrl: mealToUpdate.imageUrl,
+        imagePath: mealToUpdate.imagePath,
+        recipe: mealToUpdate.recipe,
+        plannedDates: mealToUpdate.plannedDates
+      }))
   }
 
-  updateMeal(mealToUpdate: Meal): Observable<Meal> {
-    return this.httpClient.patch<Meal>(`${this.baseUrl}/${mealToUpdate.id}`, mealToUpdate)
-      .pipe(
-        tap(updatedMeal => {
-          const meals = this.mealsSubject.value.filter(m => m.id !== updatedMeal.id);
-          meals.push(updatedMeal);
-          this.mealsSubject.next(meals);
-        })
-      );
-  }
-
-  deleteMeal(id: string): Observable<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${id}`)
-      .pipe(
-        tap(() => {
-          const meals = this.mealsSubject.value.filter(m => m.id !== id);
-          this.mealsSubject.next(meals);
-        })
-      );
+  deleteMeal(id: string) {
+    return from(this.mealsCollection
+      .doc(id)
+      .delete());
   }
 
   getMealPlan(): Observable<PlannedMeal[]> {
-    return this.mealsSubject.pipe(
+    return this.meals.pipe(
       map(meals => {
+        console.log(meals);
         let filteredMealList = meals.filter(meal =>
           meal.plannedDates.some(plannedDate => {
             const currentDate = moment();
@@ -86,9 +86,10 @@ export class MealService {
   }
 
   getRandomMeal() {
-    const actualListOfMeals = this.mealsSubject.value.slice();
-    let randomIndex = Math.floor(Math.random() * actualListOfMeals.length);
-    return actualListOfMeals[randomIndex];
+    return this.meals.pipe(take(1), map(meals => {
+      let randomIndex = Math.floor(Math.random() * meals.length);
+      return meals[randomIndex];
+    }));
   }
 }
 

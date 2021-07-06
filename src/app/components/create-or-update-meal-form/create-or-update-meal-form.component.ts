@@ -1,6 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -43,7 +42,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     if (this.id) {
       this.mealService
         .getMeal(this.id)
-        .subscribe((meal) => {
+        .subscribe((meal: Meal) => {
           this.meal = meal;
 
           this.form.patchValue({
@@ -130,22 +129,22 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
           imagePath: this.imagePath,
           recipe,
           plannedDates: []
-        }).subscribe((meal) => {
-          if (meal) {
+        }).subscribe(
+          () => {
             this.saved = true;
             if (this.meal.imagePath != this.imagePath) {
               this.firestorageService.deleteFile(this.meal.imagePath);
             }
             this.matSnackBar.open("Zaktualizowano obiad!", "Ok", { duration: 2000 });
             this.router.navigateByUrl("/meal-list");
-          }
-        })
+          },
+          () => console.log("updating meal errored")
+        )
       } else {
         const { name, recipe } = this.form.value;
 
         this.mealService
           .addMeal({
-            id: "",
             name,
             ingredients: this.ingredientsList,
             imageUrl: this.imageURL,
@@ -153,13 +152,16 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
             recipe,
             plannedDates: []
           })
-          .subscribe((meal) => {
-            if (meal) {
-              this.saved = true;
-              this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 });
-              this.router.navigateByUrl("/meal-list");
-            }
-          })
+          .subscribe(
+            (added) => {
+              if (added) {
+                this.saved = true;
+                this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 });
+                this.router.navigateByUrl("/meal-list");
+              }
+            },
+            () => console.log("adding meal errored")
+          )
       }
     }
   }
