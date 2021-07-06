@@ -15,7 +15,9 @@ export class DrawDialogComponent implements OnInit {
   constructor(private matDialogRef: MatDialogRef<DrawDialogComponent>, private mealService: MealService) { }
 
   ngOnInit(): void {
-    this.randomMeal = this.mealService.getRandomMeal();
+    this.mealService.getRandomMeal().subscribe(meal => {
+      this.randomMeal = meal;
+    });
   }
 
   planMeal() {

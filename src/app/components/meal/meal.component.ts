@@ -55,9 +55,10 @@ export class MealComponent implements OnInit {
   addToMealPlan(date: FormControl) {
     if (date.value) {
       this.meal.plannedDates.push(date.value);
-      this.mealService.updateMeal(this.meal).subscribe(() => {
-        this.matSnackBar.open("Zaplanowano obiad!", "Ok", { duration: 2000 });
-      });
+      this.mealService.updateMeal(this.meal).subscribe(
+        () => this.matSnackBar.open("Zaplanowano obiad!", "Ok", { duration: 2000 }),
+        () => console.log("adding to meal plan errored")
+      );
     }
   }
 

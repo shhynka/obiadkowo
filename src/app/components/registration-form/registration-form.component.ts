@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/auth';
+import firebase from 'firebase/app';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration-form',
@@ -10,7 +13,7 @@ export class RegistrationFormComponent implements OnInit {
 
   registrationForm: FormGroup;
 
-  constructor() { }
+  constructor(private auth: AngularFireAuth, private router: Router) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -45,4 +48,14 @@ export class RegistrationFormComponent implements OnInit {
 
     return password.value === passwordConfirmation.value ? null : { mustMatch: true };
   }
+
+  createUser() {
+    const email = this.registrationForm.controls.email.value;
+    const password = this.registrationForm.controls.password.value;
+    this.auth.createUserWithEmailAndPassword(email, password).then((user) => {
+      console.log("user: ", user);
+      this.router.navigate(['']);
+    });
+  }
+
 }

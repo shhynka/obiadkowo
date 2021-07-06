@@ -6,24 +6,27 @@ import { LogInPageComponent } from './components/log-in-page/log-in-page.compone
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { MealListComponent } from './components/meal-list/meal-list.component';
 import { MealViewComponent } from './components/meal-view/meal-view.component';
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['log-in-page']);
 
 const routes: Routes = [{
-  path: '', component: MainPageComponent
+  path: '', component: MainPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
 },
 {
-  path: 'meal-list', component: MealListComponent
+  path: 'meal-list', component: MealListComponent, canActivate: [AngularFireAuthGuard]
 },
 {
   path: 'log-in-page', component: LogInPageComponent
 },
 {
-  path: 'meal/new-meal', component: CreateOrUpdateMealFormComponent
+  path: 'meal/new-meal', component: CreateOrUpdateMealFormComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
 },
 {
-  path: 'meal/:id/edit', component: CreateOrUpdateMealFormComponent
+  path: 'meal/:id/edit', component: CreateOrUpdateMealFormComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
 },
 {
-  path: 'meal/:id/view', component: MealViewComponent
+  path: 'meal/:id/view', component: MealViewComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
 },
 {
   path: '**', component: ErrorPageComponent
