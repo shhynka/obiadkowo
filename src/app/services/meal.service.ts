@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, from, Observable, pipe } from 'rxjs';
+import { from, Observable, pipe } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Meal } from '../models/meal.model';
 import * as moment from 'moment';
@@ -7,6 +7,7 @@ import { PlannedMeal } from '../models/plannedMeal.model';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class MealService {
   meals: Observable<Meal[]>;
 
   constructor(private angularFirestore: AngularFirestore) {
-    this.mealsCollection = this.angularFirestore.collection<Meal>("meals");
+    this.mealsCollection = this.angularFirestore.collection<Meal>("meals", ref => ref.where("userId", "==", firebase.auth().currentUser.uid));
+
     this.meals = this.mealsCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Meal;
@@ -35,7 +37,7 @@ export class MealService {
   }
 
   addMeal(newMeal: Meal) {
-    return from(this.mealsCollection.add(newMeal))
+    return from(this.mealsCollection.add({ ...newMeal, userId: firebase.auth().currentUser.uid }))
       .pipe(map(doc => !!doc.id));
   }
 
@@ -61,7 +63,6 @@ export class MealService {
   getMealPlan(): Observable<PlannedMeal[]> {
     return this.meals.pipe(
       map(meals => {
-        console.log(meals);
         let filteredMealList = meals.filter(meal =>
           meal.plannedDates.some(plannedDate => {
             const currentDate = moment();
