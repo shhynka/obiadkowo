@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import firebase from 'firebase/app';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,7 +14,7 @@ export class LogInFormComponent implements OnInit {
   logInForm: FormGroup;
   loggingIn = false;
 
-  constructor(private auth: AngularFireAuth, private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
+  constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.logInForm = new FormGroup({
@@ -37,7 +35,7 @@ export class LogInFormComponent implements OnInit {
     if (this.logInForm.valid) {
       this.loggingIn = true;
       this.userService.logIn(this.email.value, this.password.value)
-        .then(() => {
+        .subscribe(() => {
           this.matSnackBar.open("Zalogowano poprawnie!", "Ok", { duration: 2000 });
           this.router.navigate(['']);
         });
@@ -45,8 +43,10 @@ export class LogInFormComponent implements OnInit {
   }
 
   sendPasswordResetEmail() {
-    const email = this.logInForm.controls.email.value;
-    this.auth.sendPasswordResetEmail(email);
+    this.userService.sendPasswordResetEmail(this.email.value)
+      .subscribe(() => {
+        this.matSnackBar.open("Wysłano emaila resetującego hasło", "Ok", { duration: 2000 });
+      });
   }
 
 }

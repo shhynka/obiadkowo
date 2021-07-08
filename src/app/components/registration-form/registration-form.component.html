@@ -24,6 +24,21 @@
               </div>
        </div>
        <div>
+              <input type="email"
+                     formControlName="email"
+                     placeholder="Adres email"
+                     [ngClass]="{'invalid-input': email.invalid && (email.touched || email.dirty)}">
+              <div *ngIf="email.invalid && (email.touched || email.dirty)"
+                   class="validation-container">
+                     <div *ngIf="email.errors.required">
+                            Pole wymagane.
+                     </div>
+                     <div *ngIf="email.errors.email">
+                            Adres email jest w niewłaściwym formacie.
+                     </div>
+              </div>
+       </div>
+       <div>
               <input type="password"
                      formControlName="password"
                      placeholder="Hasło"
@@ -40,8 +55,8 @@
                             Hasło powinno składać się z&nbsp;max. 20 znaków.
                      </div>
                      <div *ngIf="password.errors.pattern">
-                            Hasło powinno składać się z liter od a do z, cyfr od 0 do 9 oraz znaków specjalnych: !, ?,
-                            @, #, $, %, ^, &, *, +, =.
+                            Hasło powinno składać się z przynajmniej jednej wielkiej litery, jednej małej litery, jednej
+                            cyfry oraz jednego znaku specjalnego.
                      </div>
               </div>
        </div>
@@ -59,21 +74,6 @@
               <div *ngIf="registrationForm.errors?.mustMatch"
                    class="validation-container">
                      Hasło i potwierdzenie hasła muszą być takie same.
-              </div>
-       </div>
-       <div>
-              <input type="email"
-                     formControlName="email"
-                     placeholder="Adres email"
-                     [ngClass]="{'invalid-input': email.invalid && (email.touched || email.dirty)}">
-              <div *ngIf="email.invalid && (email.touched || email.dirty)"
-                   class="validation-container">
-                     <div *ngIf="email.errors.required">
-                            Pole wymagane.
-                     </div>
-                     <div *ngIf="email.errors.email">
-                            Adres email jest w niewłaściwym formacie.
-                     </div>
               </div>
        </div>
        <button (click)="createUser()">Zarejestruj się</button>

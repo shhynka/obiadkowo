@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
-import firebase from 'firebase/app';
 import { Router } from '@angular/router';
-import { from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -16,14 +12,24 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class RegistrationFormComponent implements OnInit {
 
   registrationForm: FormGroup;
-  register: boolean;
+  register: boolean = false;
 
   constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9]*')]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9!?@#$%^&*+=]*')]),
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        Validators.pattern('[a-zA-Z0-9]*')
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+        Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[!?@#$%^&*+=])(?=.*[0-9]).{6,}$')
+      ]),
       passwordConfirmation: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email])
     }, {
@@ -64,7 +70,8 @@ export class RegistrationFormComponent implements OnInit {
             this.router.navigate(['']);
           },
           (error) => {
-            console.log("Error: ", error)
+            this.register = false;
+            this.matSnackBar.open(error, "Ok", { duration: 5000 })
           })
     }
   }
