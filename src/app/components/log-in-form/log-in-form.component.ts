@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import firebase from 'firebase/app';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-log-in-form',
@@ -13,7 +15,7 @@ export class LogInFormComponent implements OnInit {
   logInForm: FormGroup;
   loggingIn = false;
 
-  constructor(private auth: AngularFireAuth, private router: Router) { }
+  constructor(private auth: AngularFireAuth, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.logInForm = new FormGroup({
@@ -31,12 +33,14 @@ export class LogInFormComponent implements OnInit {
   }
 
   logIn() {
-    const email = this.logInForm.controls.email.value;
-    const password = this.logInForm.controls.password.value;
-    this.loggingIn = true;
-    this.auth.signInWithEmailAndPassword(email, password).then(() => {
-      this.router.navigate(['']);
-    });
+    if (this.logInForm.valid) {
+      const email = this.logInForm.controls.email.value;
+      const password = this.logInForm.controls.password.value;
+      this.loggingIn = true;
+      this.auth.signInWithEmailAndPassword(email, password).then(() => {
+        this.router.navigate(['']);
+      });
+    }
   }
 
   sendPasswordResetEmail() {

@@ -3,6 +3,9 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
+import { from } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-registration-form',
@@ -13,7 +16,7 @@ export class RegistrationFormComponent implements OnInit {
 
   registrationForm: FormGroup;
 
-  constructor(private auth: AngularFireAuth, private router: Router) { }
+  constructor(private auth: AngularFireAuth, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -52,10 +55,13 @@ export class RegistrationFormComponent implements OnInit {
   createUser() {
     const email = this.registrationForm.controls.email.value;
     const password = this.registrationForm.controls.password.value;
-    this.auth.createUserWithEmailAndPassword(email, password).then((user) => {
-      console.log("user: ", user);
-      this.router.navigate(['']);
-    });
+    from(this.auth.createUserWithEmailAndPassword(email, password)).pipe(switchMap((data) => {
+      return this.userService.createUser(data.user.uid, this.username.value);
+    })).subscribe((result: any) => {
+      if (result) {
+        this.router.navigate(['']);
+      }
+    })
   }
 
 }
