@@ -6,7 +6,7 @@ import { LogInPageComponent } from './components/log-in-page/log-in-page.compone
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { MealListComponent } from './components/meal-list/meal-list.component';
 import { MealViewComponent } from './components/meal-view/meal-view.component';
-import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { canActivate } from '@angular/fire/auth-guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['log-in-page']);

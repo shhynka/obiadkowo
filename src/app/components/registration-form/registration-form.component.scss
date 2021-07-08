@@ -4,6 +4,7 @@
     align-items: center;
     row-gap: 20px;
     padding: 20px 50px;
+    position: relative;
 }
 
 h3 {
@@ -52,4 +53,10 @@ button {
 
 button:hover {
     background-color: #8c2908;
+}
+
+mat-spinner {
+    position: absolute;
+    top: -13%;
+    z-index: 1;
 }

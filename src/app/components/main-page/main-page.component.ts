@@ -20,8 +20,7 @@ export class MainPageComponent implements OnInit {
     this.mealService.getMealPlan().subscribe((meals) => {
       this.plannedMeals = meals;
     });
-
-    this.username = this.userService.user.username;
+    this.username = this.userService.user?.username;
   }
 }
 

@@ -28,6 +28,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { PERSISTENCE } from '@angular/fire/auth';
 
 registerLocaleData(localePl, 'pl');
 
@@ -74,7 +75,10 @@ registerLocaleData(localePl, 'pl');
       }
     })
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'pl' }],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pl' },
+    { provide: PERSISTENCE, useValue: 'session' }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormDialogComponent, ConfirmationDialogComponent]
 })

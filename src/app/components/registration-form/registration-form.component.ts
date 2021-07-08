@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-registration-form',
@@ -15,8 +16,9 @@ import { UserService } from 'src/app/services/user.service';
 export class RegistrationFormComponent implements OnInit {
 
   registrationForm: FormGroup;
+  register: boolean;
 
-  constructor(private auth: AngularFireAuth, private router: Router, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -53,15 +55,17 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   createUser() {
-    const email = this.registrationForm.controls.email.value;
-    const password = this.registrationForm.controls.password.value;
-    from(this.auth.createUserWithEmailAndPassword(email, password)).pipe(switchMap((data) => {
-      return this.userService.createUser(data.user.uid, this.username.value);
-    })).subscribe((result: any) => {
-      if (result) {
-        this.router.navigate(['']);
-      }
-    })
+    if (this.registrationForm.valid) {
+      this.register = true;
+      this.userService.createUser(this.username.value, this.email.value, this.password.value)
+        .subscribe(
+          () => {
+            this.matSnackBar.open("Utworzono nowe konto!", "Ok", { duration: 2000 });
+            this.router.navigate(['']);
+          },
+          (error) => {
+            console.log("Error: ", error)
+          })
+    }
   }
-
 }
