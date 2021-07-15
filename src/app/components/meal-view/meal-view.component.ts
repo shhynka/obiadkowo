@@ -21,7 +21,6 @@ export class MealViewComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
 
     this.mealService.getMeal(this.id).subscribe((meal: Meal) => {
-      console.log(meal);
       this.meal = meal;
       this.ingredients = meal.ingredients;
       this.image = meal.imageUrl;

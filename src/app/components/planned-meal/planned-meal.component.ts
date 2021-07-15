@@ -42,7 +42,9 @@ export class PlannedMealComponent implements OnInit {
   }
 
   openDrawDialog(dateToPlanMeal: Date) {
-    let dialogRef = this.matDialog.open(DrawDialogComponent);
+    let dialogRef = this.matDialog.open(DrawDialogComponent, {
+      data: { date: dateToPlanMeal }
+    });
 
     dialogRef.afterClosed().pipe(
       switchMap((result: Meal) => {

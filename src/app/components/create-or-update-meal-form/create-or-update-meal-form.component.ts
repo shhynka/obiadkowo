@@ -21,12 +21,17 @@ import firebase from "firebase/app";
 export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
   id: string;
-  imageURL: string;
   imagePath: string;
   ingredientsList: string[] = [];
   meal: Meal;
   form = new FormGroup({
-    name: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ ]*')]),
+    name: new FormControl("", [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(50),
+      Validators.pattern('[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ ]*'),
+      this.noWhitespaceValidator
+    ]),
     imageUrl: new FormControl(""),
     recipe: new FormControl("")
   });
@@ -34,7 +39,13 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   saved = false;
   unsavedChanges = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar, private router: Router, private firestorageService: FireStorageService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private matDialog: MatDialog,
+    private mealService: MealService,
+    private matSnackBar: MatSnackBar,
+    private router: Router,
+    private firestorageService: FireStorageService) { }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params.id;
@@ -47,15 +58,12 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
           this.form.patchValue({
             name: meal.name,
-            recipe: meal.recipe
+            recipe: meal.recipe,
+            imageUrl: meal.imageUrl
           });
 
           this.ingredientsList = meal.ingredients;
-          this.imageURL = this.meal.imageUrl;
-          this.imagePath = this.meal.imagePath;
-          console.log(this.meal.imagePath);
-          console.log(this.imageURL);
-          console.log("imageUrl: " + this.imageUrl);
+          this.imagePath = meal.imagePath;
         })
     }
   }
@@ -65,11 +73,17 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   }
 
   get imageUrl() {
-    return this.form.controls.imageUrl;
+    return this.form.controls.imageUrl.value;
   }
 
   get recipe() {
     return this.form.controls.recipe;
+  }
+
+  private noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true };
   }
 
   onImageDropped($event): void {
@@ -83,6 +97,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
   uploadImage(image: File): void {
     const imagePath = `/images/${new Date().getTime()}-${image.name}`;
+
     const result = this.firestorageService.uploadFile(image, imagePath);
     this.uploadPercent = result.task.percentageChanges();
 
@@ -91,7 +106,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
       filter(task => task.state === firebase.storage.TaskState.SUCCESS),
       switchMap(task => from(task.ref.getDownloadURL()))
     ).subscribe((url) => {
-      this.imageURL = url;
+      this.form.controls.imageUrl.setValue(url);
       this.imagePath = imagePath;
       this.uploadPercent = null;
     })
@@ -107,6 +122,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   }
 
   openIngredientDialog() {
+    // I can't enter 3 ogórki  --- działa
     const dialogRef = this.matDialog.open(IngredientFormDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -119,48 +135,42 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   saveMeal() {
     if (this.form.valid) {
       if (this.id) {
-        const { name, recipe } = this.form.value;
-
+        // something's off update works/don't work radomly
         this.mealService.updateMeal({
-          id: this.meal.id,
-          name,
+          name: this.form.controls.name.value,
           ingredients: this.ingredientsList,
-          imageUrl: this.imageURL,
+          imageUrl: this.form.controls.imageUrl.value,
           imagePath: this.imagePath,
-          recipe,
+          recipe: this.form.controls.recipe.value,// what's wrong here?
           plannedDates: []
         }).subscribe(
           () => {
             this.saved = true;
-            if (this.meal.imagePath != this.imagePath) {
+            if (this.imagePath && (this.meal.imagePath != this.imagePath)) {
               this.firestorageService.deleteFile(this.meal.imagePath);
             }
             this.matSnackBar.open("Zaktualizowano obiad!", "Ok", { duration: 2000 });
             this.router.navigateByUrl("/meal-list");
           },
-          () => console.log("updating meal errored")
+          (error) => console.log("updating meal errored: ", error)
         )
       } else {
-        const { name, recipe } = this.form.value;
-
         this.mealService
           .addMeal({
-            name,
+            name: this.form.controls.name.value, // walidacja, można wprowadzić same spacje? --- można wprowadzić, ale usuwa niepotrzebne spacje
             ingredients: this.ingredientsList,
-            imageUrl: this.imageURL,
+            imageUrl: this.form.controls.imageUrl.value, // something wrong here, when obrazka nie ma
             imagePath: this.imagePath,
-            recipe,
+            recipe: this.form.controls.recipe.value, // what's wrong here?
             plannedDates: []
           })
           .subscribe(
-            (added) => {
-              if (added) {
-                this.saved = true;
-                this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 });
-                this.router.navigateByUrl("/meal-list");
-              }
+            () => {
+              this.saved = true;
+              this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 });
+              this.router.navigateByUrl("/meal-list");
             },
-            () => console.log("adding meal errored")
+            (error) => console.log("adding meal errored: ", error)
           )
       }
     }
@@ -198,16 +208,15 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   deleteImage(): void {
     if (!this.id) {
       this.firestorageService.deleteFile(this.imagePath);
-      this.imageURL = null;
+      this.form.controls.imageUrl.setValue(null);
       this.imagePath = null;
     } else {
-      if (this.meal.imagePath != this.imagePath) {
+      if (this.imagePath && (this.meal.imagePath != this.imagePath)) {
         this.firestorageService.deleteFile(this.meal.imagePath);
       }
-      this.imageURL = null;
+      this.form.controls.imageUrl.setValue(null);
       this.imagePath = null;
       this.unsavedChanges = true;
-
     }
   }
 

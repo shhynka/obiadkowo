@@ -28,9 +28,9 @@ export class MealComponent implements OnInit {
 
   ngOnInit(): void {
     this.date = new FormControl("", Validators.required);
-    this.meal.plannedDates = this.meal.plannedDates.sort();
     this.minDate = moment().toDate();
     this.maxDate = moment().add(7, "days").toDate();
+    console.log(this.meal.plannedDates);
   }
 
   openDeleteDialog() {
@@ -52,22 +52,36 @@ export class MealComponent implements OnInit {
     );
   }
 
-  addToMealPlan(date: FormControl) {
-    if (date.value) {
-      this.meal.plannedDates.push(date.value);
-      this.mealService.updateMeal(this.meal).subscribe(
-        () => this.matSnackBar.open("Zaplanowano obiad!", "Ok", { duration: 2000 }),
-        () => console.log("adding to meal plan errored")
-      );
+  addToMealPlan(plannedDate: FormControl) {
+    if (plannedDate.value) {
+      if (this.meal.plannedDates.some(date => moment(date).isSame(plannedDate.value, "day"))) {
+        this.matSnackBar.open("Ten obiad jest już zaplanowany na ten dzień. Wybierz inną datę.", "Ok", { duration: 5000 }); // to już niepotrzebne
+      } else {
+        this.meal.plannedDates.push(plannedDate.value);
+        this.mealService.updateMeal(this.meal).subscribe(
+          () => this.matSnackBar.open("Zaplanowano obiad!", "Ok", { duration: 2000 }),
+          (error) => console.log("adding to meal plan errored: ", error))
+      }
     }
   }
 
+  dateFilter = (d: Date): boolean => {
+    return !this.meal.plannedDates.some(date => moment(date).isSame(d, "day"));
+  }
+
+  findClosestDate(): Date {
+    return this.meal.plannedDates.reduce((prev, curr) => {
+      return Math.abs(curr.getTime() - this.minDate.getTime()) < Math.abs(prev.getTime() - this.minDate.getTime()) ? curr : prev;
+      //w zależności od godziny, wyświetla dzisiejszy dzień lub nie
+    })
+  }
+
   getMessage(): string {
-    let latestMealDate = new Date(this.meal.plannedDates[this.meal.plannedDates.length - 1]);
-    if (latestMealDate < this.minDate) {
+    let closestDate = this.findClosestDate();
+    if (closestDate < this.minDate) {
       return "Ostatnio ugotowano: ";
     }
-    if (latestMealDate >= this.minDate) {
+    if (closestDate >= this.minDate) {
       return "Zaplanowano na: ";
     }
   }

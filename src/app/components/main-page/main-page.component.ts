@@ -16,9 +16,10 @@ export class MainPageComponent implements OnInit {
   constructor(private mealService: MealService, private userService: UserService) { }
 
   ngOnInit(): void {
-    if (this.userService.isAuthenticated) {
-      this.username = this.userService.user.username;
-    }
+    this.userService.user.subscribe((user) => {
+      this.username = user.username;
+    })
+
     this.mealService.getMealPlan().subscribe((meals) => {
       this.plannedMeals = meals;
     });

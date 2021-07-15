@@ -70,7 +70,7 @@ registerLocaleData(localePl, 'pl');
           [{ 'list': 'ordered' }, { 'list': 'bullet' }],
           [{ 'color': [] }, { 'background': [] }],
           [{ 'align': [] }],
-          ['link', 'image', 'video']
+          ['link']
         ]
       }
     })

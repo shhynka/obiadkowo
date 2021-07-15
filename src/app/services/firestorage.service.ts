@@ -10,6 +10,7 @@ export class FireStorageService {
   constructor(private storage: AngularFireStorage) { }
 
   uploadFile(image: File, imagePath: string): { ref: AngularFireStorageReference, task: AngularFireUploadTask } {
+    console.log(image);
     const ref = this.storage.ref(imagePath);
     const task = ref.put(image);
 
@@ -21,7 +22,6 @@ export class FireStorageService {
 
   deleteFile(imagePath: string) {
     const storageRef = firebase.storage().ref();
-    console.log(imagePath);
     storageRef.child(imagePath).delete();
   }
 

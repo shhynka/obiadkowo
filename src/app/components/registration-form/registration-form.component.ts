@@ -71,8 +71,9 @@ export class RegistrationFormComponent implements OnInit {
           },
           (error) => {
             this.register = false;
-            this.matSnackBar.open(error, "Ok", { duration: 5000 })
-          })
+            this.matSnackBar.open(error, "Ok", { duration: 5000 });
+          }
+        )
     }
   }
 }

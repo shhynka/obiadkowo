@@ -19,7 +19,7 @@
     <div class="content">
         <h4 [routerLink]="['/meal', meal.id, 'view']">{{ meal.name }}</h4>
         <h5 *ngIf="meal.plannedDates.length, else elseMessage">
-            {{ getMessage() }} {{meal.plannedDates[meal.plannedDates.length - 1] | date: "longDate" }}
+            {{ getMessage() }} {{ findClosestDate() | date: "longDate" }}
         </h5>
         <ng-template #elseMessage>
             <h5>Jeszcze nie ugotowano tego obiadu</h5>
@@ -30,6 +30,7 @@
         <input matInput
                [min]="minDate"
                [max]="maxDate"
+               [matDatepickerFilter]="dateFilter"
                [matDatepicker]="datepicker"
                [formControl]="date">
         <mat-datepicker-toggle matSuffix
@@ -50,7 +51,7 @@
           *ngIf="layoutType == 'list'">
     <span>{{ meal.name }}</span>
     <span *ngIf="meal.plannedDates.length; else elseMessage">
-        Ostatnio ugotowany: {{ meal.plannedDates[meal.plannedDates.length - 1] | date: "longDate" }}
+        {{ getMessage() }} {{ findClosestDate() | date: "longDate" }}
     </span>
     <ng-template #elseMessage>
         <span>Jeszcze nie ugotowano tego obiadu</span>

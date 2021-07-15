@@ -175,6 +175,7 @@
 .recipe-container {
     grid-area: recipe;
     padding: 20px 0px;
+    max-width: 940px;
 
     .recipe-area {
         display: block;

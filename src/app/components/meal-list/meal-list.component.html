@@ -1,4 +1,6 @@
 <div class="page">
+    <button class="back-btn"
+            routerLink="">Wróć do planu tygodnia</button>
     <div class="display-options-container">
         <button class="display-btn"
                 (click)="changeLayout('gallery')"
@@ -26,6 +28,7 @@
             </mat-select>
         </mat-form-field>
     </div>
+
 
     <h3 class="header">Liczba obiadów: {{ (meals | async)?.length }}</h3>
 </div>

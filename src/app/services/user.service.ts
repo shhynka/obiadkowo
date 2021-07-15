@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { EMPTY, from, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -10,21 +10,24 @@ import { User } from '../models/user.model';
 })
 export class UserService {
 
-  user: User; // zamienić na observable
+  user: Observable<User>;
 
   constructor(private angularFireAuth: AngularFireAuth, private angularFirestore: AngularFirestore) {
-    this.angularFireAuth.authState.pipe(switchMap(authState => {
-      // what if authState is Null here
-      return this.angularFirestore.doc<User>(`users/${authState.uid}`).snapshotChanges();
-    })).subscribe((userDoc) => {
+    this.user = this.angularFireAuth.authState.pipe(switchMap(authState => {
+      if (authState) {
+        return this.angularFirestore.doc<User>(`users/${authState.uid}`).snapshotChanges();
+      } else {
+        return EMPTY;
+      }
+    }), map((userDoc) => {
       const user = userDoc.payload.data();
       const id = userDoc.payload.id;
-      this.user = { ...user, id }
-    })
+      return { ...user, id };
+    }));
   }
 
-  get isAuthenticated(): boolean {
-    return this.user !== null;
+  get isAuthenticated(): Observable<boolean> {
+    return this.user.pipe(map((res) => !!res));
   }
 
   createUser(username: string, email: string, password: string) {
@@ -44,6 +47,11 @@ export class UserService {
   }
 
   sendPasswordResetEmail(email: string) {
+    //nie działa
     return from(this.angularFireAuth.sendPasswordResetEmail(email));
+  }
+
+  logOut() {
+    return from(this.angularFireAuth.signOut());
   }
 }
