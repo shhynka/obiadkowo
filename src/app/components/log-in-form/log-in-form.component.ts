@@ -37,12 +37,12 @@ export class LogInFormComponent implements OnInit {
       this.userService.logIn(this.email.value, this.password.value)
         .subscribe(
           () => {
-            this.matSnackBar.open("Zalogowano poprawnie!", "Ok", { duration: 2000 });
+            this.matSnackBar.open('Zalogowano poprawnie!', 'Ok', { duration: 2000 });
             this.router.navigate(['']);
           },
           (error) => {
             this.loggingIn = false;
-            this.matSnackBar.open(error, "Ok", { duration: 5000 });
+            this.matSnackBar.open(error, 'Ok', { duration: 5000 });
           });
       // what if zalogowano niepoprawnie xD --- działa, ale error po angielsku
     }
@@ -51,7 +51,7 @@ export class LogInFormComponent implements OnInit {
   sendPasswordResetEmail() {
     this.userService.sendPasswordResetEmail(this.email.value)
       .subscribe(() => {
-        this.matSnackBar.open("Wysłano emaila resetującego hasło", "Ok", { duration: 2000 });
+        this.matSnackBar.open('Wysłano emaila resetującego hasło', 'Ok', { duration: 2000 });
       });
   }
 

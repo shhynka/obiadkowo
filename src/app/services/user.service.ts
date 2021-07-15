@@ -33,13 +33,13 @@ export class UserService {
   createUser(username: string, email: string, password: string) {
     return from(this.angularFireAuth.createUserWithEmailAndPassword(email, password))
       .pipe(switchMap((data) => {
-        return from(this.angularFirestore.collection<User>("users").doc(data.user.uid).set({
-          username: username
-        }))
+        return from(this.angularFirestore.collection<User>('users').doc(data.user.uid).set({
+          username
+        }));
       }), switchMap(() => {
         return this.logIn(email, password);
       })
-      )
+      );
   }
 
   logIn(email: string, password: string) {
@@ -47,7 +47,7 @@ export class UserService {
   }
 
   sendPasswordResetEmail(email: string) {
-    //nie działa
+    // nie działa
     return from(this.angularFireAuth.sendPasswordResetEmail(email));
   }
 

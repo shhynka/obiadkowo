@@ -6,12 +6,12 @@ export const environment = {
   production: false,
 
   firebase: {
-    apiKey: "AIzaSyBDgNfFRZrSMRAxxSihni-CSlgY8h0rnF4",
-    authDomain: "obiadkowo-6a1d0.firebaseapp.com",
-    projectId: "obiadkowo-6a1d0",
-    storageBucket: "obiadkowo-6a1d0.appspot.com",
-    messagingSenderId: "437934254796",
-    appId: "1:437934254796:web:7040c8af5948bb29d7b069"
+    apiKey: 'AIzaSyBDgNfFRZrSMRAxxSihni-CSlgY8h0rnF4',
+    authDomain: 'obiadkowo-6a1d0.firebaseapp.com',
+    projectId: 'obiadkowo-6a1d0',
+    storageBucket: 'obiadkowo-6a1d0.appspot.com',
+    messagingSenderId: '437934254796',
+    appId: '1:437934254796:web:7040c8af5948bb29d7b069'
   }
 };
 

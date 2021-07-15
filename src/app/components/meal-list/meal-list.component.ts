@@ -26,7 +26,7 @@ export class MealListComponent implements OnInit {
   constructor(private mealService: MealService) { }
 
   ngOnInit(): void {
-    let mealList = this.mealService.getMealList();
+    const mealList = this.mealService.getMealList();
 
     this.sortByOptionControl.setValue(this.sortByDropdownValues[0].sortByOption);
 

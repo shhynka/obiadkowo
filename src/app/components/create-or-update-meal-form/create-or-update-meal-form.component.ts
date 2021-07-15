@@ -11,7 +11,9 @@ import { FireStorageService } from 'src/app/services/firestorage.service';
 import { MealService } from 'src/app/services/meal.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { IngredientFormDialogComponent } from '../ingredient-form-dialog/ingredient-form-dialog.component';
-import firebase from "firebase/app";
+import firebase from 'firebase/app';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-create-or-update-meal-form',
@@ -21,19 +23,20 @@ import firebase from "firebase/app";
 export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
   id: string;
+  user: User;
   imagePath: string;
   ingredientsList: string[] = [];
   meal: Meal;
   form = new FormGroup({
-    name: new FormControl("", [
+    name: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(50),
       Validators.pattern('[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ ]*'),
       this.noWhitespaceValidator
     ]),
-    imageUrl: new FormControl(""),
-    recipe: new FormControl("")
+    imageUrl: new FormControl(''),
+    recipe: new FormControl('')
   });
   uploadPercent: Observable<number>;
   saved = false;
@@ -45,10 +48,12 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     private mealService: MealService,
     private matSnackBar: MatSnackBar,
     private router: Router,
-    private firestorageService: FireStorageService) { }
+    private firestorageService: FireStorageService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params.id;
+
 
     if (this.id) {
       this.mealService
@@ -56,7 +61,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
         .subscribe((meal: Meal) => {
           this.meal = meal;
 
-          this.form.patchValue({
+          this.form.setValue({
             name: meal.name,
             recipe: meal.recipe,
             imageUrl: meal.imageUrl
@@ -64,7 +69,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
           this.ingredientsList = meal.ingredients;
           this.imagePath = meal.imagePath;
-        })
+        });
     }
   }
 
@@ -83,7 +88,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   private noWhitespaceValidator(control: FormControl) {
     const isWhitespace = (control.value || '').trim().length === 0;
     const isValid = !isWhitespace;
-    return isValid ? null : { 'whitespace': true };
+    return isValid ? null : { whitespace: true };
   }
 
   onImageDropped($event): void {
@@ -109,7 +114,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
       this.form.controls.imageUrl.setValue(url);
       this.imagePath = imagePath;
       this.uploadPercent = null;
-    })
+    });
   }
 
   dropIngredients(event: CdkDragDrop<string[]>): void {
@@ -127,7 +132,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.ingredientsList.push(result);
-        this.matSnackBar.open("Dodano składnik obiadu!", "Ok", { duration: 2000 });
+        this.matSnackBar.open('Dodano składnik obiadu!', 'Ok', { duration: 2000 });
       }
     });
   }
@@ -137,11 +142,12 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
       if (this.id) {
         // something's off update works/don't work radomly
         this.mealService.updateMeal({
+          id: this.id,
           name: this.form.controls.name.value,
           ingredients: this.ingredientsList,
           imageUrl: this.form.controls.imageUrl.value,
-          imagePath: this.imagePath,
-          recipe: this.form.controls.recipe.value,// what's wrong here?
+          imagePath: this.imagePath || null,
+          recipe: this.form.controls.recipe.value, // what's wrong here?
           plannedDates: []
         }).subscribe(
           () => {
@@ -149,46 +155,46 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
             if (this.imagePath && (this.meal.imagePath != this.imagePath)) {
               this.firestorageService.deleteFile(this.meal.imagePath);
             }
-            this.matSnackBar.open("Zaktualizowano obiad!", "Ok", { duration: 2000 });
-            this.router.navigateByUrl("/meal-list");
+            this.matSnackBar.open('Zaktualizowano obiad!', 'Ok', { duration: 2000 });
+            this.router.navigateByUrl('/meal-list');
           },
-          (error) => console.log("updating meal errored: ", error)
-        )
+          (error) => console.log('updating meal errored: ', error)
+        );
       } else {
         this.mealService
           .addMeal({
-            name: this.form.controls.name.value, // walidacja, można wprowadzić same spacje? --- można wprowadzić, ale usuwa niepotrzebne spacje
+            name: this.form.controls.name.value, // walidacja, można wprowadzić same spacje? --- działa - można wprowadzić, ale usuwa niepotrzebne spacje
             ingredients: this.ingredientsList,
-            imageUrl: this.form.controls.imageUrl.value, // something wrong here, when obrazka nie ma
-            imagePath: this.imagePath,
-            recipe: this.form.controls.recipe.value, // what's wrong here?
+            imageUrl: this.form.controls.imageUrl.value, // something wrong here, when obrazka nie ma --- da się zapisać bez obrazka
+            imagePath: this.imagePath || null,
+            recipe: this.form.controls.recipe.value, // what's wrong here? -- działa
             plannedDates: []
           })
           .subscribe(
             () => {
               this.saved = true;
-              this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 });
-              this.router.navigateByUrl("/meal-list");
+              this.matSnackBar.open('Dodano nowy obiad!', 'Ok', { duration: 2000 });
+              this.router.navigateByUrl('/meal-list');
             },
-            (error) => console.log("adding meal errored: ", error)
-          )
+            (error) => console.log('adding meal errored: ', error)
+          );
       }
     }
   }
 
   backToMealList() {
     if (this.form.dirty || this.unsavedChanges) {
-      let dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-        data: { message: "Czy na pewno chcesz powrócić do listy obiadów? Wprowadzone zmiany nie zostaną zapisane" }
-      })
+      const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
+        data: { message: 'Czy na pewno chcesz powrócić do listy obiadów? Wprowadzone zmiany nie zostaną zapisane' }
+      });
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.router.navigateByUrl("/meal-list");
+          this.router.navigateByUrl('/meal-list');
         }
       });
     } else {
-      this.router.navigateByUrl("/meal-list");
+      this.router.navigateByUrl('/meal-list');
     }
   }
 

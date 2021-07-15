@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
-import firebase from "firebase/app";
+import firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class FireStorageService {
     return {
       ref,
       task
-    }
+    };
   }
 
   deleteFile(imagePath: string) {

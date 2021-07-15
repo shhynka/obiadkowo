@@ -22,7 +22,7 @@ export class DrawDialogComponent implements OnInit {
   ngOnInit(): void {
     this.mealsList = this.mealService.getMealList();
     this.mealService.getRandomMeal(this.data.date).subscribe(meal => {
-      this.filteredMealList = this.mealsList.pipe(map(meals => meals.filter(meal => !meal.plannedDates.some(date => moment(date).isSame(this.data.date, "day")))))
+      this.filteredMealList = this.mealsList.pipe(map(meals => meals.filter(meal => !meal.plannedDates.some(date => moment(date).isSame(this.data.date, 'day')))));
       this.randomMeal = meal;
     });
     // what if nie ma obiadów --- działa

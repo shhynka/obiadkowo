@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class RegistrationFormComponent implements OnInit {
 
   registrationForm: FormGroup;
-  register: boolean = false;
+  register = false;
 
   constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
@@ -66,14 +66,14 @@ export class RegistrationFormComponent implements OnInit {
       this.userService.createUser(this.username.value, this.email.value, this.password.value)
         .subscribe(
           () => {
-            this.matSnackBar.open("Utworzono nowe konto!", "Ok", { duration: 2000 });
+            this.matSnackBar.open('Utworzono nowe konto!', 'Ok', { duration: 2000 });
             this.router.navigate(['']);
           },
           (error) => {
             this.register = false;
-            this.matSnackBar.open(error, "Ok", { duration: 5000 });
+            this.matSnackBar.open(error, 'Ok', { duration: 5000 });
           }
-        )
+        );
     }
   }
 }

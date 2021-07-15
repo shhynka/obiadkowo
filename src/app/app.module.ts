@@ -67,9 +67,9 @@ registerLocaleData(localePl, 'pl');
         syntax: false,
         toolbar: [
           ['bold', 'italic', 'underline'],
-          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-          [{ 'color': [] }, { 'background': [] }],
-          [{ 'align': [] }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ color: [] }, { background: [] }],
+          [{ align: [] }],
           ['link']
         ]
       }

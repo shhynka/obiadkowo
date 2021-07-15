@@ -5,10 +5,10 @@
         <button>Udostępnij</button>
     </div>
     <div class="image-container">
-        <img src="{{ meal.imageUrl}}"
+        <img src="{{ meal?.imageUrl}}"
              alt="image of dinner">
     </div>
-    <h3>{{meal.name}}</h3>
+    <h3>{{meal?.name}}</h3>
     <h4>Składniki</h4>
     <ul>
         <li *ngFor="let ingredient of ingredients"
@@ -17,6 +17,6 @@
         </li>
     </ul>
     <h4>Przepis</h4>
-    <quill-view-html [content]="meal.recipe"
+    <quill-view-html [content]="meal?.recipe"
                      theme="snow"></quill-view-html>
 </div>

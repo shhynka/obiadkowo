@@ -18,7 +18,7 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     this.userService.user.subscribe((user) => {
       this.username = user.username;
-    })
+    });
 
     this.mealService.getMealPlan().subscribe((meals) => {
       this.plannedMeals = meals;

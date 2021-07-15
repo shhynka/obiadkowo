@@ -18,7 +18,7 @@ import { DrawDialogComponent } from '../draw-dialog/draw-dialog.component';
 export class PlannedMealComponent implements OnInit {
 
   @Input() plannedMeal: PlannedMeal;
-  currentIndex: number = 0;
+  currentIndex = 0;
 
   constructor(private mealService: MealService, private matDialog: MatDialog, private matSnackBar: MatSnackBar) { }
 
@@ -42,7 +42,7 @@ export class PlannedMealComponent implements OnInit {
   }
 
   openDrawDialog(dateToPlanMeal: Date) {
-    let dialogRef = this.matDialog.open(DrawDialogComponent, {
+    const dialogRef = this.matDialog.open(DrawDialogComponent, {
       data: { date: dateToPlanMeal }
     });
 
@@ -55,25 +55,25 @@ export class PlannedMealComponent implements OnInit {
         return EMPTY;
       })
     ).subscribe(() => {
-      this.matSnackBar.open("Dodano obiad do planu posiłków!", "Ok", { duration: 2000 });
+      this.matSnackBar.open('Dodano obiad do planu posiłków!', 'Ok', { duration: 2000 });
     });
   }
 
   openDeleteFromMealPlanDialog(dateToDelete: Date) {
-    let dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
+    const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
       data: {
-        message: "Czy na pewno chcesz usunąć ten obiad z planu posiłków?"
+        message: 'Czy na pewno chcesz usunąć ten obiad z planu posiłków?'
       }
     });
 
     dialogRef.afterClosed().pipe(switchMap(result => {
       if (result) {
-        this.currentMeal.plannedDates = this.currentMeal.plannedDates.filter(date => !moment(date).isSame(dateToDelete, "day"));
+        this.currentMeal.plannedDates = this.currentMeal.plannedDates.filter(date => !moment(date).isSame(dateToDelete, 'day'));
         return this.mealService.updateMeal(this.currentMeal);
       }
       return EMPTY;
     })).subscribe(() => {
-      this.matSnackBar.open("Usunięto obiad z planu posiłków!", "Ok", { duration: 2000 });
+      this.matSnackBar.open('Usunięto obiad z planu posiłków!', 'Ok', { duration: 2000 });
     });
   }
 }

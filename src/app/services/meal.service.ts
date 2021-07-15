@@ -20,13 +20,13 @@ export class MealService {
   }
 
   getMeal(id: string) {
-    return this.angularFirestore.collection<Meal>("meals", ref => ref.where("userId", "==", firebase.auth().currentUser.uid))
+    return this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .doc(id)
       .valueChanges();
   }
 
   getMealList() {
-    return this.angularFirestore.collection<Meal>("meals", ref => ref.where("userId", "==", firebase.auth().currentUser.uid))
+    return this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .snapshotChanges()
       .pipe(
         map(actions => actions.map(a => {
@@ -34,17 +34,17 @@ export class MealService {
           const id = a.payload.doc.id;
           const plannedDates = (data.plannedDates as any[]).map((date: Timestamp) => date.toDate());
           return { ...data, plannedDates, id };
-        })))
+        })));
   }
 
   addMeal(newMeal: Meal) {
-    return from(this.angularFirestore.collection<Meal>("meals", ref => ref.where("userId", "==", firebase.auth().currentUser.uid))
+    return from(this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .add({ ...newMeal, userId: firebase.auth().currentUser.uid }))
       .pipe(map(doc => !!doc.id));
   }
 
   updateMeal(mealToUpdate: Meal) {
-    return from(this.angularFirestore.collection<Meal>("meals", ref => ref.where("userId", "==", firebase.auth().currentUser.uid))
+    return from(this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .doc(mealToUpdate.id)
       .update({
         name: mealToUpdate.name,
@@ -53,11 +53,11 @@ export class MealService {
         imagePath: mealToUpdate.imagePath,
         recipe: mealToUpdate.recipe,
         plannedDates: mealToUpdate.plannedDates
-      }))
+      }));
   }
 
   deleteMeal(id: string) {
-    return from(this.angularFirestore.collection<Meal>("meals", ref => ref.where("userId", "==", firebase.auth().currentUser.uid))
+    return from(this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .doc(id)
       .delete());
   }
@@ -65,23 +65,23 @@ export class MealService {
   getMealPlan(): Observable<PlannedMeal[]> {
     return this.meals.pipe(
       map(meals => {
-        let filteredMealList = meals.filter(meal =>
+        const filteredMealList = meals.filter(meal =>
           meal.plannedDates.some(plannedDate => {
             const currentDate = moment();
             const planD = moment(plannedDate);
-            const dayDifference = planD.diff(currentDate, "days");
-            return 0 <= dayDifference && dayDifference <= 7
+            const dayDifference = planD.diff(currentDate, 'days');
+            return 0 <= dayDifference && dayDifference <= 7;
           })
         );
-        let dateList: moment.Moment[] = [];
+        const dateList: moment.Moment[] = [];
         dateList.push(moment());
 
         for (let i = 1; i < 7; i++) {
-          dateList.push(moment().add(i, "days"));
+          dateList.push(moment().add(i, 'days'));
         }
 
         return dateList.map(date => {
-          let foundMeals = filteredMealList.filter(meal => meal.plannedDates.some(plannedDate => moment(plannedDate).isSame(date, "day")));
+          const foundMeals = filteredMealList.filter(meal => meal.plannedDates.some(plannedDate => moment(plannedDate).isSame(date, 'day')));
           return { date: date.toDate(), meals: foundMeals, isDrawPossible: meals.length !== foundMeals.length };
         });
       }
@@ -90,8 +90,8 @@ export class MealService {
 
   getRandomMeal(excludedDate: Date): Observable<Meal> {
     return this.meals.pipe(take(1), map(meals => {
-      let filteredMealList = meals.filter(meal => !meal.plannedDates.some(date => moment(date).isSame(excludedDate, "day")));
-      let randomIndex = Math.floor(Math.random() * filteredMealList.length);
+      const filteredMealList = meals.filter(meal => !meal.plannedDates.some(date => moment(date).isSame(excludedDate, 'day')));
+      const randomIndex = Math.floor(Math.random() * filteredMealList.length);
       return filteredMealList[randomIndex];
     }));
   }

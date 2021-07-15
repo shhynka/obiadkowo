@@ -25,7 +25,7 @@ export class IngredientFormDialogComponent implements OnInit {
   private noWhitespaceValidator(control: FormControl) {
     const isWhitespace = (control.value || '').trim().length === 0;
     const isValid = !isWhitespace;
-    return isValid ? null : { 'whitespace': true };
+    return isValid ? null : { whitespace: true };
   }
 
   saveIngredient() {

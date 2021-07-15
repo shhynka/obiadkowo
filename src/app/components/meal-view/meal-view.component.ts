@@ -24,6 +24,6 @@ export class MealViewComponent implements OnInit {
       this.meal = meal;
       this.ingredients = meal.ingredients;
       this.image = meal.imageUrl;
-    })
+    });
   }
 }
