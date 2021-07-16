@@ -24,9 +24,18 @@
         background: none;
     }
 
+    .display-btn:hover {
+        color: #000000;
+    }
+
     .gallery-btn,
     .list-btn {
         color: #b4531b;
+    }
+
+    .gallery-btn:hover,
+    .list-btn:hover {
+        color: #8c2908;
     }
 
     .back-btn {
@@ -48,7 +57,7 @@
     }
 
     .display-option {
-        font-size: 40px;
+        font-size: 50px;
     }
 
     .sort-options-container {

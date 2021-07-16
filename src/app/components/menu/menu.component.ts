@@ -19,7 +19,7 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  logOut() {
+  logOut(): void {
     this.userService.logOut().subscribe(() => {
       this.loggedIn = false;
       this.router.navigate(['log-in-page']);

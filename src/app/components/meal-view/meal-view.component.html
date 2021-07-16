@@ -2,14 +2,17 @@
     <div class="btn-container">
         <button class="back-btn"
                 routerLink="/meal-list">Wróć do listy</button>
-        <button>Udostępnij</button>
     </div>
     <div class="image-container">
         <img src="{{ meal?.imageUrl}}"
              alt="image of dinner">
     </div>
     <h3>{{meal?.name}}</h3>
-    <h4>Składniki</h4>
+    <div class="clipboard-container">
+        <h4>Składniki</h4>
+        <button (click)="copyIngredientsList()">Skopiuj listę składników do schowka</button>
+    </div>
+
     <ul>
         <li *ngFor="let ingredient of ingredients"
             [ingredient]="ingredient">

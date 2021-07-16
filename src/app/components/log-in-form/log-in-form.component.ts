@@ -31,7 +31,7 @@ export class LogInFormComponent implements OnInit {
     return this.logInForm.controls.password;
   }
 
-  logIn() {
+  logIn(): void {
     if (this.logInForm.valid) {
       this.loggingIn = true;
       this.userService.logIn(this.email.value, this.password.value)
@@ -48,7 +48,7 @@ export class LogInFormComponent implements OnInit {
     }
   }
 
-  sendPasswordResetEmail() {
+  sendPasswordResetEmail(): void {
     this.userService.sendPasswordResetEmail(this.email.value)
       .subscribe(() => {
         this.matSnackBar.open('Wysłano emaila resetującego hasło', 'Ok', { duration: 2000 });

@@ -28,13 +28,13 @@ export class IngredientFormDialogComponent implements OnInit {
     return isValid ? null : { whitespace: true };
   }
 
-  saveIngredient() {
+  saveIngredient(): void {
     if (this.ingredientControl.valid) {
       this.matDialogRef.close(this.ingredientControl.value);
     }
   }
 
-  closeDialog() {
+  closeDialog(): void {
     this.matDialogRef.close();
   }
 }

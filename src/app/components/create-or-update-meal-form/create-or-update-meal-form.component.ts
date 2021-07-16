@@ -12,7 +12,6 @@ import { MealService } from 'src/app/services/meal.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { IngredientFormDialogComponent } from '../ingredient-form-dialog/ingredient-form-dialog.component';
 import firebase from 'firebase/app';
-import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
 
 @Component({
@@ -48,27 +47,24 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     private mealService: MealService,
     private matSnackBar: MatSnackBar,
     private router: Router,
-    private firestorageService: FireStorageService,
-    private userService: UserService) { }
+    private firestorageService: FireStorageService) { }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params.id;
-
 
     if (this.id) {
       this.mealService
         .getMeal(this.id)
         .subscribe((meal: Meal) => {
           this.meal = meal;
+          this.ingredientsList = meal.ingredients;
+          this.imagePath = meal.imagePath;
 
           this.form.setValue({
             name: meal.name,
             recipe: meal.recipe,
             imageUrl: meal.imageUrl
           });
-
-          this.ingredientsList = meal.ingredients;
-          this.imagePath = meal.imagePath;
         });
     }
   }
@@ -77,11 +73,11 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     return this.form.controls.name;
   }
 
-  get imageUrl() {
+  get imageUrl(): string {
     return this.form.controls.imageUrl.value;
   }
 
-  get recipe() {
+  get recipe(): AbstractControl {
     return this.form.controls.recipe;
   }
 
@@ -121,12 +117,12 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     moveItemInArray(this.ingredientsList, event.previousIndex, event.currentIndex);
   }
 
-  deleteIngredient(index: number) {
+  deleteIngredient(index: number): void {
     this.ingredientsList.splice(index, 1);
     this.unsavedChanges = true;
   }
 
-  openIngredientDialog() {
+  openIngredientDialog(): void {
     // I can't enter 3 ogórki  --- działa
     const dialogRef = this.matDialog.open(IngredientFormDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
@@ -137,7 +133,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  saveMeal() {
+  saveMeal(): void {
     if (this.form.valid) {
       if (this.id) {
         // something's off update works/don't work radomly
@@ -152,7 +148,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
         }).subscribe(
           () => {
             this.saved = true;
-            if (this.imagePath && (this.meal.imagePath != this.imagePath)) {
+            if (this.imagePath && (this.meal.imagePath !== this.imagePath)) {
               this.firestorageService.deleteFile(this.meal.imagePath);
             }
             this.matSnackBar.open('Zaktualizowano obiad!', 'Ok', { duration: 2000 });
@@ -163,11 +159,11 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
       } else {
         this.mealService
           .addMeal({
-            name: this.form.controls.name.value, // walidacja, można wprowadzić same spacje? --- działa - można wprowadzić, ale usuwa niepotrzebne spacje
+            name: this.form.controls.name.value,
             ingredients: this.ingredientsList,
-            imageUrl: this.form.controls.imageUrl.value, // something wrong here, when obrazka nie ma --- da się zapisać bez obrazka
+            imageUrl: this.form.controls.imageUrl.value,
             imagePath: this.imagePath || null,
-            recipe: this.form.controls.recipe.value, // what's wrong here? -- działa
+            recipe: this.form.controls.recipe.value,
             plannedDates: []
           })
           .subscribe(
@@ -182,7 +178,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  backToMealList() {
+  backToMealList(): void {
     if (this.form.dirty || this.unsavedChanges) {
       const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
         data: { message: 'Czy na pewno chcesz powrócić do listy obiadów? Wprowadzone zmiany nie zostaną zapisane' }
@@ -198,15 +194,15 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    if (!this.saved && this.imagePath && (!this.id || this.imagePath != this.meal.imagePath)) {
+  ngOnDestroy(): void {
+    if (!this.saved && this.imagePath && (!this.id || this.imagePath !== this.meal.imagePath)) {
       this.firestorageService.deleteFile(this.imagePath);
     }
   }
 
   @HostListener('window:beforeunload')
-  windowBeforeUpload() {
-    if (this.imagePath && (!this.id || this.imagePath != this.meal.imagePath)) {
+  windowBeforeUpload(): void {
+    if (this.imagePath && (!this.id || this.imagePath !== this.meal.imagePath)) {
       this.firestorageService.deleteFile(this.imagePath);
     }
   }
@@ -217,7 +213,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
       this.form.controls.imageUrl.setValue(null);
       this.imagePath = null;
     } else {
-      if (this.imagePath && (this.meal.imagePath != this.imagePath)) {
+      if (this.imagePath && (this.meal.imagePath !== this.imagePath)) {
         this.firestorageService.deleteFile(this.meal.imagePath);
       }
       this.form.controls.imageUrl.setValue(null);

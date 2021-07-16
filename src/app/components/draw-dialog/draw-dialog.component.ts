@@ -17,12 +17,16 @@ export class DrawDialogComponent implements OnInit {
   mealsList: Observable<Meal[]>;
   filteredMealList: Observable<Meal[]>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private matDialogRef: MatDialogRef<DrawDialogComponent>, private mealService: MealService) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private matDialogRef: MatDialogRef<DrawDialogComponent>,
+    private mealService: MealService) { }
 
   ngOnInit(): void {
     this.mealsList = this.mealService.getMealList();
     this.mealService.getRandomMeal(this.data.date).subscribe(meal => {
-      this.filteredMealList = this.mealsList.pipe(map(meals => meals.filter(meal => !meal.plannedDates.some(date => moment(date).isSame(this.data.date, 'day')))));
+      this.filteredMealList = this.mealsList.pipe(
+        map(meals => meals.filter(meal => !meal.plannedDates.some(date => moment(date).isSame(this.data.date, 'day')))));
       this.randomMeal = meal;
     });
     // what if nie ma obiadów --- działa
@@ -30,11 +34,11 @@ export class DrawDialogComponent implements OnInit {
 
   }
 
-  planMeal() {
+  planMeal(): void {
     this.matDialogRef.close(this.randomMeal);
   }
 
-  closeDialog() {
+  closeDialog(): void {
     this.matDialogRef.close();
   }
 

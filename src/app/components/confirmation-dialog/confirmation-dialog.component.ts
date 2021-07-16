@@ -16,11 +16,11 @@ export class ConfirmationDialogComponent implements OnInit {
     this.msg = this.data.message;
   }
 
-  yesClick() {
+  yesClick(): void {
     this.matDialogRef.close(true);
   }
 
-  closeDialog() {
+  closeDialog(): void {
     this.matDialogRef.close();
   }
 }

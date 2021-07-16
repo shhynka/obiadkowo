@@ -20,7 +20,7 @@ export class FireStorageService {
     };
   }
 
-  deleteFile(imagePath: string) {
+  deleteFile(imagePath: string): void {
     const storageRef = firebase.storage().ref();
     storageRef.child(imagePath).delete();
   }

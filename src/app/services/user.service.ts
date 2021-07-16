@@ -51,7 +51,7 @@ export class UserService {
     return from(this.angularFireAuth.sendPasswordResetEmail(email));
   }
 
-  logOut() {
+  logOut(): Observable<void> {
     return from(this.angularFireAuth.signOut());
   }
 }

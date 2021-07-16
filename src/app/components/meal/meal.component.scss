@@ -16,6 +16,7 @@ span {
         width: 100%;
         height: 250px;
         object-fit: cover;
+        cursor: pointer;
     }
 
     .image-container {
@@ -90,9 +91,10 @@ span {
     }
 
     .no-image-msg {
-        padding-top: 100px;
+        padding: 100px 0px;
         font-size: 15px;
         color: grey;
+        cursor: pointer;
     }
 }
 

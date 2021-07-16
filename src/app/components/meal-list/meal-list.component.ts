@@ -30,18 +30,20 @@ export class MealListComponent implements OnInit {
 
     this.sortByOptionControl.setValue(this.sortByDropdownValues[0].sortByOption);
 
-    this.meals = combineLatest([this.sortByOptionControl.valueChanges.pipe(startWith(this.sortByDropdownValues[0].sortByOption)), mealList]).pipe(
-      map(([currentSortBy, currentMealList]) => {
-        return currentMealList.sort((m1, m2) => {
-          if (m1[currentSortBy.propertyName] > m2[currentSortBy.propertyName]) {
-            return currentSortBy.direction === 'asc' ? 1 : -1;
-          }
-          if (m1[currentSortBy.propertyName] < m2[currentSortBy.propertyName]) {
-            return currentSortBy.direction === 'asc' ? -1 : 1;
-          }
-          return 0;
-        });
-      }));
+    this.meals = combineLatest([this.sortByOptionControl.valueChanges
+      .pipe(
+        startWith(this.sortByDropdownValues[0].sortByOption)), mealList]).pipe(
+          map(([currentSortBy, currentMealList]) => {
+            return currentMealList.sort((m1, m2) => {
+              if (m1[currentSortBy.propertyName] > m2[currentSortBy.propertyName]) {
+                return currentSortBy.direction === 'asc' ? 1 : -1;
+              }
+              if (m1[currentSortBy.propertyName] < m2[currentSortBy.propertyName]) {
+                return currentSortBy.direction === 'asc' ? -1 : 1;
+              }
+              return 0;
+            });
+          }));
   }
 
   changeLayout(changeToLayout: 'list' | 'gallery'): void {

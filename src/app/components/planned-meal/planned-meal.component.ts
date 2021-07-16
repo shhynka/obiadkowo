@@ -25,23 +25,23 @@ export class PlannedMealComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  displayNextMeal() {
+  displayNextMeal(): void {
     if (this.currentIndex + 1 < this.plannedMeal.meals.length + 1) {
       this.currentIndex++;
     }
   }
 
-  displayPreviousMeal() {
+  displayPreviousMeal(): void {
     if (this.currentIndex - 1 >= 0) {
       this.currentIndex--;
     }
   }
 
-  get currentMeal() {
+  get currentMeal(): Meal {
     return this.plannedMeal.meals[this.currentIndex];
   }
 
-  openDrawDialog(dateToPlanMeal: Date) {
+  openDrawDialog(dateToPlanMeal: Date): void {
     const dialogRef = this.matDialog.open(DrawDialogComponent, {
       data: { date: dateToPlanMeal }
     });
@@ -59,7 +59,7 @@ export class PlannedMealComponent implements OnInit {
     });
   }
 
-  openDeleteFromMealPlanDialog(dateToDelete: Date) {
+  openDeleteFromMealPlanDialog(dateToDelete: Date): void {
     const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
       data: {
         message: 'Czy na pewno chcesz usunąć ten obiad z planu posiłków?'

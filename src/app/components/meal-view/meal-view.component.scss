@@ -57,23 +57,21 @@ h4 {
     justify-content: space-evenly;
     padding-bottom: 30px;
 
-    button {
+    .back-btn {
         width: 300px;
         padding: 15px;
-        margin-bottom: 5px;
-        border: none;
-        background-color: #b4531b;
-        color: #ffffff;
+        background-color: #ffffff;
+        color: #000000;
         font-size: 10px;
         font-weight: bold;
         border-radius: 2px;
+        border: solid 1px #8b8888;
         cursor: pointer;
+        transition: border 1s;
     }
 
-    .back-btn {
-        background-color: #ffffff;
-        color: #000000;
-        border: solid 1px #8b8888;
+    .back-btn:hover {
+        border: solid 1px #000000;
     }
 }
 
@@ -85,6 +83,29 @@ h4 {
         width: 500px;
         object-fit: cover;
         align-self: center;
+    }
+}
+
+.clipboard-container {
+    display: flex;
+    align-items: baseline;
+
+    button {
+        width: 215px;
+        padding: 5px 10px;
+        margin-left: 25px;
+        border: none;
+        background-color: #b4531b;
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: background-color 1s;
+    }
+
+    button:hover {
+        background-color: #8c2908;
     }
 }
 

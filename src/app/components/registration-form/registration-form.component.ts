@@ -60,7 +60,7 @@ export class RegistrationFormComponent implements OnInit {
     return password.value === passwordConfirmation.value ? null : { mustMatch: true };
   }
 
-  createUser() {
+  createUser(): void {
     if (this.registrationForm.valid) {
       this.register = true;
       this.userService.createUser(this.username.value, this.email.value, this.password.value)

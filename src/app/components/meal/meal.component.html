@@ -2,7 +2,8 @@
           *ngIf="layoutType == 'gallery'">
     <div class="image-container">
         <img [src]="meal.imageUrl"
-             *ngIf="meal.imageUrl; else elseImageMessage">
+             *ngIf="meal.imageUrl; else elseImageMessage"
+             [routerLink]="['/meal', meal.id, 'view']">
         <button class="edit-btn"
                 mat-mini-fab
                 [routerLink]="['/meal', meal.id, 'edit']">
@@ -44,7 +45,8 @@
                 'add-btn': date.valid,
                 'disabled-btn': date.invalid}">Dodaj do planu tygodnia</button>
     <ng-template #elseImageMessage>
-        <h5 class="no-image-msg">Brak zdjęcia</h5>
+        <h5 class="no-image-msg"
+            [routerLink]="['/meal', meal.id, 'view']">Brak zdjęcia</h5>
     </ng-template>
 </mat-card>
 <mat-card class="list-meal-card"

@@ -4,7 +4,7 @@ import { map, take } from 'rxjs/operators';
 import { Meal } from '../models/meal.model';
 import * as moment from 'moment';
 import { PlannedMeal } from '../models/plannedMeal.model';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
 
@@ -19,13 +19,13 @@ export class MealService {
     this.meals = this.getMealList();
   }
 
-  getMeal(id: string) {
+  getMeal(id: string): Observable<Meal> {
     return this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .doc(id)
       .valueChanges();
   }
 
-  getMealList() {
+  getMealList(): Observable<Meal[]> {
     return this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .snapshotChanges()
       .pipe(
@@ -37,13 +37,13 @@ export class MealService {
         })));
   }
 
-  addMeal(newMeal: Meal) {
+  addMeal(newMeal: Meal): Observable<boolean> {
     return from(this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .add({ ...newMeal, userId: firebase.auth().currentUser.uid }))
       .pipe(map(doc => !!doc.id));
   }
 
-  updateMeal(mealToUpdate: Meal) {
+  updateMeal(mealToUpdate: Meal): Observable<void> {
     return from(this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .doc(mealToUpdate.id)
       .update({
@@ -56,7 +56,7 @@ export class MealService {
       }));
   }
 
-  deleteMeal(id: string) {
+  deleteMeal(id: string): Observable<void> {
     return from(this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .doc(id)
       .delete());
@@ -81,7 +81,8 @@ export class MealService {
         }
 
         return dateList.map(date => {
-          const foundMeals = filteredMealList.filter(meal => meal.plannedDates.some(plannedDate => moment(plannedDate).isSame(date, 'day')));
+          const foundMeals = filteredMealList.filter(meal =>
+            meal.plannedDates.some(plannedDate => moment(plannedDate).isSame(date, 'day')));
           return { date: date.toDate(), meals: foundMeals, isDrawPossible: meals.length !== foundMeals.length };
         });
       }
