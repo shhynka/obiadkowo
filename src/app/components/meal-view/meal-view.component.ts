@@ -33,7 +33,7 @@ export class MealViewComponent implements OnInit {
     const ingredientString = this.ingredients.join("\n");
     const msg = `Składniki na ${this.meal.name} to: \n${ingredientString}`;
     if (this.clipboard.copy(msg)) {
-      this.matSnackBar.open("skopiowano listę składników!", "Ok", { duration: 2000 });
+      this.matSnackBar.open("Skopiowano listę składników!", "Ok", { duration: 2000 });
     }
 
   }

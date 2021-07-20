@@ -51,6 +51,10 @@ export class UserService {
     return from(this.angularFireAuth.sendPasswordResetEmail(email));
   }
 
+  confirmPasswordReset(code: string, newPassword: string) {
+    return from(this.angularFireAuth.confirmPasswordReset(code, newPassword));
+  }
+
   logOut(): Observable<void> {
     return from(this.angularFireAuth.signOut());
   }

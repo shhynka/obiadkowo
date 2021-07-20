@@ -3,7 +3,9 @@
     <div class="image-container">
         <img [src]="meal.imageUrl"
              *ngIf="meal.imageUrl; else elseImageMessage"
-             [routerLink]="['/meal', meal.id, 'view']">
+             [routerLink]="['/meal', meal.id, 'view']"
+             matTooltip="Kliknij, by przejść do szczegółów obiadu"
+             matTooltipClass="tooltip-orange">
         <button class="edit-btn"
                 mat-mini-fab
                 [routerLink]="['/meal', meal.id, 'edit']">
@@ -18,7 +20,9 @@
         </button>
     </div>
     <div class="content">
-        <h4 [routerLink]="['/meal', meal.id, 'view']">{{ meal.name }}</h4>
+        <h4 [routerLink]="['/meal', meal.id, 'view']"
+            matTooltip="Kliknij, by przejść do szczegółów obiadu"
+            matTooltipClass="tooltip-orange">{{ meal.name }}</h4>
         <h5 *ngIf="meal.plannedDates.length, else elseMessage">
             {{ getMessage() }} {{ findClosestDate() | date: "longDate" }}
         </h5>
@@ -46,7 +50,9 @@
                 'disabled-btn': date.invalid}">Dodaj do planu tygodnia</button>
     <ng-template #elseImageMessage>
         <h5 class="no-image-msg"
-            [routerLink]="['/meal', meal.id, 'view']">Brak zdjęcia</h5>
+            [routerLink]="['/meal', meal.id, 'view']"
+            matTooltip="Kliknij, by przejść do szczegółów obiadu"
+            matTooltipClass="tooltip-orange">Brak zdjęcia</h5>
     </ng-template>
 </mat-card>
 <mat-card class="list-meal-card"

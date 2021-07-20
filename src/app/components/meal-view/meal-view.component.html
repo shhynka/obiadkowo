@@ -10,7 +10,15 @@
     <h3>{{meal?.name}}</h3>
     <div class="clipboard-container">
         <h4>Składniki</h4>
-        <button (click)="copyIngredientsList()">Skopiuj listę składników do schowka</button>
+        <button mat-mini-fab
+                (click)="copyIngredientsList()"
+                *ngIf="ingredients?.length >= 1"
+                matTooltip="Skopiuj listę składników do schowka"
+                matTooltipClass="tooltip-orange">
+            <mat-icon>
+                content_copy
+            </mat-icon>
+        </button>
     </div>
 
     <ul>

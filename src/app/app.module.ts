@@ -29,6 +29,8 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { PERSISTENCE } from '@angular/fire/auth';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 registerLocaleData(localePl, 'pl');
 
@@ -50,6 +52,8 @@ registerLocaleData(localePl, 'pl');
     DrawDialogComponent,
     PlannedMealComponent,
     DragAndDropDirective,
+    ForgotPasswordComponent,
+    PasswordResetComponent,
   ],
   imports: [
     BrowserModule,

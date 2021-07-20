@@ -8,6 +8,8 @@ import { MealListComponent } from './components/meal-list/meal-list.component';
 import { MealViewComponent } from './components/meal-view/meal-view.component';
 import { redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { canActivate } from '@angular/fire/auth-guard';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['log-in-page']);
 
@@ -28,6 +30,12 @@ const routes: Routes = [{
 },
 {
   path: 'meal/:id/view', component: MealViewComponent, ...canActivate(redirectUnauthorizedToLogin)
+},
+{
+  path: 'auth/forgot-password', component: ForgotPasswordComponent
+},
+{
+  path: 'auth/reset-password', component: PasswordResetComponent
 },
 {
   path: '**', component: ErrorPageComponent

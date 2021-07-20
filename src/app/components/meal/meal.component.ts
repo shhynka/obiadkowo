@@ -34,7 +34,6 @@ export class MealComponent implements OnInit {
     this.date = new FormControl('', Validators.required);
     this.minDate = moment().toDate();
     this.maxDate = moment().add(7, 'days').toDate();
-    console.log(this.meal.plannedDates);
   }
 
   openDeleteDialog(): void {
@@ -72,7 +71,6 @@ export class MealComponent implements OnInit {
   findClosestDate(): Date {
     return this.meal.plannedDates.reduce((prev, curr) => {
       return Math.abs(curr.getTime() - this.minDate.getTime()) < Math.abs(prev.getTime() - this.minDate.getTime()) ? curr : prev;
-      // w zależności od godziny, wyświetla dzisiejszy dzień lub nie
     });
   }
 
@@ -81,7 +79,7 @@ export class MealComponent implements OnInit {
     if (closestDate < this.minDate && !moment(closestDate).isSame(this.minDate, "day")) {
       return 'Ostatnio ugotowano: ';
     }
-    if (moment(closestDate).isSame(this.minDate, "day") || closestDate > this.minDate) { //sprawdzić ten warunek jutro
+    if (moment(closestDate).isSame(this.minDate, "day") || closestDate > this.minDate) {
       return 'Zaplanowano na: ';
     }
   }

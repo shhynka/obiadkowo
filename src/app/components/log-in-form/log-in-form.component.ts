@@ -47,12 +47,4 @@ export class LogInFormComponent implements OnInit {
       // what if zalogowano niepoprawnie xD --- działa, ale error po angielsku
     }
   }
-
-  sendPasswordResetEmail(): void {
-    this.userService.sendPasswordResetEmail(this.email.value)
-      .subscribe(() => {
-        this.matSnackBar.open('Wysłano emaila resetującego hasło', 'Ok', { duration: 2000 });
-      });
-  }
-
 }
