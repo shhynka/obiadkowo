@@ -14,7 +14,6 @@ import { MealService } from 'src/app/services/meal.service';
 })
 export class MealListComponent implements OnInit {
 
-  layoutType: 'list' | 'gallery' = 'gallery';
   meals: Observable<Meal[]>;
   sortBy: BehaviorSubject<SortByOption> = new BehaviorSubject({ propertyName: 'name', direction: 'asc' });
   sortByDropdownValues: SortByDropdownValue[] = [
@@ -44,10 +43,6 @@ export class MealListComponent implements OnInit {
               return 0;
             });
           }));
-  }
-
-  changeLayout(changeToLayout: 'list' | 'gallery'): void {
-    this.layoutType = changeToLayout;
   }
 }
 

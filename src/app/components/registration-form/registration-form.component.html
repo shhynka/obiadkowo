@@ -76,6 +76,7 @@
                      Hasło i potwierdzenie hasła muszą być takie same.
               </div>
        </div>
-       <button (click)="createUser()">Zarejestruj się</button>
+       <button (click)="createUser()"
+               [disabled]="register">Zarejestruj się</button>
        <mat-spinner *ngIf="register"></mat-spinner>
 </div>

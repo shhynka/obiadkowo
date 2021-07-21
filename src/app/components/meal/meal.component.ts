@@ -17,7 +17,6 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 })
 export class MealComponent implements OnInit {
 
-  @Input() layoutType: 'list' | 'gallery';
   @Input() meal: Meal;
   date: FormControl;
   minDate: Date;
@@ -33,7 +32,7 @@ export class MealComponent implements OnInit {
   ngOnInit(): void {
     this.date = new FormControl('', Validators.required);
     this.minDate = moment().toDate();
-    this.maxDate = moment().add(7, 'days').toDate();
+    this.maxDate = moment().add(6, 'days').toDate();
   }
 
   openDeleteDialog(): void {

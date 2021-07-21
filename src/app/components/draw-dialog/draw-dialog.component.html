@@ -1,5 +1,5 @@
 <div class="dialog-container"
-     *ngIf="(mealsList | async).length > 0, else elseMessage">
+     *ngIf="(mealsList | async)?.length > 0, else elseMessage">
     <h3>Wylosowano obiad!</h3>
     <h4>{{ randomMeal?.name }}</h4>
     <div class="img-container">

@@ -47,7 +47,6 @@ export class UserService {
   }
 
   sendPasswordResetEmail(email: string) {
-    // nie działa
     return from(this.angularFireAuth.sendPasswordResetEmail(email));
   }
 
