@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { EMPTY } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { PlannedMeal } from 'src/app/models/plannedMeal.model';
@@ -18,11 +18,13 @@ import { DrawDialogComponent } from '../draw-dialog/draw-dialog.component';
 export class PlannedMealComponent implements OnInit {
 
   @Input() plannedMeal: PlannedMeal;
+  meals: Observable<Meal[]>;
   currentIndex = 0;
 
   constructor(private mealService: MealService, private matDialog: MatDialog, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.meals = this.mealService.getMealList();
   }
 
   displayNextMeal(): void {

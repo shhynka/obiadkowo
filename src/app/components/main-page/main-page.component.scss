@@ -1,11 +1,11 @@
 .page {
     background: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 50px auto 30px;
-    max-width: fit-content;
-    padding: 30px;
+    margin: 30px auto;
+    max-width: 400px;
+    padding: 25px;
     position: relative;
-    width: 80%;
+    width: 75%;
 }
 
 .page:before,
@@ -33,17 +33,22 @@
     transform: rotate(1.4deg);
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
 h3 {
     color: #38424c;
     font-size: 22px;
     text-align: center;
-    margin: 20px auto;
+    margin: 0px;
 }
 
 button {
-    width: 300px;
+    width: 200px;
     padding: 15px;
-    margin-bottom: 5px;
+    margin: 20px auto 0px;
     border: none;
     background-color: #b4531b;
     color: #ffffff;

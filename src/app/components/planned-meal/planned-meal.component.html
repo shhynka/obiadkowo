@@ -22,8 +22,11 @@
         <button class="btn"
                 (click)="openDrawDialog(plannedMeal?.date)">Wylosuj obiad</button>
     </div>
-    <div *ngIf="!currentMeal && !plannedMeal.isDrawPossible">
-        <h5>Zaplanowano wszystkie obiady z listy. Musisz dodać nowy obiad do listy.</h5>
+    <div *ngIf="!currentMeal && !plannedMeal.isDrawPossible && (meals | async)?.length !== 0">
+        <h5>Zaplanowano wszystkie możliwe obiady. Dodaj nowy obiad do listy.</h5>
+    </div>
+    <div *ngIf="(meals | async)?.length == 0">
+        <h5>Lista posiłków jest pusta. Dodaj obiad do listy.</h5>
     </div>
     <button class="arrow-back"
             (click)="displayPreviousMeal()"
@@ -39,7 +42,6 @@
             arrow_forward
         </mat-icon>
     </button>
-
     <ng-template #elseImageMessage>
         <h5 class="no-image-msg">Brak zdjęcia</h5>
     </ng-template>
