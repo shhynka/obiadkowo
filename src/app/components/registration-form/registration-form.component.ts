@@ -13,6 +13,7 @@ export class RegistrationFormComponent implements OnInit {
 
   registrationForm: FormGroup;
   register = false;
+  clicked = false;
 
   constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
@@ -62,6 +63,7 @@ export class RegistrationFormComponent implements OnInit {
 
   createUser(): void {
     if (this.registrationForm.valid) {
+      this.clicked = true;
       this.register = true;
       this.userService.createUser(this.username.value, this.email.value, this.password.value)
         .subscribe(

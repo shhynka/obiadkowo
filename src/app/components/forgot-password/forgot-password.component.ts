@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ForgotPasswordComponent implements OnInit {
 
   forgotPasswordForm: FormGroup;
+  clicked = false;
 
   constructor(private userService: UserService, private matSnackBar: MatSnackBar) { }
 
@@ -25,6 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   sendPasswordResetEmail(): void {
+    this.clicked = true;
     const email = this.forgotPasswordForm.controls.email.value;
     this.userService.sendPasswordResetEmail(email)
       .subscribe(

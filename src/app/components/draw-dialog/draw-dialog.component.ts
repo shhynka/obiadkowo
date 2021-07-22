@@ -14,8 +14,6 @@ import { MealService } from 'src/app/services/meal.service';
 export class DrawDialogComponent implements OnInit {
 
   randomMeal: Meal;
-  mealsList: Observable<Meal[]>;
-  filteredMealList: Observable<Meal[]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -23,15 +21,9 @@ export class DrawDialogComponent implements OnInit {
     private mealService: MealService) { }
 
   ngOnInit(): void {
-    this.mealsList = this.mealService.getMealList();
     this.mealService.getRandomMeal(this.data.date).subscribe(meal => {
-      this.filteredMealList = this.mealsList.pipe(
-        map(meals => meals.filter(meal => !meal.plannedDates.some(date => moment(date).isSame(this.data.date, 'day')))));
       this.randomMeal = meal;
     });
-    // what if nie ma obiadów --- działa
-    // what if there is already the same meal on that day? --- działa
-
   }
 
   planMeal(): void {

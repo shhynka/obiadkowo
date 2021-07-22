@@ -12,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class PasswordResetComponent implements OnInit {
 
   passwordResetForm: FormGroup;
+  clicked = false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
@@ -45,6 +46,7 @@ export class PasswordResetComponent implements OnInit {
   }
 
   confirmPasswordReset() {
+    this.clicked = true;
     const code = this.activatedRoute.snapshot.queryParams['oobCode'];
     const newPassword = this.passwordResetForm.controls.password.value;
     return this.userService.confirmPasswordReset(code, newPassword).subscribe(

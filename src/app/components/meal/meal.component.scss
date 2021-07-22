@@ -11,89 +11,89 @@ span {
 .gallery-meal-card {
     width: 300px;
     margin: 10px;
+}
 
-    img {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        cursor: pointer;
-    }
+img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    cursor: pointer;
+}
 
-    .image-container {
-        position: relative;
-        width: 300px;
-        height: 250px;
-    }
+.image-container {
+    position: relative;
+    width: 300px;
+    height: 250px;
+}
 
-    .edit-btn,
-    .delete-btn {
-        background-color: #b4531b;
-        color: #ffffff;
-        margin: 10px;
-        position: absolute;
-        top: 0px;
-    }
+.edit-btn,
+.delete-btn {
+    background-color: #b4531b;
+    color: #ffffff;
+    margin: 10px;
+    position: absolute;
+    top: 0px;
+}
 
-    .edit-btn {
-        right: 0px;
-    }
+.edit-btn {
+    right: 0px;
+}
 
-    .delete-btn {
-        right: 50px;
-    }
+.delete-btn {
+    right: 50px;
+}
 
-    .add-btn,
-    .disabled-btn {
-        width: 300px;
-        padding: 15px;
-        margin-bottom: 5px;
-        border: none;
-        font-size: 10px;
-        font-weight: bold;
-        border-radius: 2px;
-        cursor: pointer;
-        background-color: #b4531b;
-        color: #ffffff;
-        transition: background-color 1s;
-    }
+.add-btn,
+.disabled-btn {
+    width: 300px;
+    padding: 15px;
+    margin-bottom: 5px;
+    border: none;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: #b4531b;
+    color: #ffffff;
+    transition: background-color 1s;
+}
 
-    .disabled-btn {
-        background-color: #7e7e7e;
-    }
+.disabled-btn {
+    background-color: #7e7e7e;
+}
 
-    .log-in-btn:hover {
-        background-color: #8c2908;
-    }
+.log-in-btn:hover {
+    background-color: #8c2908;
+}
 
-    .add-btn:hover,
-    .edit-btn:hover,
-    .delete-btn:hover {
-        background-color: #8c2908;
-    }
+.add-btn:hover,
+.edit-btn:hover,
+.delete-btn:hover {
+    background-color: #8c2908;
+}
 
-    mat-form-field {
-        text-align: center;
-        width: 100%;
-    }
+mat-form-field {
+    text-align: center;
+    width: 100%;
+}
 
-    h4 {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: #38424c;
-        margin-top: 10px;
-        font-family: "Courgette";
-        cursor: pointer;
-    }
+h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #38424c;
+    margin-top: 10px;
+    font-family: "Courgette";
+    cursor: pointer;
+}
 
-    .content,
-    h5 {
-        text-align: center;
-    }
+.content,
+h5 {
+    text-align: center;
+}
 
-    .no-image-msg {
-        padding: 100px 0px;
-        font-size: 15px;
-        color: grey;
-        cursor: pointer;
-    }
+.no-image-msg {
+    padding: 100px 0px;
+    font-size: 15px;
+    color: grey;
+    cursor: pointer;
 }

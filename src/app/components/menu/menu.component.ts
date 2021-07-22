@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 export class MenuComponent implements OnInit {
 
   loggedIn: boolean;
+  clicked = false;
 
   constructor(private router: Router, private userService: UserService) { }
 
@@ -20,6 +21,7 @@ export class MenuComponent implements OnInit {
   }
 
   logOut(): void {
+    this.clicked = true;
     this.userService.logOut().subscribe(() => {
       this.loggedIn = false;
       this.router.navigate(['log-in-page']);

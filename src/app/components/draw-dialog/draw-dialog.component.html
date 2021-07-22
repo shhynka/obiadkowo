@@ -1,8 +1,8 @@
-<div class="dialog-container"
-     *ngIf="(mealsList | async)?.length > 0, else elseMessage">
+<div class="dialog-container">
     <h3>Wylosowano obiad!</h3>
     <h4>{{ randomMeal?.name }}</h4>
-    <div class="img-container">
+    <div [ngClass]="{'no-img': randomMeal?.imageUrl == ''}"
+         class="img-container">
         <img src="{{ randomMeal?.imageUrl}}">
     </div>
     <div class="btn-container">
@@ -12,10 +12,3 @@
                 class="back-btn">Anuluj</button>
     </div>
 </div>
-<ng-template #elseMessage>
-    <div class="dialog-container">
-        <h3>Lista obiadów jest pusta. By móc wylosować obiad, musisz najpierw dodać obiad do listy.</h3>
-        <button (click)="closeDialog()"
-                class="yes-btn btn">Ok</button>
-    </div>
-</ng-template>

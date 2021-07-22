@@ -40,6 +40,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   uploadPercent: Observable<number>;
   saved = false;
   unsavedChanges = false;
+  clicked = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -135,6 +136,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
   saveMeal(): void {
     if (this.form.valid) {
+      this.clicked = true;
       if (this.id) {
         // something's off update works/don't work radomly
         this.mealService.updateMeal({

@@ -3,9 +3,9 @@
         <button class="back-btn"
                 routerLink="/meal-list">Wróć do listy</button>
     </div>
-    <div class="image-container">
-        <img src="{{ meal?.imageUrl}}"
-             alt="image of dinner">
+    <div class="image-container"
+         *ngIf="meal.imageUrl">
+        <img src="{{ meal?.imageUrl}}">
     </div>
     <h3>{{meal?.name}}</h3>
     <div class="clipboard-container">

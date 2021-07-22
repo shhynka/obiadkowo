@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { Meal } from '../models/meal.model';
 import * as moment from 'moment';
 import { PlannedMeal } from '../models/plannedMeal.model';

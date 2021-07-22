@@ -7,7 +7,7 @@
             Wróć do listy
         </button>
         <button class="add-meal-btn"
-                [disabled]="form.invalid"
+                [disabled]="form.invalid || clicked"
                 [ngClass]="{
                     'add-meal-btn': form.valid,
                     'disabled-btn': form.invalid}"

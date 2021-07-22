@@ -13,6 +13,7 @@ export class LogInFormComponent implements OnInit {
 
   logInForm: FormGroup;
   loggingIn = false;
+  clicked = false;
 
   constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
@@ -34,6 +35,7 @@ export class LogInFormComponent implements OnInit {
   logIn(): void {
     if (this.logInForm.valid) {
       this.loggingIn = true;
+      this.clicked = true;
       this.userService.logIn(this.email.value, this.password.value)
         .subscribe(
           () => {

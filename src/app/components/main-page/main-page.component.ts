@@ -15,6 +15,10 @@ export class MainPageComponent implements OnInit {
 
   constructor(private mealService: MealService, private userService: UserService) { }
 
+  ngOnDestroy() {
+    console.log("wtf");
+  }
+
   ngOnInit(): void {
     this.userService.user.subscribe((user) => {
       this.username = user.username;
