@@ -43,7 +43,7 @@
     </mat-form-field>
     <button (click)="addToMealPlan(date)"
             class="btn btn-primary"
-            [disabled]="date.invalid">Dodaj do planu tygodnia</button>
+            [disabled]="date.invalid || isAddingToPlan">Dodaj do planu tygodnia</button>
     <ng-template #elseImageMessage>
         <h5 class="no-image-msg"
             [routerLink]="['/meal', meal.id, 'view']"

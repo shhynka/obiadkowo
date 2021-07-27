@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { EMPTY } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { finalize, switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { FireStorageService } from 'src/app/services/firestorage.service';
 import { MealService } from 'src/app/services/meal.service';
@@ -22,6 +22,7 @@ export class MealComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
   msg: string;
+  isAddingToPlan = false;
 
   constructor(
     private matDialog: MatDialog,
@@ -56,10 +57,13 @@ export class MealComponent implements OnInit {
 
   addToMealPlan(plannedDate: FormControl): void {
     if (plannedDate.value) {
+      this.isAddingToPlan = true;
       this.meal.plannedDates.push(plannedDate.value);
-      this.mealService.updateMeal(this.meal).subscribe(
-        () => this.matSnackBar.open('Zaplanowano obiad!', 'Ok', { duration: 2000 }),
-        (error) => console.log('adding to meal plan errored: ', error));
+      this.mealService.updateMeal(this.meal)
+        .pipe(finalize(() => this.isAddingToPlan = false))
+        .subscribe(
+          () => this.matSnackBar.open('Zaplanowano obiad!', 'Ok', { duration: 2000 }),
+          (error) => console.log('adding to meal plan errored: ', error));
     }
   }
 

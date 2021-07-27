@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class PasswordResetComponent implements OnInit {
 
   passwordResetForm: FormGroup;
-  clicked = false;
+  isResettingPassword = false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
@@ -46,18 +47,20 @@ export class PasswordResetComponent implements OnInit {
   }
 
   confirmPasswordReset() {
-    this.clicked = true;
+    this.isResettingPassword = true;
     const code = this.activatedRoute.snapshot.queryParams['oobCode'];
     const newPassword = this.passwordResetForm.controls.password.value;
-    return this.userService.confirmPasswordReset(code, newPassword).subscribe(
-      () => {
-        this.matSnackBar.open('Poprawnie zmieniono hasło!', 'Ok', { duration: 2000 });
-        this.router.navigate(['']);
-      },
-      (error) => {
-        this.matSnackBar.open(error, 'Ok', { duration: 5000 });
-      }
-    )
+    this.userService.confirmPasswordReset(code, newPassword)
+      .pipe(finalize(() => this.isResettingPassword = false))
+      .subscribe(
+        () => {
+          this.matSnackBar.open('Poprawnie zmieniono hasło!', 'Ok', { duration: 2000 });
+          this.router.navigate(['']);
+        },
+        (error) => {
+          this.matSnackBar.open(error, 'Ok', { duration: 5000 });
+        }
+      )
   }
 
 }

@@ -9,10 +9,10 @@
               formControlName="password"
               placeholder="Hasło">
        <button type="submit"
-               [disabled]="clicked"
+               [disabled]="isLoggingIn"
                class="btn btn-primary"
                (click)="logIn()">Zaloguj się</button>
        <button class="btn btn-secondary"
                routerLink="/auth/forgot-password">Zapomniałeś hasła?</button>
-       <mat-spinner *ngIf="loggingIn"></mat-spinner>
+       <mat-spinner *ngIf="isLoggingIn"></mat-spinner>
 </form>

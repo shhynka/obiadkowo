@@ -6,7 +6,7 @@
             Wróć do listy
         </button>
         <button class="btn btn-primary"
-                [disabled]="form.invalid || clicked"
+                [disabled]="form.invalid || isSaving"
                 (click)="saveMeal()">
             Zapisz obiad
         </button>
