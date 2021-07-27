@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .btn-container {
     display: flex;
     flex-direction: column;
@@ -5,7 +9,7 @@
 }
 
 h3 {
-    font-size: 22px;
+    font-size: 20px;
     text-align: center;
     color: #38424c;
     margin-bottom: 30px;
@@ -40,14 +44,14 @@ button {
     border: solid 1px #000000;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 480px) {
     .container {
-        width: 250px;
+        min-width: 200px;
     }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 481px) {
     .container {
-        width: 400px;
+        max-width: 350px;
     }
 }

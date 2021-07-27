@@ -1,38 +1,8 @@
-@media (max-width: 420px) {
+@media (max-width: 480px) {
     .form-container {
-        background: #ffffff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         margin: 30px auto;
         min-width: 250px;
         max-width: 400px;
-        padding: 25px;
-        position: relative;
-        width: 75%;
-    }
-
-    .form-container:before,
-    .form-container:after {
-        content: "";
-        height: 98%;
-        position: absolute;
-        width: 100%;
-        z-index: -1;
-    }
-
-    .form-container:before {
-        background: #fafafa;
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-        left: -5px;
-        top: 4px;
-        transform: rotate(-2.5deg);
-    }
-
-    .form-container:after {
-        background: #f6f6f6;
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-        right: -3px;
-        top: 1px;
-        transform: rotate(1.4deg);
     }
 
     .btn-container {
@@ -52,19 +22,14 @@
         }
     }
 
+    // how about flex?
     .image-container {
         .dropzone {
             height: 200px;
-            text-align: center;
-            border: solid 1px #8b8888;
-            border-radius: 2px;
-            background-color: #ffffff;
-            position: relative;
         }
 
         .drop-icon {
             font-size: 80px;
-            margin: 20px;
         }
 
         h4 {
@@ -85,7 +50,6 @@
     }
 
     .list-container {
-        grid-area: list;
         position: relative;
 
         .add-item-list-btn {
@@ -96,63 +60,28 @@
     .recipe-container {
         padding: 20px 0px;
         max-width: 100%;
-        margin-top: 20px;
     }
 }
 
-@media (min-width: 421px) and (max-width: 767px) {
-    * {
-        box-sizing: border-box;
-    }
-
+@media (min-width: 481px) and (max-width: 1023px) {
     .form-container {
-        display: grid;
-        grid-template-areas:
-            "button button"
-            "name image"
-            "list image"
-            "recipe recipe";
-        grid-template-columns: 450px 1fr;
-        grid-template-rows: min-content 150px min-content min-content;
-        background: #ffffff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        margin: 30px auto;
-        max-width: 1000px;
-        padding: 25px;
-        position: relative;
-        width: 75%;
+        min-width: 400px;
+        max-width: 750px;
     }
-
-    .form-container:before,
-    .form-container:after {
-        content: "";
-        height: 98%;
-        position: absolute;
-        width: 100%;
-        z-index: -1;
+    @media (min-width: 481px) and (max-width: 767px) {
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            align-items: center;
+        }
     }
-
-    .form-container:before {
-        background: #fafafa;
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-        left: -5px;
-        top: 4px;
-        transform: rotate(-2.5deg);
-    }
-
-    .form-container:after {
-        background: #f6f6f6;
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-        right: -3px;
-        top: 1px;
-        transform: rotate(1.4deg);
-    }
-
-    .btn-container {
-        grid-area: button;
-        display: flex;
-        justify-content: space-evenly;
-        padding: 10px 30px 30px;
+    @media (min-width: 768px) and (max-width: 1023px) {
+        .btn-container {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 10px 30px;
+        }
     }
     .name-container {
         mat-form-field {
@@ -165,34 +94,31 @@
     }
 
     .image-container {
-        grid-area: image;
-
+        width: 100%;
         .dropzone {
-            height: 400px;
+            height: 300px;
         }
 
         .drop-icon {
             font-size: 160px;
-            margin: 30px;
         }
 
         #upload-img {
-            height: 300px;
+            height: 200px;
         }
 
         mat-progress-bar {
-            width: 400px;
+            width: 100%;
         }
 
         h4 {
-            color: #38424c;
-            margin-bottom: 10px;
+            display: none;
         }
     }
 
     .list-container {
-        grid-area: list;
         position: relative;
+        width: 100%;
 
         .add-item-list-btn {
             left: 45%;
@@ -201,64 +127,33 @@
 
     .recipe-container {
         padding: 20px 0px;
-        max-width: 940px;
+        width: 100%;
     }
 }
 
-@media (min-width: 768px) {
-    * {
-        box-sizing: border-box;
-    }
-
+@media (min-width: 1024px) {
     .form-container {
-        display: grid;
-        grid-template-areas:
-            "button button"
-            "name image"
-            "list image"
-            "recipe recipe";
-        grid-template-columns: 450px 1fr;
-        grid-template-rows: min-content 150px min-content min-content;
-        background: #ffffff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         margin: 30px auto;
-        max-width: 1000px;
-        padding: 25px;
-        position: relative;
-        width: 75%;
+        min-width: 900px;
+        max-width: 900px;
     }
 
-    .form-container:before,
-    .form-container:after {
-        content: "";
-        height: 98%;
-        position: absolute;
-        width: 100%;
-        z-index: -1;
+    .column-container {
+        display: flex;
+        flex-direction: column;
+        width: 450px;
     }
 
-    .form-container:before {
-        background: #fafafa;
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-        left: -5px;
-        top: 4px;
-        transform: rotate(-2.5deg);
-    }
-
-    .form-container:after {
-        background: #f6f6f6;
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-        right: -3px;
-        top: 1px;
-        transform: rotate(1.4deg);
+    .row-container {
+        display: flex;
     }
 
     .btn-container {
-        grid-area: button;
         display: flex;
         justify-content: space-evenly;
         padding: 10px 30px 30px;
     }
+
     .name-container {
         mat-form-field {
             width: 400px;
@@ -270,15 +165,14 @@
     }
 
     .image-container {
-        grid-area: image;
+        width: 450px;
 
         .dropzone {
-            height: 400px;
+            width: 448px;
         }
 
         .drop-icon {
             font-size: 160px;
-            margin: 30px;
         }
 
         #upload-img {
@@ -306,10 +200,50 @@
 
     .recipe-container {
         padding: 20px 0px;
-        max-width: 100%;
+    }
+
+    .ingredients-list {
+        width: 400px;
     }
 }
 
+// globalne style np. klasa paper
+.form-container {
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin: 30px auto;
+    padding: 25px;
+    position: relative;
+    width: 75%;
+}
+
+.form-container:before,
+.form-container:after {
+    content: "";
+    height: 98%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+}
+
+.form-container:before {
+    background: #fafafa;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    left: -5px;
+    top: 4px;
+    transform: rotate(-2.5deg);
+}
+
+.form-container:after {
+    background: #f6f6f6;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    right: -3px;
+    top: 1px;
+    transform: rotate(1.4deg);
+}
+//
+
+// globalne style buttonów i np. btn (stykle ogólne), btn-active - brąz, btn-disable
 .back-btn,
 .add-meal-btn,
 .disabled-btn {
@@ -346,15 +280,16 @@
 .back-btn:hover {
     border: solid 1px #000000;
 }
+// koniec o buttonach
 
+// glboal style, error-message
 .name-container {
-    grid-area: name;
-
     .validation-container {
         font-size: 12px;
         color: #f44336;
     }
 }
+//
 
 .image-container {
     .dropzone {
@@ -363,11 +298,14 @@
         border-radius: 2px;
         background-color: #ffffff;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
     }
 
     .drop-icon {
         color: #38424c;
-        padding: 10px 30px;
     }
 
     label {
@@ -399,12 +337,14 @@
         cursor: default;
     }
 
-    .inserted-img {
-        max-width: 100%;
+    .inserted-img-container {
+        width: 100%;
+        position: relative;
     }
 
-    .inserted-img-container {
-        position: relative;
+    .inserted-img {
+        width: 100%;
+        object-fit: cover;
     }
 
     mat-progress-bar {
@@ -413,14 +353,13 @@
 }
 
 .list-container {
-    grid-area: list;
     position: relative;
+    padding-bottom: 20px;
 }
 
 .recipe-container {
-    grid-area: recipe;
-
     .recipe-area {
+        width: 100%;
         display: block;
         background-color: #ffffff;
         margin-bottom: 20px;
@@ -437,6 +376,7 @@ h3 {
     margin: 30px auto 10px;
 }
 
+// buttony okrągłe - jako osobna klasa np. fab-button
 .delete-image-btn,
 .delete-item-list-btn {
     background-color: #b4531b94;
@@ -466,9 +406,9 @@ h3 {
 .delete-item-list-btn:hover {
     background-color: #b4531b;
 }
+// koniec fab
 
 .ingredients-list {
-    width: 400px;
     max-width: 100%;
     border: solid 1px #8b8888;
     min-height: 60px;
