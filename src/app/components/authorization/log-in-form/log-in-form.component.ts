@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import firebase from 'firebase/app';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -14,8 +13,9 @@ export class LogInFormComponent implements OnInit {
 
   logInForm: FormGroup;
   loggingIn = false;
+  clicked = false;
 
-  constructor(private auth: AngularFireAuth, private router: Router, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.logInForm = new FormGroup({
@@ -32,20 +32,21 @@ export class LogInFormComponent implements OnInit {
     return this.logInForm.controls.password;
   }
 
-  logIn() {
+  logIn(): void {
     if (this.logInForm.valid) {
-      const email = this.logInForm.controls.email.value;
-      const password = this.logInForm.controls.password.value;
       this.loggingIn = true;
-      this.auth.signInWithEmailAndPassword(email, password).then(() => {
-        this.router.navigate(['']);
-      });
+      this.clicked = true;
+      this.userService.logIn(this.email.value, this.password.value)
+        .subscribe(
+          () => {
+            this.matSnackBar.open('Zalogowano poprawnie!', 'Ok', { duration: 2000 });
+            this.router.navigate(['']);
+          },
+          (error) => {
+            this.loggingIn = false;
+            this.matSnackBar.open(error, 'Ok', { duration: 5000 });
+          });
+      // what if zalogowano niepoprawnie xD --- działa, ale error po angielsku
     }
   }
-
-  sendPasswordResetEmail() {
-    const email = this.logInForm.controls.email.value;
-    this.auth.sendPasswordResetEmail(email);
-  }
-
 }

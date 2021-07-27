@@ -1,14 +1,16 @@
-<mat-card class="gallery-meal-card"
-          *ngIf="layoutType == 'gallery'">
+<mat-card class="gallery-meal-card">
     <div class="image-container">
         <img [src]="meal.imageUrl"
-             *ngIf="meal.imageUrl; else elseImageMessage">
-        <button class="edit-btn"
+             *ngIf="meal.imageUrl; else elseImageMessage"
+             [routerLink]="['/meal', meal.id, 'view']"
+             matTooltip="Kliknij, by przejść do szczegółów obiadu"
+             matTooltipClass="tooltip-orange">
+        <button class="edit-btn mini-fab-button"
                 mat-mini-fab
                 [routerLink]="['/meal', meal.id, 'edit']">
             <mat-icon>create</mat-icon>
         </button>
-        <button class="delete-btn"
+        <button class="delete-btn mini-fab-button"
                 mat-mini-fab
                 (click)="openDeleteDialog()">
             <mat-icon>
@@ -17,9 +19,11 @@
         </button>
     </div>
     <div class="content">
-        <h4 [routerLink]="['/meal', meal.id, 'view']">{{ meal.name }}</h4>
+        <h4 [routerLink]="['/meal', meal.id, 'view']"
+            matTooltip="Kliknij, by przejść do szczegółów obiadu"
+            matTooltipClass="tooltip-orange">{{ meal.name }}</h4>
         <h5 *ngIf="meal.plannedDates.length, else elseMessage">
-            {{ getMessage() }} {{meal.plannedDates[meal.plannedDates.length - 1] | date: "longDate" }}
+            {{ getMessage() }} {{ findClosestDate() | date: "longDate" }}
         </h5>
         <ng-template #elseMessage>
             <h5>Jeszcze nie ugotowano tego obiadu</h5>
@@ -30,6 +34,7 @@
         <input matInput
                [min]="minDate"
                [max]="maxDate"
+               [matDatepickerFilter]="dateFilter"
                [matDatepicker]="datepicker"
                [formControl]="date">
         <mat-datepicker-toggle matSuffix
@@ -37,22 +42,12 @@
         <mat-datepicker #datepicker></mat-datepicker>
     </mat-form-field>
     <button (click)="addToMealPlan(date)"
-            class="add-btn"
-            [disabled]="date.invalid"
-            [ngClass]="{
-                'add-btn': date.valid,
-                'disabled-btn': date.invalid}">Dodaj do planu tygodnia</button>
+            class="btn btn-primary"
+            [disabled]="date.invalid">Dodaj do planu tygodnia</button>
     <ng-template #elseImageMessage>
-        <h5 class="no-image-msg">Brak zdjęcia</h5>
-    </ng-template>
-</mat-card>
-<mat-card class="list-meal-card"
-          *ngIf="layoutType == 'list'">
-    <span>{{ meal.name }}</span>
-    <span *ngIf="meal.plannedDates.length; else elseMessage">
-        Ostatnio ugotowany: {{ meal.plannedDates[meal.plannedDates.length - 1] | date: "longDate" }}
-    </span>
-    <ng-template #elseMessage>
-        <span>Jeszcze nie ugotowano tego obiadu</span>
+        <h5 class="no-image-msg"
+            [routerLink]="['/meal', meal.id, 'view']"
+            matTooltip="Kliknij, by przejść do szczegółów obiadu"
+            matTooltipClass="tooltip-orange">Brak zdjęcia</h5>
     </ng-template>
 </mat-card>

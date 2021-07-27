@@ -1,4 +1,6 @@
 <mat-toolbar>
     <a routerLink="/">Obiadkowo</a>
-    <a (click)="logOut()">Wyloguj</a>
+    <a *ngIf="loggedIn"
+       [disabled]="clicked"
+       (click)="logOut()">Wyloguj</a>
 </mat-toolbar>

@@ -14,16 +14,27 @@ export class IngredientFormDialogComponent implements OnInit {
   constructor(private matDialogRef: MatDialogRef<IngredientFormDialogComponent>) { }
 
   ngOnInit(): void {
-    this.ingredientControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ ]*')]);
+    this.ingredientControl = new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20),
+      Validators.pattern('[0-9a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ ]*'),
+      this.noWhitespaceValidator]);
   }
 
-  saveIngredient() {
+  private noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { whitespace: true };
+  }
+
+  saveIngredient(): void {
     if (this.ingredientControl.valid) {
       this.matDialogRef.close(this.ingredientControl.value);
     }
   }
 
-  closeDialog() {
+  closeDialog(): void {
     this.matDialogRef.close();
   }
 }

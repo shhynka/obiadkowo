@@ -8,7 +8,7 @@
                      placeholder="Nazwa użytkownika"
                      [ngClass]="{'invalid-input': username.invalid && (username.touched || username.dirty)}">
               <div *ngIf="username.invalid && (username.touched || username.dirty)"
-                   class="validation-container">
+                   class="error-msg">
                      <div *ngIf="username.errors.required">
                             Pole wymagane.
                      </div>
@@ -24,12 +24,27 @@
               </div>
        </div>
        <div>
+              <input type="email"
+                     formControlName="email"
+                     placeholder="Adres email"
+                     [ngClass]="{'invalid-input': email.invalid && (email.touched || email.dirty)}">
+              <div *ngIf="email.invalid && (email.touched || email.dirty)"
+                   class="error-msg">
+                     <div *ngIf="email.errors.required">
+                            Pole wymagane.
+                     </div>
+                     <div *ngIf="email.errors.email">
+                            Adres email jest w niewłaściwym formacie.
+                     </div>
+              </div>
+       </div>
+       <div>
               <input type="password"
                      formControlName="password"
                      placeholder="Hasło"
                      [ngClass]="{'invalid-input': password.invalid && (password.touched || password.dirty)}">
               <div *ngIf="password.invalid && (password.touched || password.dirty)"
-                   class="validation-container">
+                   class="error-msg">
                      <div *ngIf="password.errors.required">
                             Pole wymagane.
                      </div>
@@ -40,8 +55,8 @@
                             Hasło powinno składać się z&nbsp;max. 20 znaków.
                      </div>
                      <div *ngIf="password.errors.pattern">
-                            Hasło powinno składać się z liter od a do z, cyfr od 0 do 9 oraz znaków specjalnych: !, ?,
-                            @, #, $, %, ^, &, *, +, =.
+                            Hasło powinno składać się z przynajmniej jednej wielkiej litery, jednej małej litery, jednej
+                            cyfry oraz jednego znaku specjalnego.
                      </div>
               </div>
        </div>
@@ -51,30 +66,18 @@
                      placeholder="Potwierdzenie hasła"
                      [ngClass]="{'invalid-input': (passwordConfirmation.invalid || registrationForm.errors?.mustMatch) && (passwordConfirmation.touched || passwordConfirmation.dirty)}">
               <div *ngIf="passwordConfirmation.invalid && (passwordConfirmation.touched || passwordConfirmation.dirty)"
-                   class="validation-container">
+                   class="error-msg">
                      <div *ngIf="passwordConfirmation.errors.required">
                             Pole wymagane.
                      </div>
               </div>
               <div *ngIf="registrationForm.errors?.mustMatch"
-                   class="validation-container">
+                   class="error-msg">
                      Hasło i potwierdzenie hasła muszą być takie same.
               </div>
        </div>
-       <div>
-              <input type="email"
-                     formControlName="email"
-                     placeholder="Adres email"
-                     [ngClass]="{'invalid-input': email.invalid && (email.touched || email.dirty)}">
-              <div *ngIf="email.invalid && (email.touched || email.dirty)"
-                   class="validation-container">
-                     <div *ngIf="email.errors.required">
-                            Pole wymagane.
-                     </div>
-                     <div *ngIf="email.errors.email">
-                            Adres email jest w niewłaściwym formacie.
-                     </div>
-              </div>
-       </div>
-       <button (click)="createUser()">Zarejestruj się</button>
+       <button (click)="createUser()"
+               [disabled]="register || clicked"
+               class="btn btn-primary">Zarejestruj się</button>
+       <mat-spinner *ngIf="register"></mat-spinner>
 </div>

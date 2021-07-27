@@ -1,48 +1,50 @@
 import { Injectable } from '@angular/core';
-import { from, Observable, pipe } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { map, take, tap } from 'rxjs/operators';
 import { Meal } from '../models/meal.model';
 import * as moment from 'moment';
 import { PlannedMeal } from '../models/plannedMeal.model';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MealService {
 
-  private mealsCollection: AngularFirestoreCollection<Meal>;
   meals: Observable<Meal[]>;
 
   constructor(private angularFirestore: AngularFirestore) {
-    this.mealsCollection = this.angularFirestore.collection<Meal>("meals", ref => ref.where("userId", "==", firebase.auth().currentUser.uid));
-
-    this.meals = this.mealsCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Meal;
-        const id = a.payload.doc.id;
-        const plannedDates = (data.plannedDates as any[]).map((date: Timestamp) => date.toDate());
-        return { ...data, plannedDates, id };
-      }))
-    )
+    this.meals = this.getMealList();
   }
 
-  getMeal(id: string) {
-    return this.mealsCollection
+  getMeal(id: string): Observable<Meal> {
+    return this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .doc(id)
       .valueChanges();
   }
 
-  addMeal(newMeal: Meal) {
-    return from(this.mealsCollection.add({ ...newMeal, userId: firebase.auth().currentUser.uid }))
+  getMealList(): Observable<Meal[]> {
+    return this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          const plannedDates = (data.plannedDates as any[]).map((date: Timestamp) => date.toDate());
+          return { ...data, plannedDates, id };
+        })));
+  }
+
+  addMeal(newMeal: Meal): Observable<boolean> {
+    return from(this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
+      .add({ ...newMeal, userId: firebase.auth().currentUser.uid }))
       .pipe(map(doc => !!doc.id));
   }
 
-  updateMeal(mealToUpdate: Meal) {
-    return from(this.mealsCollection
+  updateMeal(mealToUpdate: Meal): Observable<void> {
+    return from(this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .doc(mealToUpdate.id)
       .update({
         name: mealToUpdate.name,
@@ -51,11 +53,11 @@ export class MealService {
         imagePath: mealToUpdate.imagePath,
         recipe: mealToUpdate.recipe,
         plannedDates: mealToUpdate.plannedDates
-      }))
+      }));
   }
 
-  deleteMeal(id: string) {
-    return from(this.mealsCollection
+  deleteMeal(id: string): Observable<void> {
+    return from(this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
       .doc(id)
       .delete());
   }
@@ -63,33 +65,35 @@ export class MealService {
   getMealPlan(): Observable<PlannedMeal[]> {
     return this.meals.pipe(
       map(meals => {
-        let filteredMealList = meals.filter(meal =>
+        const filteredMealList = meals.filter(meal =>
           meal.plannedDates.some(plannedDate => {
             const currentDate = moment();
             const planD = moment(plannedDate);
-            const dayDifference = planD.diff(currentDate, "days");
-            return 0 <= dayDifference && dayDifference <= 7
+            const dayDifference = planD.diff(currentDate, 'days');
+            return 0 <= dayDifference && dayDifference <= 7;
           })
         );
-        let dateList: moment.Moment[] = [];
+        const dateList: moment.Moment[] = [];
         dateList.push(moment());
 
         for (let i = 1; i < 7; i++) {
-          dateList.push(moment().add(i, "days"));
+          dateList.push(moment().add(i, 'days'));
         }
 
         return dateList.map(date => {
-          let foundMeals = filteredMealList.filter(meal => meal.plannedDates.some(plannedDate => moment(plannedDate).isSame(date, "day")));
-          return { date: date.toDate(), meals: foundMeals }
+          const foundMeals = filteredMealList.filter(meal =>
+            meal.plannedDates.some(plannedDate => moment(plannedDate).isSame(date, 'day')));
+          return { date: date.toDate(), meals: foundMeals, isDrawPossible: meals.length !== foundMeals.length };
         });
       }
       ));
   }
 
-  getRandomMeal() {
+  getRandomMeal(excludedDate: Date): Observable<Meal> {
     return this.meals.pipe(take(1), map(meals => {
-      let randomIndex = Math.floor(Math.random() * meals.length);
-      return meals[randomIndex];
+      const filteredMealList = meals.filter(meal => !meal.plannedDates.some(date => moment(date).isSame(excludedDate, 'day')));
+      const randomIndex = Math.floor(Math.random() * filteredMealList.length);
+      return filteredMealList[randomIndex];
     }));
   }
 }

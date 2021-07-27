@@ -9,9 +9,10 @@ import { filter, switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { FireStorageService } from 'src/app/services/firestorage.service';
 import { MealService } from 'src/app/services/meal.service';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { IngredientFormDialogComponent } from '../ingredient-form-dialog/ingredient-form-dialog.component';
-import firebase from "firebase/app";
+import { ConfirmationDialogComponent } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
+import { IngredientFormDialogComponent } from '../dialogs/ingredient-form-dialog/ingredient-form-dialog.component';
+import firebase from 'firebase/app';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-create-or-update-meal-form',
@@ -21,20 +22,33 @@ import firebase from "firebase/app";
 export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
   id: string;
-  imageURL: string;
+  user: User;
   imagePath: string;
   ingredientsList: string[] = [];
   meal: Meal;
   form = new FormGroup({
-    name: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ ]*')]),
-    imageUrl: new FormControl(""),
-    recipe: new FormControl("")
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(50),
+      Validators.pattern('[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ ]*'),
+      this.noWhitespaceValidator
+    ]),
+    imageUrl: new FormControl(''),
+    recipe: new FormControl('')
   });
   uploadPercent: Observable<number>;
   saved = false;
   unsavedChanges = false;
+  clicked = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private matDialog: MatDialog, private mealService: MealService, private matSnackBar: MatSnackBar, private router: Router, private firestorageService: FireStorageService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private matDialog: MatDialog,
+    private mealService: MealService,
+    private matSnackBar: MatSnackBar,
+    private router: Router,
+    private firestorageService: FireStorageService) { }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params.id;
@@ -44,19 +58,15 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
         .getMeal(this.id)
         .subscribe((meal: Meal) => {
           this.meal = meal;
-
-          this.form.patchValue({
-            name: meal.name,
-            recipe: meal.recipe
-          });
-
           this.ingredientsList = meal.ingredients;
-          this.imageURL = this.meal.imageUrl;
-          this.imagePath = this.meal.imagePath;
-          console.log(this.meal.imagePath);
-          console.log(this.imageURL);
-          console.log("imageUrl: " + this.imageUrl);
-        })
+          this.imagePath = meal.imagePath;
+
+          this.form.setValue({
+            name: meal.name,
+            recipe: meal.recipe,
+            imageUrl: meal.imageUrl
+          });
+        });
     }
   }
 
@@ -64,12 +74,18 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     return this.form.controls.name;
   }
 
-  get imageUrl() {
-    return this.form.controls.imageUrl;
+  get imageUrl(): string {
+    return this.form.controls.imageUrl.value;
   }
 
-  get recipe() {
+  get recipe(): AbstractControl {
     return this.form.controls.recipe;
+  }
+
+  private noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { whitespace: true };
   }
 
   onImageDropped($event): void {
@@ -83,6 +99,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
   uploadImage(image: File): void {
     const imagePath = `/images/${new Date().getTime()}-${image.name}`;
+
     const result = this.firestorageService.uploadFile(image, imagePath);
     this.uploadPercent = result.task.percentageChanges();
 
@@ -91,106 +108,103 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
       filter(task => task.state === firebase.storage.TaskState.SUCCESS),
       switchMap(task => from(task.ref.getDownloadURL()))
     ).subscribe((url) => {
-      this.imageURL = url;
+      this.form.controls.imageUrl.setValue(url);
       this.imagePath = imagePath;
       this.uploadPercent = null;
-    })
+    });
   }
 
   dropIngredients(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.ingredientsList, event.previousIndex, event.currentIndex);
   }
 
-  deleteIngredient(index: number) {
+  deleteIngredient(index: number): void {
     this.ingredientsList.splice(index, 1);
     this.unsavedChanges = true;
   }
 
-  openIngredientDialog() {
+  openIngredientDialog(): void {
+    // I can't enter 3 ogórki  --- działa
     const dialogRef = this.matDialog.open(IngredientFormDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.ingredientsList.push(result);
-        this.matSnackBar.open("Dodano składnik obiadu!", "Ok", { duration: 2000 });
+        this.matSnackBar.open('Dodano składnik obiadu!', 'Ok', { duration: 2000 });
       }
     });
   }
 
-  saveMeal() {
+  saveMeal(): void {
     if (this.form.valid) {
+      this.clicked = true;
       if (this.id) {
-        const { name, recipe } = this.form.value;
-
+        // something's off update works/don't work radomly
         this.mealService.updateMeal({
-          id: this.meal.id,
-          name,
+          id: this.id,
+          name: this.form.controls.name.value,
           ingredients: this.ingredientsList,
-          imageUrl: this.imageURL,
-          imagePath: this.imagePath,
-          recipe,
+          imageUrl: this.form.controls.imageUrl.value,
+          imagePath: this.imagePath || null,
+          recipe: this.form.controls.recipe.value, // what's wrong here?
           plannedDates: []
         }).subscribe(
           () => {
             this.saved = true;
-            if (this.meal.imagePath != this.imagePath) {
+            if (this.imagePath && (this.meal.imagePath !== this.imagePath)) {
               this.firestorageService.deleteFile(this.meal.imagePath);
             }
-            this.matSnackBar.open("Zaktualizowano obiad!", "Ok", { duration: 2000 });
-            this.router.navigateByUrl("/meal-list");
+            this.matSnackBar.open('Zaktualizowano obiad!', 'Ok', { duration: 2000 });
+            this.router.navigateByUrl('/meal-list');
           },
-          () => console.log("updating meal errored")
-        )
+          (error) => console.log('updating meal errored: ', error)
+        );
       } else {
-        const { name, recipe } = this.form.value;
-
         this.mealService
           .addMeal({
-            name,
+            name: this.form.controls.name.value,
             ingredients: this.ingredientsList,
-            imageUrl: this.imageURL,
-            imagePath: this.imagePath,
-            recipe,
+            imageUrl: this.form.controls.imageUrl.value,
+            imagePath: this.imagePath || null,
+            recipe: this.form.controls.recipe.value,
             plannedDates: []
           })
           .subscribe(
-            (added) => {
-              if (added) {
-                this.saved = true;
-                this.matSnackBar.open("Dodano nowy obiad!", "Ok", { duration: 2000 });
-                this.router.navigateByUrl("/meal-list");
-              }
+            () => {
+              this.saved = true;
+              this.matSnackBar.open('Dodano nowy obiad!', 'Ok', { duration: 2000 });
+              this.router.navigateByUrl('/meal-list');
             },
-            () => console.log("adding meal errored")
-          )
+            (error) => console.log('adding meal errored: ', error)
+          );
       }
     }
   }
 
-  backToMealList() {
+  backToMealList(): void {
     if (this.form.dirty || this.unsavedChanges) {
-      let dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-        data: { message: "Czy na pewno chcesz powrócić do listy obiadów? Wprowadzone zmiany nie zostaną zapisane" }
-      })
+      const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
+        data: { message: 'Czy na pewno chcesz powrócić do listy obiadów? Wprowadzone zmiany nie zostaną zapisane' }
+      });
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.router.navigateByUrl("/meal-list");
+          this.router.navigateByUrl('/meal-list');
         }
       });
     } else {
-      this.router.navigateByUrl("/meal-list");
+      this.router.navigateByUrl('/meal-list');
     }
   }
 
-  ngOnDestroy() {
-    if (!this.saved && this.imagePath && (!this.id || this.imagePath != this.meal.imagePath)) {
+  ngOnDestroy(): void {
+    if (!this.saved && this.imagePath && (!this.id || this.imagePath !== this.meal.imagePath)) {
       this.firestorageService.deleteFile(this.imagePath);
     }
   }
 
   @HostListener('window:beforeunload')
-  windowBeforeUpload() {
-    if (this.imagePath && (!this.id || this.imagePath != this.meal.imagePath)) {
+  windowBeforeUpload(): void {
+    if (this.imagePath && (!this.id || this.imagePath !== this.meal.imagePath)) {
       this.firestorageService.deleteFile(this.imagePath);
     }
   }
@@ -198,16 +212,15 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   deleteImage(): void {
     if (!this.id) {
       this.firestorageService.deleteFile(this.imagePath);
-      this.imageURL = null;
+      this.form.controls.imageUrl.setValue(null);
       this.imagePath = null;
     } else {
-      if (this.meal.imagePath != this.imagePath) {
+      if (this.imagePath && (this.meal.imagePath !== this.imagePath)) {
         this.firestorageService.deleteFile(this.meal.imagePath);
       }
-      this.imageURL = null;
+      this.form.controls.imageUrl.setValue(null);
       this.imagePath = null;
       this.unsavedChanges = true;
-
     }
   }
 

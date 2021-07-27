@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,13 +9,21 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private auth: AngularFireAuth, private router: Router) { }
+  loggedIn: boolean;
+  clicked = false;
+
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.isAuthenticated.subscribe((authenticated) => {
+      this.loggedIn = authenticated;
+    });
   }
 
-  logOut() {
-    this.auth.signOut().then(() => {
+  logOut(): void {
+    this.clicked = true;
+    this.userService.logOut().subscribe(() => {
+      this.loggedIn = false;
       this.router.navigate(['log-in-page']);
     });
   }

@@ -1,104 +1,101 @@
-<div class="form-container"
+<div class="paper-background"
      [formGroup]="form">
-
     <div class="btn-container">
-        <button class="back-btn"
+        <button class="btn btn-secondary"
                 (click)="backToMealList()">
             Wróć do listy
         </button>
-        <button class="add-meal-btn"
-                [disabled]="form.invalid"
-                [ngClass]="{
-                    'add-meal-btn': form.valid,
-                    'disabled-btn': form.invalid}"
+        <button class="btn btn-primary"
+                [disabled]="form.invalid || clicked"
                 (click)="saveMeal()">
             Zapisz obiad
         </button>
     </div>
+    <div class="row-container">
+        <div class="column-container">
 
-    <div class="name-container">
-        <h3>{{ id ? 'Edytuj obiad' : 'Dodaj nowy obiad' }}</h3>
+            <div class="name-container">
+                <h3>{{ id ? 'Edytuj obiad' : 'Dodaj nowy obiad' }}</h3>
 
-        <mat-form-field>
-            <mat-label>Nazwa obiadu</mat-label>
-            <input matInput
-                   formControlName="name"
-                   maxlength="50">
-            <mat-hint align="end">{{name.value.length}} / 50</mat-hint>
+                <mat-form-field>
+                    <mat-label>Nazwa obiadu</mat-label>
+                    <input matInput
+                           formControlName="name"
+                           maxlength="50">
+                    <mat-hint align="end">{{name.value.length}} / 50</mat-hint>
 
-        </mat-form-field>
-        <div *ngIf="name.invalid && (name.dirty || name.touched)"
-             class="validation-container">
-            <div *ngIf="name.errors.required">
-                Pole wymagane
+                </mat-form-field>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                     class="error-msg">
+                    <div *ngIf="name.errors.required">
+                        Pole wymagane
+                    </div>
+                    <div *ngIf="name.errors.minlength">
+                        Pole powinno zawierać od 3 do 50 liter.
+                    </div>
+                    <div *ngIf="name.errors.pattern">
+                        Pole zawiera niedopuszczalne znaki. Pole powinno zawierać tylko litery.
+                    </div>
+                </div>
             </div>
-            <div *ngIf="name.errors.minlength">
-                Pole powinno zawierać od 3 do 50 liter.
-            </div>
-            <div *ngIf="name.errors.pattern">
-                Pole zawiera niedopuszczalne znaki. Pole powinno zawierać tylko litery.
-            </div>
-        </div>
-    </div>
-
-    <div class="image-container">
-        <h3>{{ id ? 'Zdjęcie' : 'Zdjęcie (opcjonalne)'}}</h3>
-        <div class="dropzone"
-             appDragAndDrop
-             *ngIf="!imageURL"
-             (fileDrop)="onImageDropped($event)">
-            <span class="material-icons drop-icon">
-                image_search
-            </span>
-            <h4>Przeciągnij zdjęcie</h4>
-            <h4>lub</h4>
-            <label for="upload-img">Przeglądaj...</label>
-            <input type="file"
-                   name="image"
-                   id="upload-img"
-                   accept="image/*"
-                   formControlName="imageUrl"
-                   (change)="imageBrowseHandler($event)">
-            <mat-progress-bar mode="indeterminate"
-                              *ngIf="uploadPercent"></mat-progress-bar>
-        </div>
-        <div class="inserted-img-container"
-             *ngIf="imageURL">
-            <button class="delete-image-btn"
-                    mat-mini-fab
-                    (click)="deleteImage()">
-                <mat-icon>close</mat-icon>
-            </button>
-            <img class="inserted-img"
-                 [src]="imageURL">
-        </div>
-    </div>
-
-    <div class="list-container">
-        <h3>{{ id ? 'Lista składników' : 'Lista składników (opcjonalne)'}}</h3>
-        <div cdkDropList
-             class="ingredients-list"
-             (cdkDropListDropped)="dropIngredients($event)">
-            <div class="ingredient-box"
-                 *ngFor="let ingredient of ingredientsList; index as i"
-                 cdkDrag>
-                {{ingredient}}
-                <button class="delete-item-list-btn"
+            <div class="list-container">
+                <h3>{{ id ? 'Lista składników' : 'Lista składników (opcjonalne)'}}</h3>
+                <div cdkDropList
+                     class="ingredients-list"
+                     (cdkDropListDropped)="dropIngredients($event)">
+                    <div class="ingredient-box"
+                         *ngFor="let ingredient of ingredientsList; index as i"
+                         cdkDrag>
+                        {{ingredient}}
+                        <button class="secondary-mini-fab-button delete-item-list-btn"
+                                mat-mini-fab
+                                (click)="deleteIngredient(i)">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+                <button class="add-item-list-btn mini-fab-button"
                         mat-mini-fab
-                        (click)="deleteIngredient(i)">
-                    <mat-icon>close</mat-icon>
+                        (click)="openIngredientDialog()">
+                    <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <div>
+        </div>
+        <div class="image-container">
+            <h3>{{ id ? 'Zdjęcie' : 'Zdjęcie (opcjonalne)'}}</h3>
+            <div class="dropzone"
+                 appDragAndDrop
+                 *ngIf="!imageUrl"
+                 (fileDrop)="onImageDropped($event)">
+                <span class="material-icons drop-icon">
+                    image_search
+                </span>
+                <h4>Przeciągnij zdjęcie</h4>
+                <h4>lub</h4>
+                <label class="label"
+                       for="upload-img">Przeglądaj...</label>
+                <input type="file"
+                       name="image"
+                       id="upload-img"
+                       accept="image/*"
+                       (change)="imageBrowseHandler($event)">
+                <mat-progress-bar mode="indeterminate"
+                                  *ngIf="uploadPercent"></mat-progress-bar>
+            </div>
+            <div class="inserted-img-container"
+                 *ngIf="imageUrl">
+                <button class="secondary-mini-fab-button delete-image-btn"
+                        mat-mini-fab
+                        (click)="deleteImage()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <img class="inserted-img"
+                     [src]="imageUrl">
             </div>
         </div>
-        <button class="add-item-list-btn"
-                mat-mini-fab
-                (click)="openIngredientDialog()">
-            <mat-icon>add</mat-icon>
-        </button>
     </div>
-
     <div class="recipe-container">
         <h3>{{ id ? 'Przepis' : 'Przepis (opcjonalne)'}}</h3>
         <quill-editor class="recipe-area"

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -15,7 +14,6 @@ import { MealService } from 'src/app/services/meal.service';
 })
 export class MealListComponent implements OnInit {
 
-  layoutType: 'list' | 'gallery' = 'gallery';
   meals: Observable<Meal[]>;
   sortBy: BehaviorSubject<SortByOption> = new BehaviorSubject({ propertyName: 'name', direction: 'asc' });
   sortByDropdownValues: SortByDropdownValue[] = [
@@ -24,30 +22,27 @@ export class MealListComponent implements OnInit {
   ];
   sortByOptionControl: FormControl = new FormControl();
 
-  constructor(private mealService: MealService, private angularFirestore: AngularFirestore) { }
+  constructor(private mealService: MealService) { }
 
   ngOnInit(): void {
-    const mealList = this.mealService.meals;
+    const mealList = this.mealService.getMealList();
 
     this.sortByOptionControl.setValue(this.sortByDropdownValues[0].sortByOption);
 
-    this.meals = combineLatest([this.sortByOptionControl.valueChanges.pipe(startWith(this.sortByDropdownValues[0].sortByOption)), mealList]).pipe(
-      map(([currentSortBy, currentMealList]) => {
-        console.log(currentMealList);
-        return currentMealList.sort((m1, m2) => {
-          if (m1[currentSortBy.propertyName] > m2[currentSortBy.propertyName]) {
-            return currentSortBy.direction === 'asc' ? 1 : -1;
-          }
-          if (m1[currentSortBy.propertyName] < m2[currentSortBy.propertyName]) {
-            return currentSortBy.direction === 'asc' ? -1 : 1;
-          }
-          return 0;
-        });
-      }));
-  }
-
-  changeLayout(changeToLayout: 'list' | 'gallery'): void {
-    this.layoutType = changeToLayout;
+    this.meals = combineLatest([this.sortByOptionControl.valueChanges
+      .pipe(
+        startWith(this.sortByDropdownValues[0].sortByOption)), mealList]).pipe(
+          map(([currentSortBy, currentMealList]) => {
+            return currentMealList.sort((m1, m2) => {
+              if (m1[currentSortBy.propertyName] > m2[currentSortBy.propertyName]) {
+                return currentSortBy.direction === 'asc' ? 1 : -1;
+              }
+              if (m1[currentSortBy.propertyName] < m2[currentSortBy.propertyName]) {
+                return currentSortBy.direction === 'asc' ? -1 : 1;
+              }
+              return 0;
+            });
+          }));
   }
 }
 

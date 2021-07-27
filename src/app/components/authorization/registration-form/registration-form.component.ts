@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
-import firebase from 'firebase/app';
 import { Router } from '@angular/router';
-import { from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-registration-form',
@@ -15,13 +12,25 @@ import { UserService } from 'src/app/services/user.service';
 export class RegistrationFormComponent implements OnInit {
 
   registrationForm: FormGroup;
+  register = false;
+  clicked = false;
 
-  constructor(private auth: AngularFireAuth, private router: Router, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9]*')]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9!?@#$%^&*+=]*')]),
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        Validators.pattern('[a-zA-Z0-9]*')
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+        Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[!?@#$%^&*+=])(?=.*[0-9]).{6,}$')
+      ]),
       passwordConfirmation: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email])
     }, {
@@ -52,16 +61,21 @@ export class RegistrationFormComponent implements OnInit {
     return password.value === passwordConfirmation.value ? null : { mustMatch: true };
   }
 
-  createUser() {
-    const email = this.registrationForm.controls.email.value;
-    const password = this.registrationForm.controls.password.value;
-    from(this.auth.createUserWithEmailAndPassword(email, password)).pipe(switchMap((data) => {
-      return this.userService.createUser(data.user.uid, this.username.value);
-    })).subscribe((result: any) => {
-      if (result) {
-        this.router.navigate(['']);
-      }
-    })
+  createUser(): void {
+    if (this.registrationForm.valid) {
+      this.clicked = true;
+      this.register = true;
+      this.userService.createUser(this.username.value, this.email.value, this.password.value)
+        .subscribe(
+          () => {
+            this.matSnackBar.open('Utworzono nowe konto!', 'Ok', { duration: 2000 });
+            this.router.navigate(['']);
+          },
+          (error) => {
+            this.register = false;
+            this.matSnackBar.open(error, 'Ok', { duration: 5000 });
+          }
+        );
+    }
   }
-
 }

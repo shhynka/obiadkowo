@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PlannedMeal } from 'src/app/models/plannedMeal.model';
-import { User } from 'src/app/models/user.model';
 import { MealService } from 'src/app/services/meal.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,12 +15,18 @@ export class MainPageComponent implements OnInit {
 
   constructor(private mealService: MealService, private userService: UserService) { }
 
+  ngOnDestroy() {
+    console.log("wtf");
+  }
+
   ngOnInit(): void {
+    this.userService.user.subscribe((user) => {
+      this.username = user.username;
+    });
+
     this.mealService.getMealPlan().subscribe((meals) => {
       this.plannedMeals = meals;
     });
-
-    this.username = this.userService.user.username;
   }
 }
 

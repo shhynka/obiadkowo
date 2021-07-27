@@ -1,43 +1,22 @@
-<div class="page">
-    <div class="display-options-container">
-        <button class="display-btn"
-                (click)="changeLayout('gallery')"
-                [ngClass]="{
-                    'gallery-btn':layoutType == 'gallery'}">
-            <mat-icon class="display-option">
-                grid_view
-            </mat-icon>
-        </button>
-        <button class="display-btn"
-                (click)="changeLayout('list')"
-                [ngClass]="{
-                    'list-btn':layoutType == 'list'}">
-            <mat-icon class="display-option">
-                format_list_bulleted
-            </mat-icon>
-        </button>
-        <mat-form-field appearance="fill">
-            <mat-label>Sortuj</mat-label>
-            <mat-select [formControl]="sortByOptionControl">
-                <mat-option *ngFor="let dropdownOption of sortByDropdownValues"
-                            [value]="dropdownOption.sortByOption">
-                    {{dropdownOption.displayValue}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    <h3 class="header">Liczba obiadów: {{ (meals | async)?.length }}</h3>
+<div class="paper-background">
+    <button class="btn btn-primary"
+            routerLink="">Wróć do planu tygodnia</button>
+    <mat-form-field appearance="fill">
+        <mat-label>Sortuj</mat-label>
+        <mat-select [formControl]="sortByOptionControl">
+            <mat-option *ngFor="let dropdownOption of sortByDropdownValues"
+                        [value]="dropdownOption.sortByOption">
+                {{dropdownOption.displayValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <h3>Liczba obiadów: {{ (meals | async)?.length }}</h3>
 </div>
-<div [ngClass]="{
-    'gallery-container':layoutType == 'gallery',
-    'list-container':layoutType == 'list'}">
-    <mat-card [ngClass]="{
-            'gallery-card':layoutType == 'gallery',
-            'list-card':layoutType == 'list'}">
+<div class="gallery-container">
+    <mat-card class="gallery-card">
         <div>
             <h3>Dodaj nowy obiad</h3>
-            <button class="add-btn"
+            <button class="mini-fab-button"
                     mat-mini-fab
                     routerLink="/meal/new-meal">
                 <mat-icon>add</mat-icon>

@@ -1,53 +1,18 @@
-.page {
-    background: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 50px auto 30px;
-    max-width: 700px;
-    min-height: 300px;
-    padding: 30px;
-    position: relative;
-    width: 80%;
-}
-
-.page:before,
-.page:after {
-    content: "";
-    height: 98%;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-}
-
-.page:before {
-    background: #fafafa;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-    left: -5px;
-    top: 4px;
-    transform: rotate(-2.5deg);
-}
-
-.page:after {
-    background: #f6f6f6;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-    right: -3px;
-    top: 1px;
-    transform: rotate(1.4deg);
-}
-
 h3 {
     font-size: 22px;
     text-align: center;
-    margin-top: 10px;
+    margin: 0px;
     font-family: "Courgette";
 }
 
 h3,
 h4 {
-    color: #38424c;
+    color: var(--font-grey);
     font-weight: bold;
 }
 
 h4 {
+    font-size: 20px;
     padding-left: 15px;
     margin-bottom: 0px;
 }
@@ -55,36 +20,25 @@ h4 {
 .btn-container {
     display: flex;
     justify-content: space-evenly;
-    padding-bottom: 30px;
-
-    button {
-        width: 300px;
-        padding: 15px;
-        margin-bottom: 5px;
-        border: none;
-        background-color: #b4531b;
-        color: #ffffff;
-        font-size: 10px;
-        font-weight: bold;
-        border-radius: 2px;
-        cursor: pointer;
-    }
-
-    .back-btn {
-        background-color: #ffffff;
-        color: #000000;
-        border: solid 1px #8b8888;
-    }
+    max-width: 400px;
 }
 
 .image-container {
-    width: 500px;
-    margin: 0 auto;
+    width: 100%;
 
     img {
-        width: 500px;
+        width: 100%;
         object-fit: cover;
-        align-self: center;
+    }
+}
+
+.clipboard-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+    .mini-fab-button {
+        margin-left: 25px;
     }
 }
 
@@ -94,4 +48,29 @@ ul {
 
 quill-view-html {
     font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    .flex-container {
+        max-width: 768px;
+        display: flex;
+        column-gap: 25px;
+        padding: 0px 20px;
+        margin: 0px auto;
+    }
+
+    .name-container {
+        max-width: 500px;
+        margin: 0px;
+    }
+
+    .ingredients-container {
+        width: 250px;
+        margin: 0px;
+    }
+
+    .recipe-container {
+        min-width: 600px;
+        width: 100%;
+    }
 }

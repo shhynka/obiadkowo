@@ -71,12 +71,121 @@ $obiadkowo-theme: mat-light-theme(
 
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --primary: #b4531b;
+  --secondary: #ffffff;
+  --faded-orange: #b4531b94;
+  --dark-orange: #8c2908;
+  --disable-grey: #7e7e7e;
+  --error-red: #f44336;
+  --border-grey: #8b8888;
+  --font-grey: #38424c;
+}
+
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: url(C:\Users\Iga\Downloads\andrey-haimin-q2Fyzn-KJOQ-unsplash.jpg);
+  background: url(assets/andrey-haimin-q2Fyzn-KJOQ-unsplash.jpg);
+}
+
+.tooltip-orange {
+  background: var(--primary);
+}
+
+.paper-background {
+  background: var(--secondary);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  margin: 30px auto;
+  padding: 25px;
+  position: relative;
+  width: 75%;
+}
+
+.paper-background:before,
+.paper-background:after {
+  content: "";
+  height: 98%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+.paper-background:before {
+  background: #fafafa;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  left: -5px;
+  top: 4px;
+  transform: rotate(-2.5deg);
+}
+
+.paper-background:after {
+  background: #f6f6f6;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  right: -3px;
+  top: 1px;
+  transform: rotate(1.4deg);
+}
+
+.btn {
+  width: 200px;
+  padding: 15px;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--secondary);
+  border: none;
+  transition: background-color 1s;
+}
+
+.btn-primary:hover {
+  background-color: var(--dark-orange);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: #000000;
+  border: solid 1px var(--border-grey);
+  transition: border 1s;
+}
+
+.btn-secondary:hover {
+  border: solid 1px #000000;
+}
+
+.btn[disabled],
+.btn[disabled]:hover {
+  background-color: var(--disable-grey);
+  color: var(--secondary);
+  border: none;
+}
+
+.mini-fab-button {
+  background-color: var(--primary);
+}
+
+.mini-fab-button:hover {
+  background-color: var(--dark-orange);
+}
+
+.secondary-mini-fab-button {
+  background-color: var(--faded-orange) !important;
+}
+
+.secondary-mini-fab-button:hover {
+  background-color: var(--primary) !important;
+}
+
+.error-msg {
+  color: var(--error-red);
+  font-size: 12px;
 }

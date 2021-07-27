@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-primary {
+    margin-bottom: 10px;
+}
+
+h3,
+h4 {
+    color: var(--font-grey);
+    text-align: center;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+h4 {
+    font-family: "Courgette";
+}
+
+.img-container {
+    margin: 0px auto 20px;
+}
+
+img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.no-img {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .dialog-container {
+        min-width: 200px;
+    }
+
+    .img-container {
+        width: 200px;
+    }
+}
+
+@media (min-width: 481px) {
+    .dialog-container {
+        max-width: 350px;
+    }
+
+    .img-container {
+        width: 350px;
+    }
+}
