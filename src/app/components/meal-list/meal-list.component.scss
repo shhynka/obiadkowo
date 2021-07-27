@@ -1,59 +1,13 @@
-.page {
-    background: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 30px auto;
-    min-width: 250px;
+.paper-background {
     max-width: 400px;
-    padding: 25px;
-    position: relative;
-    width: 75%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
 
-.page:before,
-.page:after {
-    content: "";
-    height: 98%;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-}
-
-.page:before {
-    background: #fafafa;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-    left: -5px;
-    top: 4px;
-    transform: rotate(-2.5deg);
-}
-
-.page:after {
-    background: #f6f6f6;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-    right: -3px;
-    top: 1px;
-    transform: rotate(1.4deg);
-}
-
-.back-btn {
-    width: 200px;
-    padding: 15px;
+.btn-primary {
     margin-bottom: 30px;
-    border: none;
-    background-color: #b4531b;
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: bold;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: background-color 1s;
-}
-
-.back-btn:hover {
-    background-color: #8c2908;
 }
 
 mat-form-field {
@@ -64,7 +18,7 @@ h3 {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
-    color: #38424c;
+    color: var(--font-grey);
     margin: 10px auto 0px;
 }
 
@@ -90,13 +44,4 @@ h3 {
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 30px;
-}
-
-.add-btn {
-    background-color: #b4531b;
-    color: #ffffff;
-}
-
-.add-btn:hover {
-    background-color: #8c2908;
 }

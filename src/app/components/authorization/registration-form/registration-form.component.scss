@@ -7,7 +7,7 @@
 }
 
 h3 {
-    color: #38424c;
+    color: var(--font-grey);
     font-size: 22px;
     text-align: center;
 }
@@ -16,42 +16,23 @@ input {
     width: 178px;
     height: 40px;
     background-color: #eaf2f8;
-    border: solid 1px #8b8888;
+    border: solid 1px var(--border-grey);
     border-radius: 2px;
     padding: 0px;
     padding-left: 20px;
 }
 
 input:focus {
-    border: solid 1px #b4531b;
+    border: solid 1px var(--main-orange);
     outline: none;
 }
 
-.validation-container {
+.error-msg {
     width: 200px;
-    color: #f44336;
-    font-size: 10px;
 }
 
 .invalid-input {
-    border: solid 1px #f44336;
-}
-
-button {
-    width: 200px;
-    padding: 15px;
-    border: none;
-    background-color: #b4531b;
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: bold;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: background-color 1s;
-}
-
-button:hover {
-    background-color: #8c2908;
+    border: solid 1px var(--error-red);
 }
 
 mat-spinner {

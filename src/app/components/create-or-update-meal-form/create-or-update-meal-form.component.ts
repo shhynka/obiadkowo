@@ -9,8 +9,8 @@ import { filter, switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { FireStorageService } from 'src/app/services/firestorage.service';
 import { MealService } from 'src/app/services/meal.service';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { IngredientFormDialogComponent } from '../ingredient-form-dialog/ingredient-form-dialog.component';
+import { ConfirmationDialogComponent } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
+import { IngredientFormDialogComponent } from '../dialogs/ingredient-form-dialog/ingredient-form-dialog.component';
 import firebase from 'firebase/app';
 import { User } from 'src/app/models/user.model';
 

@@ -8,7 +8,7 @@ import { switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { FireStorageService } from 'src/app/services/firestorage.service';
 import { MealService } from 'src/app/services/meal.service';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-meal',

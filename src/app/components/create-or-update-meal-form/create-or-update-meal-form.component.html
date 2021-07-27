@@ -1,16 +1,12 @@
-<div class="form-container"
+<div class="paper-background"
      [formGroup]="form">
-
     <div class="btn-container">
-        <button class="back-btn"
+        <button class="btn btn-secondary"
                 (click)="backToMealList()">
             Wróć do listy
         </button>
-        <button class="add-meal-btn"
+        <button class="btn btn-primary"
                 [disabled]="form.invalid || clicked"
-                [ngClass]="{
-                    'add-meal-btn': form.valid,
-                    'disabled-btn': form.invalid}"
                 (click)="saveMeal()">
             Zapisz obiad
         </button>
@@ -30,7 +26,7 @@
 
                 </mat-form-field>
                 <div *ngIf="name.invalid && (name.dirty || name.touched)"
-                     class="validation-container">
+                     class="error-msg">
                     <div *ngIf="name.errors.required">
                         Pole wymagane
                     </div>
@@ -51,7 +47,7 @@
                          *ngFor="let ingredient of ingredientsList; index as i"
                          cdkDrag>
                         {{ingredient}}
-                        <button class="delete-item-list-btn"
+                        <button class="secondary-mini-fab-button delete-item-list-btn"
                                 mat-mini-fab
                                 (click)="deleteIngredient(i)">
                             <mat-icon>close</mat-icon>
@@ -60,14 +56,13 @@
                     <div>
                     </div>
                 </div>
-                <button class="add-item-list-btn"
+                <button class="add-item-list-btn mini-fab-button"
                         mat-mini-fab
                         (click)="openIngredientDialog()">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
         </div>
-
         <div class="image-container">
             <h3>{{ id ? 'Zdjęcie' : 'Zdjęcie (opcjonalne)'}}</h3>
             <div class="dropzone"
@@ -91,7 +86,7 @@
             </div>
             <div class="inserted-img-container"
                  *ngIf="imageUrl">
-                <button class="delete-image-btn"
+                <button class="secondary-mini-fab-button delete-image-btn"
                         mat-mini-fab
                         (click)="deleteImage()">
                     <mat-icon>close</mat-icon>
@@ -101,8 +96,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="recipe-container">
         <h3>{{ id ? 'Przepis' : 'Przepis (opcjonalne)'}}</h3>
         <quill-editor class="recipe-area"

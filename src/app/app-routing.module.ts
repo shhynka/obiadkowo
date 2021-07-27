@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CreateOrUpdateMealFormComponent } from './components/create-or-update-meal-form/create-or-update-meal-form.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
-import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
+import { LogInPageComponent } from './components/authorization/log-in-page/log-in-page.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { MealListComponent } from './components/meal-list/meal-list.component';
 import { MealViewComponent } from './components/meal-view/meal-view.component';
 import { redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { canActivate } from '@angular/fire/auth-guard';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { ForgotPasswordComponent } from './components/authorization/forgot-password/forgot-password.component';
+import { PasswordResetComponent } from './components/authorization/password-reset/password-reset.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['log-in-page']);
 

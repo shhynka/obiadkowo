@@ -1,7 +1,5 @@
 @media (max-width: 480px) {
-    .form-container {
-        margin: 30px auto;
-        min-width: 250px;
+    .paper-background {
         max-width: 400px;
     }
 
@@ -17,12 +15,11 @@
             width: 100%;
         }
 
-        .validation-container {
+        .error-msg {
             width: 100%;
         }
     }
 
-    // how about flex?
     .image-container {
         .dropzone {
             height: 200px;
@@ -64,10 +61,10 @@
 }
 
 @media (min-width: 481px) and (max-width: 1023px) {
-    .form-container {
-        min-width: 400px;
+    .paper-background {
         max-width: 750px;
     }
+
     @media (min-width: 481px) and (max-width: 767px) {
         .btn-container {
             display: flex;
@@ -88,7 +85,7 @@
             width: 300px;
         }
 
-        .validation-container {
+        .error-msg {
             width: 300px;
         }
     }
@@ -132,8 +129,7 @@
 }
 
 @media (min-width: 1024px) {
-    .form-container {
-        margin: 30px auto;
+    .paper-background {
         min-width: 900px;
         max-width: 900px;
     }
@@ -159,7 +155,7 @@
             width: 400px;
         }
 
-        .validation-container {
+        .error-msg {
             width: 400px;
         }
     }
@@ -176,7 +172,7 @@
         }
 
         #upload-img {
-            height: 300px;
+            height: 200px;
         }
 
         mat-progress-bar {
@@ -184,7 +180,7 @@
         }
 
         h4 {
-            color: #38424c;
+            color: var(--font-grey);
             margin-bottom: 10px;
         }
     }
@@ -207,94 +203,10 @@
     }
 }
 
-// globalne style np. klasa paper
-.form-container {
-    background: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 30px auto;
-    padding: 25px;
-    position: relative;
-    width: 75%;
-}
-
-.form-container:before,
-.form-container:after {
-    content: "";
-    height: 98%;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-}
-
-.form-container:before {
-    background: #fafafa;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-    left: -5px;
-    top: 4px;
-    transform: rotate(-2.5deg);
-}
-
-.form-container:after {
-    background: #f6f6f6;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-    right: -3px;
-    top: 1px;
-    transform: rotate(1.4deg);
-}
-//
-
-// globalne style buttonów i np. btn (stykle ogólne), btn-active - brąz, btn-disable
-.back-btn,
-.add-meal-btn,
-.disabled-btn {
-    width: 200px;
-    padding: 15px;
-    border: none;
-    font-size: 10px;
-    font-weight: bold;
-    border-radius: 2px;
-    color: #ffffff;
-}
-
-.disabled-btn,
-.disabled-btn:hover {
-    background-color: #7e7e7e;
-}
-
-.add-meal-btn {
-    background-color: #b4531b;
-    transition: background-color 1s;
-}
-
-.add-meal-btn:hover {
-    background-color: #8c2908;
-}
-
-.back-btn {
-    background-color: #ffffff;
-    border: solid 1px #8b8888;
-    color: #000000;
-    transition: border 1s;
-}
-
-.back-btn:hover {
-    border: solid 1px #000000;
-}
-// koniec o buttonach
-
-// glboal style, error-message
-.name-container {
-    .validation-container {
-        font-size: 12px;
-        color: #f44336;
-    }
-}
-//
-
 .image-container {
     .dropzone {
         text-align: center;
-        border: solid 1px #8b8888;
+        border: solid 1px var(--border-grey);
         border-radius: 2px;
         background-color: #ffffff;
         position: relative;
@@ -305,12 +217,12 @@
     }
 
     .drop-icon {
-        color: #38424c;
+        color: var(--font-grey);
     }
 
     label {
         display: inline-block;
-        background-color: #b4531b;
+        background-color: var(--main-orange);
         color: #ffffff;
         width: 200px;
         padding: 15px;
@@ -324,7 +236,8 @@
     }
 
     label:hover {
-        background-color: #8c2908;
+        background-color: var(--dark-orange);
+        cursor: pointer;
     }
 
     #upload-img {
@@ -371,15 +284,13 @@ button {
 }
 
 h3 {
-    color: #38424c;
+    color: var(--font-grey);
     font-size: 22px;
     margin: 30px auto 10px;
 }
 
-// buttony okrągłe - jako osobna klasa np. fab-button
 .delete-image-btn,
 .delete-item-list-btn {
-    background-color: #b4531b94;
     position: absolute;
     right: 0px;
 }
@@ -394,23 +305,12 @@ h3 {
 }
 
 .add-item-list-btn {
-    background-color: #b4531b;
     position: absolute;
 }
 
-.add-item-list-btn:hover {
-    background-color: #8c2908;
-}
-
-.delete-image-btn:hover,
-.delete-item-list-btn:hover {
-    background-color: #b4531b;
-}
-// koniec fab
-
 .ingredients-list {
     max-width: 100%;
-    border: solid 1px #8b8888;
+    border: solid 1px var(--border-grey);
     min-height: 60px;
     display: block;
     background: #ffffff;
@@ -420,7 +320,7 @@ h3 {
 
 .ingredient-box {
     padding: 20px 10px;
-    border-bottom: solid 1px #8b8888;
+    border-bottom: solid 1px var(--border-grey);
     color: rgba(0, 0, 0, 0.87);
     display: flex;
     flex-direction: row;

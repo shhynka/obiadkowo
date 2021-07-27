@@ -1,0 +1,34 @@
+<div class="dialog-container">
+    <h3>Dodaj składnik obiadu</h3>
+    <div class="flex-container">
+        <mat-form-field>
+            <mat-label>Składnik</mat-label>
+            <input matInput
+                   [formControl]="ingredientControl"
+                   maxlength="20">
+            <mat-hint align="end">{{ingredientControl.value.length}} / 20</mat-hint>
+        </mat-form-field>
+        <div class="error-msg"
+             *ngIf="ingredientControl.invalid && (ingredientControl.dirty || ingredientControl.touched)">
+            <div *ngIf="ingredientControl.errors.required">
+                Pole wymagane.
+            </div>
+            <div *ngIf="ingredientControl.errors.minlength || ingredientControl.errors.maxlength">
+                Pole powinno zawierać od 3 do 20 liter.
+            </div>
+            <div *ngIf="ingredientControl.errors.pattern">
+                Pole zawiera niedopuszczalne znaki. Pole powinno zawierać tylko litery.
+            </div>
+        </div>
+    </div>
+    <div class="btn-container">
+        <button (click)="saveIngredient()"
+                class="btn btn-primary">
+            Dodaj
+        </button>
+        <button class="btn btn-secondary"
+                (click)="closeDialog()">
+            Cofnij
+        </button>
+    </div>
+</div>

@@ -8,41 +8,13 @@
     align-items: center;
 }
 
-button {
-    width: 200px;
-    padding: 15px;
-    border: none;
-    background-color: #b4531b;
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: bold;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.yes-btn {
+.btn-primary {
     margin-bottom: 10px;
-    transition: background-color 1s;
-}
-
-.yes-btn:hover {
-    background-color: #8c2908;
-}
-
-.back-btn {
-    background-color: #ffffff;
-    color: #000000;
-    border: solid 1px #8b8888;
-    transition: border 1s;
-}
-
-.back-btn:hover {
-    border: solid 1px #000000;
 }
 
 h3,
 h4 {
-    color: #38424c;
+    color: var(--font-grey);
     text-align: center;
 }
 

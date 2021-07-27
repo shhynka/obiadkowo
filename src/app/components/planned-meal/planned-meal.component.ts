@@ -7,8 +7,8 @@ import { switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { PlannedMeal } from 'src/app/models/plannedMeal.model';
 import { MealService } from 'src/app/services/meal.service';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { DrawDialogComponent } from '../draw-dialog/draw-dialog.component';
+import { ConfirmationDialogComponent } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
+import { DrawDialogComponent } from '../dialogs/draw-dialog/draw-dialog.component';
 
 @Component({
   selector: 'app-planned-meal',

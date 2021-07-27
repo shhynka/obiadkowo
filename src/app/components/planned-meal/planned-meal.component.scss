@@ -16,17 +16,11 @@ mat-card {
         object-fit: cover;
     }
 
-    .delete-btn {
-        background-color: #b4531b;
-        color: #ffffff;
+    .mini-fab-button {
         margin: 10px;
         position: absolute;
         top: 0px;
         right: 0px;
-    }
-
-    .delete-btn:hover {
-        background-color: #8c2908;
     }
 
     .no-image-msg {
@@ -39,7 +33,7 @@ mat-card {
 
 .date-header {
     font-weight: bold;
-    border: solid 1px #8b8888;
+    border: solid 1px var(--border-grey);
     border-radius: 2px;
     padding: 10px 0px;
     margin-bottom: 16px;
@@ -50,13 +44,13 @@ mat-card {
 }
 
 h4 {
-    color: #38424c;
+    color: var(--font-grey);
     text-align: center;
     margin: 10px auto 0;
 }
 
 h5 {
-    color: #38424c;
+    color: var(--font-grey);
     text-align: center;
     font-size: 30px;
     line-height: 30px;
@@ -69,7 +63,7 @@ h5 {
     border: none;
     padding: 15px;
     cursor: pointer;
-    background-color: #b4531b94;
+    background-color: var(--faded-orange);
     color: #ffffff;
     position: absolute;
     top: 42%;
@@ -77,7 +71,7 @@ h5 {
 
 .arrow-back:hover,
 .arrow-forward:hover {
-    background-color: #b4531b;
+    background-color: var(--main-orange);
 }
 
 .arrow-back {
@@ -88,20 +82,7 @@ h5 {
     right: 0;
 }
 
-.btn {
+.btn-primary {
     width: 280px;
-    padding: 15px;
     margin-bottom: 5px;
-    border: none;
-    background-color: #b4531b;
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: bold;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: background-color 1s;
-}
-
-.btn:hover {
-    background-color: #8c2908;
 }
