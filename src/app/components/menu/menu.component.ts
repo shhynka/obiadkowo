@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class MenuComponent implements OnInit {
 
   loggedIn: boolean;
-  clicked = false;
+  isLoggingOut = false;
 
   constructor(private router: Router, private userService: UserService) { }
 
@@ -21,10 +22,12 @@ export class MenuComponent implements OnInit {
   }
 
   logOut(): void {
-    this.clicked = true;
-    this.userService.logOut().subscribe(() => {
-      this.loggedIn = false;
-      this.router.navigate(['log-in-page']);
-    });
+    this.isLoggingOut = true;
+    this.userService.logOut()
+      .pipe(finalize(() => this.isLoggingOut = false))
+      .subscribe(() => {
+        this.loggedIn = false;
+        this.router.navigate(['log-in-page']);
+      });
   }
 }

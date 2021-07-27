@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { finalize } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ForgotPasswordComponent implements OnInit {
 
   forgotPasswordForm: FormGroup;
-  clicked = false;
+  isSendingPasswordResetEmail = false;
 
   constructor(private userService: UserService, private matSnackBar: MatSnackBar) { }
 
@@ -26,9 +27,10 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   sendPasswordResetEmail(): void {
-    this.clicked = true;
+    this.isSendingPasswordResetEmail = true;
     const email = this.forgotPasswordForm.controls.email.value;
     this.userService.sendPasswordResetEmail(email)
+      .pipe(finalize(() => this.isSendingPasswordResetEmail = false))
       .subscribe(
         () => {
           this.matSnackBar.open('Wysłano emaila resetującego hasło', 'Ok', { duration: 2000 });

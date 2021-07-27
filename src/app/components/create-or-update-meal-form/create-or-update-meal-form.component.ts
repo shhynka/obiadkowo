@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, Observable } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, finalize, switchMap } from 'rxjs/operators';
 import { Meal } from 'src/app/models/meal.model';
 import { FireStorageService } from 'src/app/services/firestorage.service';
 import { MealService } from 'src/app/services/meal.service';
@@ -39,8 +39,8 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   });
   uploadPercent: Observable<number>;
   saved = false;
+  isSaving = false;
   unsavedChanges = false;
-  clicked = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -67,6 +67,19 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
             imageUrl: meal.imageUrl
           });
         });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (!this.saved && this.imagePath && (!this.id || this.imagePath !== this.meal.imagePath)) {
+      this.firestorageService.deleteFile(this.imagePath);
+    }
+  }
+
+  @HostListener('window:beforeunload')
+  windowBeforeUpload(): void {
+    if (this.imagePath && (!this.id || this.imagePath !== this.meal.imagePath)) {
+      this.firestorageService.deleteFile(this.imagePath);
     }
   }
 
@@ -124,7 +137,6 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   }
 
   openIngredientDialog(): void {
-    // I can't enter 3 ogórki  --- działa
     const dialogRef = this.matDialog.open(IngredientFormDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -136,28 +148,30 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
 
   saveMeal(): void {
     if (this.form.valid) {
-      this.clicked = true;
+      this.isSaving = true;
       if (this.id) {
-        // something's off update works/don't work radomly
-        this.mealService.updateMeal({
-          id: this.id,
-          name: this.form.controls.name.value,
-          ingredients: this.ingredientsList,
-          imageUrl: this.form.controls.imageUrl.value,
-          imagePath: this.imagePath || null,
-          recipe: this.form.controls.recipe.value, // what's wrong here?
-          plannedDates: []
-        }).subscribe(
-          () => {
-            this.saved = true;
-            if (this.imagePath && (this.meal.imagePath !== this.imagePath)) {
-              this.firestorageService.deleteFile(this.meal.imagePath);
-            }
-            this.matSnackBar.open('Zaktualizowano obiad!', 'Ok', { duration: 2000 });
-            this.router.navigateByUrl('/meal-list');
-          },
-          (error) => console.log('updating meal errored: ', error)
-        );
+        this.mealService
+          .updateMeal({
+            id: this.id,
+            name: this.form.controls.name.value,
+            ingredients: this.ingredientsList,
+            imageUrl: this.form.controls.imageUrl.value,
+            imagePath: this.imagePath || null,
+            recipe: this.form.controls.recipe.value,
+            plannedDates: []
+          })
+          .pipe(finalize(() => this.isSaving = false))
+          .subscribe(
+            () => {
+              this.saved = true;
+              if (this.imagePath && (this.meal.imagePath !== this.imagePath)) {
+                this.firestorageService.deleteFile(this.meal.imagePath);
+              }
+              this.matSnackBar.open('Zaktualizowano obiad!', 'Ok', { duration: 2000 });
+              this.router.navigateByUrl('/meal-list');
+            },
+            (error) => console.log('updating meal errored: ', error)
+          );
       } else {
         this.mealService
           .addMeal({
@@ -168,6 +182,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
             recipe: this.form.controls.recipe.value,
             plannedDates: []
           })
+          .pipe(finalize(() => this.isSaving = false))
           .subscribe(
             () => {
               this.saved = true;
@@ -196,18 +211,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    if (!this.saved && this.imagePath && (!this.id || this.imagePath !== this.meal.imagePath)) {
-      this.firestorageService.deleteFile(this.imagePath);
-    }
-  }
 
-  @HostListener('window:beforeunload')
-  windowBeforeUpload(): void {
-    if (this.imagePath && (!this.id || this.imagePath !== this.meal.imagePath)) {
-      this.firestorageService.deleteFile(this.imagePath);
-    }
-  }
 
   deleteImage(): void {
     if (!this.id) {

@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration-form',
@@ -12,8 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class RegistrationFormComponent implements OnInit {
 
   registrationForm: FormGroup;
-  register = false;
-  clicked = false;
+  isRegistering = false;
 
   constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
@@ -63,16 +63,15 @@ export class RegistrationFormComponent implements OnInit {
 
   createUser(): void {
     if (this.registrationForm.valid) {
-      this.clicked = true;
-      this.register = true;
+      this.isRegistering = true;
       this.userService.createUser(this.username.value, this.email.value, this.password.value)
+        .pipe(finalize(() => this.isRegistering = false))
         .subscribe(
           () => {
             this.matSnackBar.open('Utworzono nowe konto!', 'Ok', { duration: 2000 });
             this.router.navigate(['']);
           },
           (error) => {
-            this.register = false;
             this.matSnackBar.open(error, 'Ok', { duration: 5000 });
           }
         );

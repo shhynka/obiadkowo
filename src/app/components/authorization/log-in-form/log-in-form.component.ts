@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,8 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class LogInFormComponent implements OnInit {
 
   logInForm: FormGroup;
-  loggingIn = false;
-  clicked = false;
+  isLoggingIn = false;
 
   constructor(private router: Router, private userService: UserService, private matSnackBar: MatSnackBar) { }
 
@@ -34,19 +34,17 @@ export class LogInFormComponent implements OnInit {
 
   logIn(): void {
     if (this.logInForm.valid) {
-      this.loggingIn = true;
-      this.clicked = true;
+      this.isLoggingIn = true;
       this.userService.logIn(this.email.value, this.password.value)
+        .pipe(finalize(() => this.isLoggingIn = false))
         .subscribe(
           () => {
             this.matSnackBar.open('Zalogowano poprawnie!', 'Ok', { duration: 2000 });
             this.router.navigate(['']);
           },
           (error) => {
-            this.loggingIn = false;
             this.matSnackBar.open(error, 'Ok', { duration: 5000 });
           });
-      // what if zalogowano niepoprawnie xD --- działa, ale error po angielsku
     }
   }
 }

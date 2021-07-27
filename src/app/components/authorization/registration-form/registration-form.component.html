@@ -77,7 +77,7 @@
               </div>
        </div>
        <button (click)="createUser()"
-               [disabled]="register || clicked"
+               [disabled]="isRegistering"
                class="btn btn-primary">Zarejestruj się</button>
-       <mat-spinner *ngIf="register"></mat-spinner>
+       <mat-spinner *ngIf="isRegistering"></mat-spinner>
 </div>
