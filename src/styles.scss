@@ -72,7 +72,8 @@ $obiadkowo-theme: mat-light-theme(
 /* You can add global styles to this file, and also import other style files */
 
 :root {
-  --main-orange: #b4531b;
+  --primary: #b4531b;
+  --secondary: #ffffff;
   --faded-orange: #b4531b94;
   --dark-orange: #8c2908;
   --disable-grey: #7e7e7e;
@@ -93,11 +94,11 @@ body {
 }
 
 .tooltip-orange {
-  background: var(--main-orange);
+  background: var(--primary);
 }
 
 .paper-background {
-  background: #ffffff;
+  background: var(--secondary);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin: 30px auto;
   padding: 25px;
@@ -140,8 +141,8 @@ body {
 }
 
 .btn-primary {
-  background-color: var(--main-orange);
-  color: #ffffff;
+  background-color: var(--primary);
+  color: var(--secondary);
   border: none;
   transition: background-color 1s;
 }
@@ -151,7 +152,7 @@ body {
 }
 
 .btn-secondary {
-  background-color: #ffffff;
+  background-color: var(--secondary);
   color: #000000;
   border: solid 1px var(--border-grey);
   transition: border 1s;
@@ -164,12 +165,12 @@ body {
 .btn[disabled],
 .btn[disabled]:hover {
   background-color: var(--disable-grey);
-  color: #ffffff;
+  color: var(--secondary);
   border: none;
 }
 
 .mini-fab-button {
-  background-color: var(--main-orange);
+  background-color: var(--primary);
 }
 
 .mini-fab-button:hover {
@@ -181,7 +182,7 @@ body {
 }
 
 .secondary-mini-fab-button:hover {
-  background-color: var(--main-orange) !important;
+  background-color: var(--primary) !important;
 }
 
 .error-msg {

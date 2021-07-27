@@ -64,14 +64,14 @@ h5 {
     padding: 15px;
     cursor: pointer;
     background-color: var(--faded-orange);
-    color: #ffffff;
+    color: var(--secondary);
     position: absolute;
     top: 42%;
 }
 
 .arrow-back:hover,
 .arrow-forward:hover {
-    background-color: var(--main-orange);
+    background-color: var(--primary);
 }
 
 .arrow-back {

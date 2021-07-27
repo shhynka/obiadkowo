@@ -1,11 +1,11 @@
 mat-toolbar {
-    background-color: var(--main-orange);
+    background-color: var(--primary);
     display: flex;
     justify-content: space-between;
 }
 
 a {
-    color: #ffffff;
+    color: var(--secondary);
     text-decoration: none;
     margin: 0px 30px;
     cursor: pointer;

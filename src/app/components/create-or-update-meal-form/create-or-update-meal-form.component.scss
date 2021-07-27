@@ -208,7 +208,7 @@
         text-align: center;
         border: solid 1px var(--border-grey);
         border-radius: 2px;
-        background-color: #ffffff;
+        background-color: var(--secondary);
         position: relative;
         display: flex;
         flex-direction: column;
@@ -222,8 +222,8 @@
 
     label {
         display: inline-block;
-        background-color: var(--main-orange);
-        color: #ffffff;
+        background-color: var(--primary);
+        color: var(--secondary);
         width: 200px;
         padding: 15px;
         border: none;
@@ -274,7 +274,7 @@
     .recipe-area {
         width: 100%;
         display: block;
-        background-color: #ffffff;
+        background-color: var(--secondary);
         margin-bottom: 20px;
     }
 }
@@ -313,7 +313,7 @@ h3 {
     border: solid 1px var(--border-grey);
     min-height: 60px;
     display: block;
-    background: #ffffff;
+    background: var(--secondary);
     border-radius: 2px;
     overflow: hidden;
 }
@@ -328,7 +328,7 @@ h3 {
     justify-content: space-between;
     box-sizing: border-box;
     cursor: move;
-    background: #ffffff;
+    background: var(--secondary);
     font-size: 14px;
 }
 
