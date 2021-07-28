@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +31,7 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { PERSISTENCE } from '@angular/fire/auth';
 import { ForgotPasswordComponent } from './components/authorization/forgot-password/forgot-password.component';
 import { PasswordResetComponent } from './components/authorization/password-reset/password-reset.component';
+import { MAT_TOOLTIP_SCROLL_STRATEGY_FACTORY_PROVIDER } from '@angular/material/tooltip';
 
 registerLocaleData(localePl, 'pl');
 
@@ -77,7 +78,9 @@ registerLocaleData(localePl, 'pl');
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pl' },
-    { provide: PERSISTENCE, useValue: 'session' }
+    { provide: PERSISTENCE, useValue: 'session' },
+    MAT_TOOLTIP_SCROLL_STRATEGY_FACTORY_PROVIDER,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig }
   ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormDialogComponent, ConfirmationDialogComponent]
