@@ -53,11 +53,6 @@
             left: 40%;
         }
     }
-
-    .recipe-container {
-        padding: 20px 0px;
-        max-width: 100%;
-    }
 }
 
 @media (min-width: 481px) and (max-width: 1023px) {
@@ -120,11 +115,6 @@
         .add-item-list-btn {
             left: 45%;
         }
-    }
-
-    .recipe-container {
-        padding: 20px 0px;
-        width: 100%;
     }
 }
 
@@ -192,10 +182,6 @@
         .add-item-list-btn {
             left: 45%;
         }
-    }
-
-    .recipe-container {
-        padding: 20px 0px;
     }
 
     .ingredients-list {
@@ -275,7 +261,6 @@
         width: 100%;
         display: block;
         background-color: var(--secondary);
-        margin-bottom: 20px;
     }
 }
 

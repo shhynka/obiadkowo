@@ -17,7 +17,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTooltipModule, MAT_TOOLTIP_SCROLL_STRATEGY_FACTORY_PROVIDER } from '@angular/material/tooltip';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 @NgModule({
   exports: [
@@ -40,6 +41,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatProgressSpinnerModule,
     ClipboardModule,
     MatTooltipModule
+  ],
+  providers: [
+    MAT_TOOLTIP_SCROLL_STRATEGY_FACTORY_PROVIDER,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig }
   ]
 })
 export class MaterialModule { }

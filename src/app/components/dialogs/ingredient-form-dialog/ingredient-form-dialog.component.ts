@@ -17,8 +17,8 @@ export class IngredientFormDialogComponent implements OnInit {
     this.ingredientControl = new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(20),
-      Validators.pattern('[0-9a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ ]*'),
+      Validators.maxLength(30),
+      Validators.pattern('[0-9a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ/,.% ]*'),
       this.noWhitespaceValidator]);
   }
 
