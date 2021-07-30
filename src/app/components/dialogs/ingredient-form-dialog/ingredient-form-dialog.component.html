@@ -5,8 +5,8 @@
             <mat-label>Składnik</mat-label>
             <input matInput
                    [formControl]="ingredientControl"
-                   maxlength="20">
-            <mat-hint align="end">{{ingredientControl.value.length}} / 20</mat-hint>
+                   maxlength="30">
+            <mat-hint align="end">{{ingredientControl.value.length}} / 30</mat-hint>
         </mat-form-field>
         <div class="error-msg"
              *ngIf="ingredientControl.invalid && (ingredientControl.dirty || ingredientControl.touched)">

@@ -71,16 +71,18 @@ registerLocaleData(localePl, 'pl');
       modules: {
         syntax: false,
         toolbar: [
-          ['bold', 'italic', 'underline', { list: 'ordered' }, { list: 'bullet' }, { color: [] }, { background: [] }, { align: [] }, 'link']
+          ['bold', 'italic', 'underline'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ color: [] }, { background: [] }],
+          [{ align: [] }],
+          ['link']
         ]
       }
     })
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pl' },
-    { provide: PERSISTENCE, useValue: 'session' },
-    MAT_TOOLTIP_SCROLL_STRATEGY_FACTORY_PROVIDER,
-    { provide: HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig }
+    { provide: PERSISTENCE, useValue: 'session' }
   ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormDialogComponent, ConfirmationDialogComponent]
