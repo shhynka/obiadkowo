@@ -5,9 +5,14 @@
 <div class="flex-container">
     <div class="paper-background name-container">
         <div class="image-container"
-             *ngIf="meal.imageUrl">
+             *ngIf="meal.imageUrl; else elseMessage">
             <img src="{{ meal?.imageUrl}}">
         </div>
+        <ng-template #elseMessage>
+            <div class="image-container">
+                <h5>Brak zdjęcia</h5>
+            </div>
+        </ng-template>
         <h3>{{meal?.name}}</h3>
     </div>
     <div class="paper-background ingredients-container">

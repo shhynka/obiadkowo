@@ -114,9 +114,6 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
     const imagePath = `/images/${new Date().getTime()}-${image.name}`;
 
     const result = this.firestorageService.uploadFile(image, imagePath);
-    this.uploadPercent = result.task.percentageChanges();
-
-    result.task.percentageChanges().subscribe((v) => console.log(v));
     result.task.snapshotChanges().pipe(
       filter(task => task.state === firebase.storage.TaskState.SUCCESS),
       switchMap(task => from(task.ref.getDownloadURL()))
@@ -220,7 +217,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
       this.imagePath = null;
     } else {
       if (this.imagePath && (this.meal.imagePath !== this.imagePath)) {
-        this.firestorageService.deleteFile(this.meal.imagePath);
+        this.firestorageService.deleteFile(this.imagePath);
       }
       this.form.controls.imageUrl.setValue(null);
       this.imagePath = null;
