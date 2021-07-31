@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { Meal } from '../models/meal.model';
 import * as moment from 'moment';
 import { PlannedMeal } from '../models/plannedMeal.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -15,26 +16,26 @@ export class MealService {
 
   meals: Observable<Meal[]>;
 
-  constructor(private angularFirestore: AngularFirestore) {
+  constructor(private angularFirestore: AngularFirestore, private fireAuth: AngularFireAuth) {
     this.meals = this.getMealList();
   }
 
   getMeal(id: string): Observable<Meal> {
-    return this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
-      .doc(id)
-      .valueChanges();
+    return this.fireAuth.user.pipe(
+      filter(user => !!user),
+      switchMap((user: firebase.User) => this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', user.uid)).doc(id).valueChanges()));
   }
 
   getMealList(): Observable<Meal[]> {
-    return this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', firebase.auth().currentUser.uid))
-      .snapshotChanges()
-      .pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          const plannedDates = (data.plannedDates as any[]).map((date: Timestamp) => date.toDate());
-          return { ...data, plannedDates, id };
-        })));
+    return this.fireAuth.user.pipe(
+      filter(user => !!user),
+      switchMap((user: firebase.User) => this.angularFirestore.collection<Meal>('meals', ref => ref.where('userId', '==', user.uid)).snapshotChanges()),
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        const plannedDates = (data.plannedDates as any[]).map((date: Timestamp) => date.toDate());
+        return { ...data, plannedDates, id };
+      })));
   }
 
   addMeal(newMeal: Meal): Observable<boolean> {
