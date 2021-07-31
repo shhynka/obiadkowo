@@ -5,7 +5,7 @@
 <div class="flex-container">
     <div class="paper-background name-container">
         <div class="image-container"
-             *ngIf="meal.imageUrl; else elseMessage">
+             *ngIf="meal?.imageUrl; else elseMessage">
             <img src="{{ meal?.imageUrl}}">
         </div>
         <ng-template #elseMessage>
