@@ -30,7 +30,7 @@
                     <div *ngIf="name.errors.required">
                         Pole wymagane
                     </div>
-                    <div *ngIf="name.errors.minlength">
+                    <div *ngIf="name.errors.minlength || name.errors.maxlength">
                         Pole powinno zawierać od 3 do 50 liter.
                     </div>
                     <div *ngIf="name.errors.pattern">
