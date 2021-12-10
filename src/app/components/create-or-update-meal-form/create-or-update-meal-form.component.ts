@@ -77,7 +77,7 @@ export class CreateOrUpdateMealFormComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:beforeunload')
-  windowBeforeUpload(): void {
+  windowBeforeUnload(): void {
     if (this.imagePath && (!this.id || this.imagePath !== this.meal.imagePath)) {
       this.firestorageService.deleteFile(this.imagePath);
     }
